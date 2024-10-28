@@ -27,7 +27,10 @@ class Solution:
       # Faster with dictionary search
       # Move the left to the index where we just passed the one that caused duplication
       # char_index[char] >= left so that previous elements won't interfer with current window
-      
+      # Ex. [a, b, c, d, b, e, f, g, a] we have 2 b in the array which would cause our left to shift to 2, when we encounter 'a' again at 8
+      # we haven't updated index of a, which is still 0, if we don't check index >= left, then it would be counted as duplicate as well, but in fact. 
+      # the a before left does not have an impact because if there's already a duplicate happened before (we moved left, there's duplicate b) the array that contains 2b are also not valid!
+        
         char_index = {}
         max_length = 0
         left = 0
