@@ -13,7 +13,7 @@ class Solution:
             # find the the letters in the window with most frequencies
             max_freq = max(max_freq, char_dict[s[right]])
             # plus 1 because of the zero index, without the max frequency number, we only allow 
-            # k number of other eplacment
+            # k number of other replacements and we keep moving left until we satisfy the condition
             while right - left + 1 - max_freq > k:
                 char_dict[s[left]] -= 1
                 left += 1
