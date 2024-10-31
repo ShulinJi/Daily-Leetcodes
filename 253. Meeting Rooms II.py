@@ -13,13 +13,17 @@ class Solution:
         if len(intervals) == 0:
             return 0
 
+        # Sort the meeting interval
         intervals.sort()
+        # The meeting room that keeps the current meeting
         room = []
         for x in range(len(intervals)):
             current_meeting_start = intervals[x][0]
+            # if current meeting start time is later than any of the meetings before, than we clear the room to be [] for other meetings to use (Don't need extra rooms)
             for y in range(len(room)):
                 if room[y] != [] and room[y][1] <= current_meeting_start:
                     room[y] = []
+            # Then we allocate the meeting to any available slot, if there's no slot, we just put it at the end (increase an room)
             if [] in room:
                 for y in range(len(room)):
                     if room[y] == []:
