@@ -4,9 +4,12 @@ class Solution:
         intervals.sort(key=lambda x:x[0])
         merged = []
         for interval in intervals:
+            # new interval does not overlap with the last interval, we simply just insert the intervals
             if not merged or merged[-1][1] < interval[0]:
                 merged.append(interval)
             else:
+                # if there's a overlap, we just update the last interval so that the maximum is the max between new interval and last interval, 
+                # so that we are basically merging the interval
                 merged[-1][1] = max(interval[1], merged[-1][1])
                 
         return merged
