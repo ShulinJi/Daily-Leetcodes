@@ -1,12 +1,15 @@
 class Solution:
     def myPow(self, x: float, n: int) -> float:
         def power(num, n):
+            # base condition when n = 0, the power 0 of a number is 1
             if n == 0:
                 return 1
-            
+                
+            # if the power is negative, then we calculate the total and then take its reciprocal
             if n < 0:
                 return 1 / power(num, -1 * n)
-            
+                
+            # we are doing power division by divide power by 2, we simply do x * x = x^2
             if n % 2 == 1:
                 return num * power(num * num, (n - 1) // 2)
             else:
