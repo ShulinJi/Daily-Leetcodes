@@ -30,11 +30,13 @@ class Solution:
             for neighbor in n.neighbors:
                 if neighbor not in visited:
                     # Clone the neighbor and put in the visited, if not present already
+                    # initialize the neighbor node and add it to the neighbor list later
                     visited[neighbor] = Node(neighbor.val, [])
                     # Add the newly encountered node to the queue.
                     queue.append(neighbor)
                 # Add the clone of the neighbor to the neighbors of the clone node "n".
-                # We add the neighbors one by one instead of simply use Node(val, neighbors) because we want a deep copy not a shallow copy and we can avoid duplicate 
+                # add the copy of the neighbor to the list of neighbors in the current node
+                # if the neighbor is already in the visited, we simply access it
                 visited[n].neighbors.append(visited[neighbor])
 
         # Return the clone of the node from visited.
