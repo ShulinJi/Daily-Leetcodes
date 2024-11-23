@@ -25,3 +25,36 @@
 
 # Input: board = [[-1,-1],[-1,3]]
 # Output: 1
+
+
+from collections import deque
+class Solution:
+    def snakesAndLadders(self, board: List[List[int]]) -> int:
+        n = len(board)
+        # We need n^2 + 1 cells because we have in total of n x n grid and we start at 1 instead of 0
+        cells = [None] * (n * n + 1)
+        columns = list(range(0, n))
+        label = 1
+        for row in range(n - 1, -1, -1):
+            for col in columns:
+                # for cells, the index represent its value: 1, 2, 3, 4, 5, 6, 7...
+                # and cells[index] represents its location at the board
+                cells[label] = (row, col)
+                label += 1
+            columns.reverse()
+
+        distance = [-1] * (n**2 + 1)
+        distance[1] = 0
+        # basically we store the value of the cells and use it to find its locations
+        # to check if we have traversed through all the cells
+        queue = deque([1])
+        while queue:
+            curr = queue.popleft()
+            for next in range(curr + 1, min(curr + 6, n * n) + 1):
+                row, col = cells[next]
+                destination = (board[row][col] if board[col][col] != -1 else next)
+                if distance[destination] == -1:
+                    distance[destination] = distance[curr] + 1
+                    queue.append(destination)
+
+        return distance[n * n]
