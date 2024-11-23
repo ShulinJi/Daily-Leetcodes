@@ -43,16 +43,18 @@ class Solution:
                 label += 1
             columns.reverse()
 
-        distance = [-1] * (n**2 + 1)
+        print(cells)
+
+        distance = [-1] * (n * n + 1)
         distance[1] = 0
         # basically we store the value of the cells and use it to find its locations
         # to check if we have traversed through all the cells
         queue = deque([1])
         while queue:
             curr = queue.popleft()
-            for next in range(curr + 1, min(curr + 6, n * n) + 1):
-                row, col = cells[next]
-                destination = (board[row][col] if board[col][col] != -1 else next)
+            for next_cell in range(curr + 1, min(curr + 6, n * n) + 1):
+                row, col = cells[next_cell]
+                destination = (board[row][col] if board[row][col] != -1 else next_cell)
                 if distance[destination] == -1:
                     distance[destination] = distance[curr] + 1
                     queue.append(destination)
