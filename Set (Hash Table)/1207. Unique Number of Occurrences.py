@@ -2,6 +2,7 @@ class Solution:
     def uniqueOccurrences(self, arr: List[int]) -> bool:
         numOccurrence = {}
 
+        # record the number of occurrence of each number
         for x in arr:
             if x in numOccurrence:
                 numOccurrence[x] += 1
@@ -10,7 +11,10 @@ class Solution:
         
         set_of_ocurrence = set(numOccurrence.values())
 
-        # return len(set_of_ocurrence) == len(numOccurrence.values())
+        # Can simplify to only compare the size of the set and dictionary b/c if there's any duplicate, set will remove it and make the length different
+        # return len(set_of_ocurrence) == len(numOccurrence.values()
+
+        # check if there's any duplicate by set()
         for value in numOccurrence.values():
             if value in set_of_ocurrence:
                 return False
