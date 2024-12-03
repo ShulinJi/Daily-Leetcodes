@@ -34,9 +34,11 @@
 
 class Solution:
     def closeStrings(self, word1: str, word2: str) -> bool:
+        # if length is not the same, we cannot do the operation
         if len(word1) != len(word2):
             return False
 
+        # get two dictionary of character, frequency 
         word1_dict = {}
         word2_dict = {}
         for x in word1:
@@ -54,13 +56,11 @@ class Solution:
             return False
 
         # Check if both words have the same set of characters
-        if set(word1_dict.keys()) != set(word2_dict.keys()):
+        if word1_dict.keys() != word2_dict.keys():
             return False
 
         # Check if the frequency counts match, but not necessarily in the same order
         if sorted(word1_dict.values()) != sorted(word2_dict.values()):
             return False
-
-        return True
 
         return True
