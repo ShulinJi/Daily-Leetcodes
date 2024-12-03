@@ -21,17 +21,35 @@
 # - (Row 2, Column 2): [2,4,2,2]
 # - (Row 3, Column 2): [2,4,2,2]
 
+# Brute Force
+# class Solution:
+#     def equalPairs(self, grid: List[List[int]]) -> int:
+#         count = 0
+#         cols = []
+#         for x in range(len(grid[0])):
+#             cols.append([row[x] for row in grid])
 
+#         for row in range(len(grid)):
+#             for col in range(len(grid[0])):
+#                 if grid[row] == cols[col]:
+#                     count += 1
+        
+#         return count
+
+# Use collection.Counter()
 class Solution:
     def equalPairs(self, grid: List[List[int]]) -> int:
-        count = 0
-        cols = []
-        for x in range(len(grid[0])):
-            cols.append([row[x] for row in grid])
-
-        for row in range(len(grid)):
-            for col in range(len(grid[0])):
-                if grid[row] == cols[col]:
-                    count += 1
+        # count the col first for faster access later
+        col = []
+        for i in range(len(grid[0])):
+            col.append([row[i] for row in grid])
         
+        # list is not hashable, so we use tuple
+        row_counter = collections.Counter(tuple(row) for row in grid)
+
+        # Faster access for access, no need to compare the list
+        # simply add the frequency of the row
+        count = 0
+        for x in col:
+            count += row_counter[tuple(x)]
         return count
