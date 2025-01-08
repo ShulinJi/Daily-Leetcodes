@@ -25,15 +25,19 @@ Output: false
 
 class Solution:
     def isHappy(self, n: int) -> bool:
+     # the number would either stuck in a cycle or reach 1
         seen = set()
         while n != 1 and n not in seen:
             string = str(n)
+
+         # calculate the total of the current number
             total = 0
             for x in string:
                 total += (int(x)) ** 2
             
             if total == 1:
                 return True
+             # use set to detect duplicates or cycles
             seen.add(n)
             n = total
         
