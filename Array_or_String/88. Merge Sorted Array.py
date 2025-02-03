@@ -43,6 +43,7 @@ class Solution:
         p1 = 0
         p2 = 0
 
+        # Time complexity O(m + n), Space Complexity O(m) since we made copy of nums1
         # We try to fill out nums1 by choosing the bigger one from either nums1_copy or nums2
         for p in range(n + m):
             # we choose from nums1_copy if p2 is out of bound, or p1 is inbound and is the smaller one
