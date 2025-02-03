@@ -40,15 +40,12 @@
 # 0 <= nums[i] <= 50
 # 0 <= val <= 100
 
-
-
-
-
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
         ### Two pointer O(N) runtime 
         i = 0
         for j in range(len(nums)):
+            # Whenver we meet a value equal to val, we simply don't copy and skip it
             if nums[j] != val:
                 nums[i] = nums[j]
                 i += 1
@@ -59,10 +56,12 @@ class Solution:
         i = 0
         n = len(nums)
         while i < n:
+            # when we meet a value equals to val, we simply swap it with the other elements at the end since order doesn't matter
             if nums[i] == val:
                 nums[i] = nums[n - 1]
                 n -= 1
             else:
+            # if it doesn't equal, then we simply proceed
                 i += 1
         return n
 
