@@ -36,6 +36,28 @@
 
 class Solution:
     def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        ### Approach 2, Time Complexity O(m + n), Space Complexity O(1)
+        # This time, we start our pointer at the end of the array, we don't need extra array since we just filling out nums1
+        p1 = m - 1
+        p2 = n - 1
+
+        # Since nums1 has length of n+m, so there is no way for overtaking happens between p1 and p
+        for p in range(n + m - 1, -1, -1):
+            # if we run out of p2, then the merge already completes since the rest of nums1 is just staying there
+            if p2 < 0:
+                break
+            # if nums1 is bigger than nums2 and nums1 is inbound
+            if p1 >= 0 and nums1[p1] >= nums2[p2]:
+                nums1[p] = nums1[p1]
+                p1 -= 1
+            else:
+                nums1[p] = nums2[p2]
+                p2 -= 1
+        
+
+
+        ### Approach 1
+
         # Makes an copy of nums1 since nums1 needs to return in-place
         nums1_copy = nums1[:m]
         
