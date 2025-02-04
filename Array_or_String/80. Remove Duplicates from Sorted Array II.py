@@ -41,18 +41,25 @@ class Solution:
         if len(nums) <= 2:
             return len(nums)
 
+        ### 2 pointers, i is for traversing through the nums and j points at the place where we need to overwrite after meet of 2 values (count)
         i = 1
         j = 1
         count = 1
         while i < len(nums):
+            # check to see if current number is same as last one
             if nums[i] == nums[i - 1]:
+                # if so, we increment the count
                 count += 1
+                # if count is bigger than 2, we don't update and move to the next until we see a different value
                 if count > 2:
                     i += 1
                     continue
             else:
+                # we reset the counter to 1 if we see a different value
                 count = 1
+            # we keep overwrite the j if the counter is <= 2 or we see a new value(count == 0)
             nums[j] = nums[i]
+            # we increment both pointer after each overwrite
             i += 1
             j += 1
 
