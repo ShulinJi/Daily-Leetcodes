@@ -36,6 +36,19 @@
 
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
+        ### O(N) runtime and O(1) for space
+        # we create a pointer which points at index 1 that keeps swaping unique numebrs to the front
+        p1 = 1
+
+        for i in range(1, len(nums)):
+            # if we find a different integer (another unique number), we swap it to avoid duplicate
+            if nums[i - 1] != nums[i]:
+                nums[p1] = nums[i]
+                # increament the insert index by 1
+                p1 += 1
+        return p1
+
+
 
         ### If we are using extra space
         ### O(N) for space and O(N) for runtime
