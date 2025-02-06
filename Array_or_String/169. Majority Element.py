@@ -27,8 +27,10 @@ class Solution:
             # if count is smaller than 0, we switch the candidate
             if count < 0:
                 candidate = x
+            # if it is first element, simply overwrite
             if candidate == None:
                 candidate = x
+            # if same element, we increment counter by 1
             elif candidate == x:
                 count += 1
             else:
