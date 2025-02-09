@@ -14,3 +14,24 @@
 # Explanation: 
 # rotate 1 steps to the right: [99,-1,-100,3]
 # rotate 2 steps to the right: [3,99,-1,-100]
+
+
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+
+
+
+        ### O(n) runtime and O(n) extra space
+        # since every whole cycle doesn't change the order, we only need the module
+        rotate_times = k % len(nums)
+        # the numbers that are needed to move to front
+        move_to_front = nums[len(nums) - rotate_times:]
+        # numbers need to stay
+        rest = nums[:len(nums) - rotate_times]
+
+        # combine them
+        move_to_front.extend(rest)
+        nums[:] = move_to_front
+        return 
+
+        
