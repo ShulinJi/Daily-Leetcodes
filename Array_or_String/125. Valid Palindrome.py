@@ -7,23 +7,25 @@ class Solution:
         #         return False
         #     j = j - 1
         # return True
-        
-        
-        i, j = 0, len(s) - 1
-        while i < j:
-            # Move i to the next alphanumeric character or stop if past j
-            while i < j and not s[i].isalnum():
-                i += 1
-            # Move j to the previous alphanumeric character or stop if before i
-            while i < j and not s[j].isalnum():
-                j -= 1
-            # Compare characters, converting them to lowercase
-            if s[i].lower() != s[j].lower():
+    def isPalindrome(self, s: str) -> bool:
+        l = 0
+        r = len(s) - 1
+        while l < r:
+            while not s[l].isalnum() and l < r:
+                l += 1
+                continue
+
+            while not s[r].isalnum() and l < r:
+                r -= 1
+                continue
+            
+            if s[l].lower() != s[r].lower():
                 return False
-            # Move pointers inward
-            i += 1
-            j -= 1
-        return True
+            else:
+                r -= 1
+                l += 1
+
+        return True  
 
 
 
