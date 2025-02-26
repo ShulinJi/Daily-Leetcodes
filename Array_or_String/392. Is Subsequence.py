@@ -14,11 +14,17 @@
 # Follow up: Suppose there are lots of incoming s, say s1, s2, ..., sk where k >= 109, 
 # and you want to check one by one to see if t has its subsequence. In this scenario, how would you change your code?
 
+
+
+# Two Pointers
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
+        # get the bound for s and t (the bound which the pointer would stop at)
         leftBound = len(s)
         rightBound = len(t)
 
+        # we will slide our pointer whenever we find there is a match for left and right
+        # This ensures the order since we slide from left to right
         left = 0
         right = 0
         while left < leftBound and right < rightBound:
@@ -26,5 +32,7 @@ class Solution:
                 left += 1
             right += 1
 
+        # then we only need to check if the pointer has travelled through all s, meaning that all characters in s have been found in t
+        # which implies that s is a subsequence of t
         return left == leftBound 
 
