@@ -20,15 +20,13 @@
 
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
-
-
-
-
-
+        # O(N) runtime, O(1) space
+        # Two Pointer
 
         i = 0
         j = len(numbers) - 1
         while i < j:
+            # We could cast the sum to be long to avoid overflow!!!
             if numbers[i] + numbers[j] == target:
                 # return the index of i and j added by 1
                 return [i + 1, j + 1]
