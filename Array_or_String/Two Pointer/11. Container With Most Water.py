@@ -11,16 +11,22 @@
 # Input: height = [1,1]
 # Output: 1
 
+
+
 class Solution:
     def maxArea(self, height: List[int]) -> int:
         left = 0
         right = len(height) - 1
         maxVolume = 0
 
+        # Proof of the method: https://leetcode.com/problems/container-with-most-water/solutions/6099/yet-another-way-to-see-what-happens-in-the-on-algorithm/
+        # we move the short height one, which is more beneficial since the height is limited by short height.
         while left < right:
+            # Compute the volume
             currentVolume = (right - left) * min(height[right], height[left])
             if currentVolume > maxVolume:
                 maxVolume = currentVolume
+            # move the short height one
             if height[left] < height[right]:
                 left += 1
             else:
