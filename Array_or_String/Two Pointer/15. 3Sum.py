@@ -24,7 +24,7 @@
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        # O(N^2) runtime, and O(nlogn) to O(N) space
+        # O(N^2) runtime, and O(logn) to O(N) space
         returnList = []
         nums.sort()
         for i in range(len(nums)):
