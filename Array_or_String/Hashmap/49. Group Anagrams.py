@@ -1,9 +1,17 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+
+
+
+
+
         answer = {}
         for s in strs:
-            # if we use the defualt dict, then we need to check the 
+            # if we use the defualt dict, then we need to check if the key exist or not
+            # A list is not hashable, need to use something not immutable, such as, string, tuple, integers...
+            # List can be modified in-place, so the hash value may get changed
             anagram_s = tuple(sorted(s))
+            # if not exist, we need to first initialize it, cannot directly append
             if anagram_s not in answer:
                 answer[anagram_s] = []
                 answer[anagram_s].append(s)
@@ -11,6 +19,9 @@ class Solution:
                 answer[anagram_s].append(s)
         
         return list(answer.values())
+
+
+
 
         # works
         # dictionary used to record group of index with the same anagram
