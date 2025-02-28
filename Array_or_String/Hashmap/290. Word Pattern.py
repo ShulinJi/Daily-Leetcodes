@@ -36,14 +36,19 @@ class Solution:
         if len(words) != len(pattern):
             return False
 
-        # create two hashmaps to determine if 
+        # create two hashmaps to determine if they are mapped to each other
+        # Need two maps b/c to avoid duplicate mapping, need to ensure unique one to one map
+        # pattern: "abba", string: "dog dog dog dog"
+        # In this case, if we only one map, we will map a -> dog and b -> dog, which is wrong, so we need to check both ways
+        # that a -> dog and dog -> a to ensure the correctness
         hashmap_pattern_to_s = {}
         hashmap_s_to_pattern = {}
         for x in range(len(pattern)):
-            # the case that 
+            # the case that we haven't met the mapping before, so we map each other
             if pattern[x] not in hashmap_pattern_to_s and words[x] not in hashmap_s_to_pattern:
                 hashmap_pattern_to_s[pattern[x]] = words[x]
                 hashmap_s_to_pattern[words[x]] = pattern[x]
+                # if we have seen the word, then we check if the mapping is correct
             elif (hashmap_pattern_to_s.get(pattern[x]) != words[x]) or (hashmap_s_to_pattern.get(words[x]) != pattern[x]):
                 return False
         
