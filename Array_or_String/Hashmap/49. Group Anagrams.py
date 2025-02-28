@@ -1,6 +1,13 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
 
+        # Fastest answer, use collection.defaultdict, which it initialize the entries automatically, 
+        # don't need to check if a key exists or not
+        ans = collections.defaultdict(list)
+        for s in strs:
+            # Convert to tuple to make it hashable
+            ans[tuple(sorted(s))].append(s)
+        return list(ans.values())
 
 
 
