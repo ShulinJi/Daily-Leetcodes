@@ -26,8 +26,11 @@ class Solution:
             if nums[x] not in hashmap:
                 hashmap[nums[x]] = x
             else:
+                # we have seen the number before, we check if it satisfies the condition index(current) - index(before) <= k
+                # if satify, then return True
                 if x - hashmap[nums[x]] <= k:
                     return True
+                # if not satisfied, we update the most recent index of this number for the use of checking of next time
                 else:
                     hashmap[nums[x]] = x
         return False
