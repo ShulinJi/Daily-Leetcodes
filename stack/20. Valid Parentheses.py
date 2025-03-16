@@ -1,5 +1,35 @@
 class Solution:
     def isValid(self, s: str) -> bool:
+        # Add a check when the length of the string cannot module by 2 -> false directly
+        if len(s) % 2:
+            return False
+
+
+        stack = []
+        # we map the 
+        mapping = {'}':'{', ']': '[', ')': '('}
+
+        for char in s:
+            if char in mapping:
+                if stack:
+                    top_element = stack.pop()
+                else:
+                    return False
+                
+                if top_element != mapping[char]:
+                    return False
+            else:
+                stack.append(char)
+        
+        return not stack
+
+
+
+
+
+
+
+
         if len(s) % 2 == 1:
             return False
 
