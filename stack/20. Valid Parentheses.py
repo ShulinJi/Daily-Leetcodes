@@ -6,21 +6,29 @@ class Solution:
 
 
         stack = []
-        # we map the 
+        # we map the right side from left side
         mapping = {'}':'{', ']': '[', ')': '('}
 
+        # we traverse through the string
         for char in s:
+            # if the char is in the keys of mapping, then is the right side (closing parenthese)
+            # we pop the top of the stack (the lastest one we pushed) to check if they match with each other 
+            # We only keep the left side of parenthese in the stack
             if char in mapping:
+                # pop the tail, if nothing in the stack, then it is a fail of match
                 if stack:
                     top_element = stack.pop()
                 else:
                     return False
                 
+                # if the left side we popped and right side do not match
                 if top_element != mapping[char]:
                     return False
             else:
+                # we append the left side to wait itself for a closing parenthese
                 stack.append(char)
         
+        # if stack is not empty, then we have unmatched parentheses
         return not stack
 
 
