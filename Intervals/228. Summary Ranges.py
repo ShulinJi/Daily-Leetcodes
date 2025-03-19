@@ -35,7 +35,8 @@ class Solution:
         while i < len(nums):
             # it is a new start of an interval
             start = nums[i]
-            # we keep traversing until we find a discontinued number, ex: 1, 2, 3, 6, we stop at 3
+            # we keep traversing until we find a discontinued number, ex: 1, 2, 3, 6, we stop at 3stack
+            
             while i < len(nums) - 1 and nums[i] + 1 == nums[i + 1]:
                 i += 1
 
