@@ -11,6 +11,15 @@ class Solution:
         #                 return False
         #             if (intervals[x][0] < intervals[y][0] < intervals[x][1]) or (intervals[x][0] < intervals[y][1] < intervals[x][1]):
         #                 return False
+        intervals.sort(key=lambda x: x[0])
+
+        for i in range(1, len(intervals)):
+            if intervals[i][0] < intervals[i - 1][1]:
+                return False
+        
+        return True
+
+        # OR
 
         intervals.sort()
         for x in range(len(intervals) - 1):
