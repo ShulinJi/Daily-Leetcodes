@@ -1,5 +1,31 @@
 class Solution:
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        # (O(logn + N)) => O(n)
+        # Binary search to find where to insert the interval
+        low, high = 0, len(intervals) - 1
+        while low <= high:
+            mid = (low + high) // 2
+            if intervals[mid][0] <= newInterval[0]:
+                low = mid + 1
+            else:
+                high = mid - 1
+
+        # insert the new interval
+        intervals.insert(low, newInterval)
+        # merge the interval
+
+        merge = []
+        for interval in intervals:
+            if not merge or merge[-1][1] < interval[0]:
+                merge.append(interval)
+            else:
+                merge[-1][1] = max(interval[1], merge[-1][1])
+        return merge
+
+
+
+
+        # O(nlogn)
         intervals.append(newInterval)
         intervals.sort(key=lambda x:x[0])
         merged = []
