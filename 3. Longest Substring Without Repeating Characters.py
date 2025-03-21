@@ -30,7 +30,28 @@ class Solution:
       # Ex. [a, b, c, d, b, e, f, g, a] we have 2 b in the array which would cause our left to shift to 2, when we encounter 'a' again at 8
       # we haven't updated index of a, which is still 0, if we don't check index >= left, then it would be counted as duplicate as well, but in fact. 
       # the a before left does not have an impact because if there's already a duplicate happened before (we moved left, there's duplicate b) the array that contains 2b are also not valid!
+        # it is to ensure that the char we are checking are inside the sliding window! if index is smaller than left bound, then we don't need to check!
+    
+        char_index = {}
+        left = 0
+        right = 0
+        ans = 0
+
+        for right in range(len(s)):
+            if s[right] in char_index:
+                left = max(left, char_index[s[right]])
+
+            # + 1 b/c we want to update our left one over the duplicate, so +1 makes it to next element
+            char_index[s[right]] = right + 1
+            ans = max(ans, right - left + 1)
         
+        return ans
+
+
+
+
+        # Same method here! 
+
         char_index = {}
         max_length = 0
         left = 0
