@@ -1,5 +1,38 @@
 class Solution:
     def longestPalindrome(self, s: str) -> str:
+        # my own solution
+        def expand(i, j):
+        # i can be 0! but j cannot be len(s)
+        while i >= 0 and j < len(s) and s[i] == s[j]:
+            i -= 1
+            j += 1
+        return j - i - 2 + 1
+    
+        ans = [0, 0]
+        for i in range(len(s)):
+            # test expand from single centre
+            length = expand(i, i)
+            if length > ans[1] - ans[0] + 1:
+                middle = length // 2
+                ans[0] = i - middle
+                ans[1] = i + middle
+            
+            # test expand from 2 
+            length = expand(i, i + 1)
+            if length > ans[1] - ans[0] + 1:
+                # length 4 but there is no middle, only plus on on each i and i + 1
+                middle = length // 2 - 1
+                ans[0] = i - middle
+                ans[1] = i + 1 + middle
+                    
+        return s[ans[0]:ans[1] + 1]
+
+
+
+
+
+
+
         def expand(i, j):
             left = i
             right = j
