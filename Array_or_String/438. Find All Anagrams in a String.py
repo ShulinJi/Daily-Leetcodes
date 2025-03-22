@@ -24,6 +24,7 @@
 # 1 <= s.length, p.length <= 3 * 104
 # s and p consist of lowercase English letters.
 
+# Sliding windows!!!!!!!!!!
 class Solution:
     def findAnagrams(self, s: str, p: str) -> List[int]:
         if len(s) < len(p):
