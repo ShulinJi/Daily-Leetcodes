@@ -1,5 +1,34 @@
 class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
+        stack = []
+
+        for x in tokens:
+            print(x)
+            if x not in '+-/*':
+                stack.append(x)
+            else:
+                num1 = int(stack.pop())
+                num2 = int(stack.pop())
+                if x == '+':
+                    stack.append(num2 + num1)
+                elif x == '-':
+                    stack.append(num2 - num1)
+                elif x == '*':
+                    stack.append(num2 * num1)
+                elif x == '/':
+                    stack.append(int(num2 / num1))
+        
+        return stack[-1]
+
+
+
+
+
+
+
+
+
+
         stack = [] # used to store the numbers
         for i in range(len(tokens)):
             # if current token is a number, not an operator, we simply store it fr later use
