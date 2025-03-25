@@ -20,8 +20,6 @@
 
 # 1 <= n <= 1690
 
-
-
 class Solution:
     def nthUglyNumber(self, n: int) -> int:
         min_heap = []  # min-heap to store and retrieve the smallest ugly number

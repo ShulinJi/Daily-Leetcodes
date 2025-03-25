@@ -39,10 +39,12 @@ class Solution:
 
         for right in range(len(s)):
             if s[right] in char_index:
-                left = max(left, char_index[s[right]])
+                # + 1 b/c we want to update our left one over the duplicate, so +1 makes it to next element
+                # b/c if we don't plus one, for example, "dabca" we jump to the index 1 which is first a but it still include the a, which is still duplicate
+                left = max(left, char_index[s[right]] + 1)
 
-            # + 1 b/c we want to update our left one over the duplicate, so +1 makes it to next element
-            char_index[s[right]] = right + 1
+            # record the index of this element
+            char_index[s[right]] = right
             ans = max(ans, right - left + 1)
         
         return ans
