@@ -55,7 +55,8 @@ class Solution:
 
 
 # follow up: if we change the question to be up to k modifications:
-
+# recursion with memorization
+# O(n² * k)
 class Solution:
     def validPalindromeK(self, s: str, k: int) -> bool:
         memo = {}
