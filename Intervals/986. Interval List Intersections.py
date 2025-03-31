@@ -30,6 +30,7 @@ class Solution:
             # hi - the endpoint of the intersection
             lo = max(A[i][0], B[j][0])
             hi = min(A[i][1], B[j][1])
+            # if low is > than hi, it means one of the interval is bigger ex. [1, 3], [5, 10],lo = 5 hi = 3
             if lo <= hi:
                 ans.append([lo, hi])
 
