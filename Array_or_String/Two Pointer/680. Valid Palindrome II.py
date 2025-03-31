@@ -50,3 +50,33 @@ class Solution:
             j -= 1
 
         return True
+
+
+
+
+# follow up: if we change the question to be up to k modifications:
+
+class Solution:
+    def validPalindromeK(self, s: str, k: int) -> bool:
+        memo = {}
+
+        def helper(left, right, k):
+            if (left, right, k) in memo:
+                return memo[(left, right, k)]
+
+            while left < right:
+                if s[left] == s[right]:
+                    left += 1
+                    right -= 1
+                else:
+                    if k == 0:
+                        memo[(left, right, k)] = False
+                        return False
+                    res = helper(left + 1, right, k - 1) or helper(left, right - 1, k - 1)
+                    memo[(left, right, k)] = res
+                    return res
+
+            memo[(left, right, k)] = True
+            return True
+
+        return helper(0, len(s) - 1, k)
