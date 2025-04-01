@@ -31,10 +31,12 @@ class Solution:
             lo = max(A[i][0], B[j][0])
             hi = min(A[i][1], B[j][1])
             # if low is > than hi, it means one of the interval is bigger ex. [1, 3], [5, 10],lo = 5 hi = 3
+            # For two intervals to intersect, the later start must come before (or exactly at) the earlier end
             if lo <= hi:
                 ans.append([lo, hi])
 
             # Remove the interval with the smallest endpoint
+            # each time we could only process one interval, the onw with the smaller max
             if A[i][1] < B[j][1]:
                 i += 1
             else:
