@@ -36,16 +36,26 @@
 
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
+        # O(n) time and O(1) space using Floyd's Tortoise and Hare (Cycle Detection)
+        # reduce problem to 142
+        # start at the list
+        slow = nums[0]
+        fast = nums[0]
+
+        # find the cycle, slow moves one at a time, fast moves at two at a time
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+            if slow == fast:
+                break
         
-
-
-
-
-
-
-
-
-
+        # then we find the start of the cycle
+        fast = nums[0]
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[fast]
+        
+        return slow
 
         # Negating the numebrs, it works, but I cannot prove it 
         for num in nums:
