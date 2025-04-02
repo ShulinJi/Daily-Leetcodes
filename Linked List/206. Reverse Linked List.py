@@ -60,7 +60,7 @@ class Solution:
 # nk.next.next = nk;
 
 # Be very careful that n1's next must point to Ø. If you forget about this, your linked list will have a cycle in it. This bug could be caught if you test your code with a linked list of size 2.
-        # Recursive method
+        # Recursive method O(n) time and O(n) space complexity
         if (not head) or (not head.next):
             return head
 
