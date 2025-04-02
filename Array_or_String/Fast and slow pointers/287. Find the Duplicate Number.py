@@ -34,3 +34,31 @@
 # Can you solve the problem in linear runtime complexity?
 
 
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        
+
+
+
+
+
+
+
+
+
+
+        # Negating the numebrs, it works, but I cannot prove it 
+        for num in nums:
+            cur = abs(num)
+            print("cur", cur)
+            if nums[cur] < 0:
+                duplicate = cur
+                break
+            nums[cur] = -nums[cur]
+            print(nums)
+
+        # Restore numbers
+        for i in range(len(nums)):
+            nums[i] = abs(nums[i])
+
+        return duplicate
