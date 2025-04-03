@@ -26,30 +26,40 @@
 # 1 <= schedule.length , schedule[i].length <= 50
 # 0 <= schedule[i].start < schedule[i].end <= 10^8
 
+"""
+# Definition for an Interval.
+class Interval:
+    def __init__(self, start: int = None, end: int = None):
+        self.start = start
+        self.end = end
+"""
+
 class Solution:
     def employeeFreeTime(self, avails):
-        OPEN, CLOSE = 0, 1
+        BEGIN, END = 0, 1
 
         # intervals are events (begin, end) when it begins we add 1 to the total number of person (bal)
         # when we see end, we -1 from the bal (total number of working people)
         # if we see a bal == 0, it means that we have a total of 0 people are working right now, 
         # so it is a free time
         events = []
-        for emp in avails:
-            for iv in emp:
-                events.append((iv.start, OPEN))
-                events.append((iv.end, CLOSE))
+        for employee in avails:
+            for interval in employee:
+                events.append((interval.start, BEGIN))
+                events.append((interval.end, END))
         events.sort()
 
         ans = []
         prev = None
-        bal = 0
+        balance = 0
 
-        for t, cmd in events:
-            if bal == 0 and prev is not None:
-                ans.append(Interval(prev, t))
+        # sweep through the time intervals and 
+        for time, action in events:
+            # whenever we see a balance of 0, we add interval [prev, current_time], current_time must be BEGIN
+            if balance == 0 and prev is not None:
+                ans.append(Interval(prev, time))
 
-            bal += 1 if cmd is OPEN else -1
-            prev = t
+            balance += 1 if action is BEGIN else -1
+            prev = time
 
         return ans
