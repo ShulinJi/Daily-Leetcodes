@@ -30,6 +30,9 @@
 
 class Solution:
     def search(self, nums: List[int], target: int) -> bool:
+
+        # Time complexity : O(N) worst case, O(logN) best case
+        # Space complexity : O(1).
         if len(nums) == 0:
             return False
         
@@ -38,7 +41,7 @@ class Solution:
 
         while start <= end:
             mid = (start + end) // 2
-            if nums[mimd] == target:
+            if nums[mid] == target:
                 return True
             
             # check if binary search could apply in this case
@@ -75,7 +78,7 @@ class Solution:
 
 
     # used to check if the number is in the first half of the sorted array
-    def inFirstHalf(self, nums, start, element)
+    def inFirstHalf(self, nums, start, element):
         return nums[start] <= element
     
     # check if binary search is helpful
