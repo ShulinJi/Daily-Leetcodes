@@ -28,25 +28,33 @@ class Solution:
             return new_board
         
         def backtrack(row, cols, diagonal, anti_diagonal, state):
+            # if we have exhausted all the rows, we have an answer here and append it
             if row == n:
                 ans.append(copy_board(state))
                 return
             
             for col in range(n):
+                # to avoid two queens on diagonal, every piece on same diagonal row - col will be the same ex. row(4) - col(4) = 0, row(5) - col(5) = 0, on the same diagonal
+                # same for anti_diagonal, row + col will add up to a fixed value if on the same anti_diagonal ex. row(4) + col(4) = 8, row(2) + col(6) = 8
+                # then we could use a set to detect if there's a duplicate so that we could place a queen 
                 curr_diagonal = row - col
                 curr_anti_diagonal = row + col
 
+                # if there are any pieces on same col, diagonal, anti_diagonal
                 if (col in cols 
                     or curr_diagonal in diagonal 
                     or curr_anti_diagonal in anti_diagonal):
                     continue
 
+                # we update the state and save the state
                 state[row][col] = "Q"
                 cols.add(col)
                 diagonal.add(curr_diagonal)
                 anti_diagonal.add(curr_anti_diagonal)
+                # we continue the search with next row, so that we assure that we don't have duplicate in rows
                 backtrack(row + 1, cols, diagonal, anti_diagonal, state)
-
+                
+                # after we reached the final row and it returned, we simply return the result and restore the state for other searches
                 cols.remove(col)
                 diagonal.remove(curr_diagonal)
                 anti_diagonal.remove(curr_anti_diagonal)
