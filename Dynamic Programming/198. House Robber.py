@@ -33,6 +33,9 @@ class Solution:
 # B: you robbed the second previous house (can rob current house)
 
 # and you keep repeating this branching logic (choice A or B) until the base case where you're at the first house.
+
+
+# dp[i] is the maximum amount we've robbed so far, if we’re working from the end
         n = len(nums)
         dp = [0] * (n + 1)
 
@@ -45,3 +48,54 @@ class Solution:
             dp[i] = max(dp[i + 1], dp[i + 2] + nums[i])
         
         return dp[0]
+
+
+
+# recrusion with memorization (top-down approach)
+# function stack for recursion
+# Call robTotal(1)
+
+# Calls robTotal(2)
+
+# Calls robTotal(3)
+
+# Calls robTotal(4) → returns 0
+
+# maxRob = max(0, 1 + 0) = 1 → stored as mem[3] = 1
+
+# robTotal(4) is 0 again
+
+# maxRob = max(1, 3 + 0) = 3 → stored as mem[2] = 3
+
+# maxRob = max(3, 2 + 1) = 3 → stored as mem[1] = 3
+
+# Now go back to robTotal(0)
+
+# robTotal(1) has returned 3
+
+# Call robTotal(2) → it’s memoized! Returns 3 instantly
+
+# maxRob = max(3, 1 + 3) = 4 → stored as mem[0] = 4
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        mem = {}
+        def robTotal(i):
+            # cannot rob anything, return 0 and reached the end
+            if i >= len(nums):
+                return 0
+
+            # if we have computed the answer before
+            if i in mem:
+                return mem[i]
+            
+            # we either skip current house  robTotal(i + 1)
+            # or rob current house and skip to the i + 2 one(call to i + 2 instead of i+1)
+
+            # “The maximum total amount we can still rob starting from house i, assuming we follow the optimal strategy from here on.”
+            # Not the max rob we have so far!
+            maxRob = max(robTotal(i + 1), robTotal(i + 2) + nums[i])
+
+            mem[i] = maxRob
+            return maxRob
+        
+        return robTotal(0)
