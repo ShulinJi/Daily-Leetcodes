@@ -23,3 +23,70 @@
 
 # 1 <= s.length <= 20
 # s consists of digits only.
+
+
+# Backtracking patterns
+def backtrack(state):
+    if is_goal(state):
+        record_solution(state)
+        return
+
+    for choice in choices(state):
+        if is_valid(choice):
+            make_choice(state, choice)
+            backtrack(state)
+            undo_choice(state, choice)
+
+# Personal Solution
+class Solution:
+    def restoreIpAddresses(self, s: str) -> List[str]:
+        if len(s) < 4:
+            return []
+
+        ans = set()
+        def backtracking(dot_count, ip, ip_segment, rest_string):
+            # if there is still string left but used all 3 dots
+            if dot_count == 4 and len(ip_segment):
+                return
+            # if there is still dots and we used up all the segments
+            elif dot_count != 4 and len(ip_segment) == 0:
+                return 
+                
+            # if the digits is not number
+            for x in ip_segment:
+                if not x.isdigit():
+                    return
+            # contain leading zero
+            if  len(ip_segment) > 1:
+                if int(ip_segment[0]) == 0:
+                    return 
+                # if ip segment is bigger than 255
+                if int(ip_segment) > 255:
+                    return 
+
+            if dot_count == 4:
+                ans.add("".join(ip))
+                return 
+
+            dot_count += 1
+            ip.append(ip_segment)
+            ip.append(".")
+            for x in range(1, 4):
+                backtracking(dot_count, ip, rest_string[0:x], rest_string[x:])
+            ip.pop()
+            ip.pop()
+            dot_count -= 1
+            # pop the dot and the last ip_segment we tried
+
+        # starting with first 3 element
+        for x in range(1, 4):
+            backtracking(0, [], s[0:x], s[x:])
+        
+        ans = list(ans)
+        for x in range(len(ans)):
+            ans[x] = "".join(ans[x])
+            ans[x] = ans[x][:-1]
+        
+        return ans
+
+        
