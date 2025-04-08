@@ -89,4 +89,40 @@ class Solution:
         
         return ans
 
+
+
+
+# GPT Answer, much cleaner!
+
+from typing import List
+
+class Solution:
+    def restoreIpAddresses(self, s: str) -> List[str]:
+        result = []
+
+        def backtrack(start: int, path: List[str]):
+            # 🛑 Base case: 4 segments and no chars left
+            if len(path) == 4:
+                if start == len(s):
+                    result.append('.'.join(path))
+                return
+            
+            # ✂️ Try 1 to 3 digits
+            for length in range(1, 4):
+                if start + length > len(s):
+                    break  # Out of bounds
+
+                segment = s[start:start+length]
+
+                # 🚫 Skip invalid segments
+                if (segment.startswith("0") and len(segment) > 1) or int(segment) > 255:
+                    continue
+
+                # ✅ Recurse with this segment added
+                backtrack(start + length, path + [segment])
+
+        # 🚀 Start backtracking
+        backtrack(0, [])
+
+        return result
         
