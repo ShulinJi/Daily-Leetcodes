@@ -26,3 +26,24 @@
 # 1 <= coins.length <= 12
 # 1 <= coins[i] <= 231 - 1
 # 0 <= amount <= 104
+
+
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+
+        # top-down approach
+
+        # each index means the minmum number of coins needed to achieve it 
+        dp = [float("inf")] * (amount + 1)
+        # initial state 0 dollar with 0 coins needed
+        dp[0] = 0
+
+        # loop through initial coins 
+        for coin in coins:
+            # first start with 0, then first loop populate the 1, 2, 5 with 1, and then start with 1, begin to add 1 coin to each amount increased
+            # result in a 12 in amount 12, and then we begin to start with 2 and update the new minimum and then 5 with the minimum
+            # if the number cannot be reached, it will stay as float(inf) as it won't be updated!
+            for i in range(coin, amount + 1):
+                dp[i] = min(dp[i], dp[i - coin] + 1)
+
+        return dp[amount] if dp[amount] != float("inf") else -1
