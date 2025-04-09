@@ -41,4 +41,21 @@ class Solution:
         
         return dp[n]
 
+
+# top-down without memorization, exceed time limit
+class Solution:
+    def tribonacci(self, n: int) -> int:
+        # without memorization, exceed time limit!
+        # we are doing repetitve work for same operation, simply naive recursion
+        # Need to memorize the answer!
+        # time complexity would be O(3^n) !
+        def find_tribonacci(n):
+            if n < 3:
+                return 0 if not n else 1
+
+            ans = find_tribonacci(n - 1) + find_tribonacci(n - 2) + find_tribonacci(n - 3)
+            return ans
+
+        return find_tribonacci(n)
+
         
