@@ -58,4 +58,25 @@ class Solution:
 
         return find_tribonacci(n)
 
+
+# correct top-down, recursion with memorization
+class Solution:
+    def tribonacci(self, n: int) -> int:
+        mem = {}
+        def find_tribonacci(n):
+            if n < 3:
+                return 0 if not n else 1
+
+            # memorize the operation so that we don't execute the same operation more than once
+            # b/c we are solving sub-optimal problems that each subproblem only have one optimal solution
+            if n in mem:
+                return mem[n]
+
+            ans = find_tribonacci(n - 1) + find_tribonacci(n - 2) + find_tribonacci(n - 3)
+            mem[n] = ans
+
+            return ans
+
+        return find_tribonacci(n)
+
         
