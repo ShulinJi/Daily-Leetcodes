@@ -27,6 +27,10 @@
 # 1 <= coins[i] <= 231 - 1
 # 0 <= amount <= 104
 
+# DP Problems:
+# I know I'm working with DP when I can define a recursive algorithm 
+# where the answer at a current step is some function of previous or future steps and the function only requires you to call the function at different values.
+
 
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:

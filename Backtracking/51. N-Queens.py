@@ -18,6 +18,10 @@
 # Output: [["Q"]]
 
 
+# for Backtracking problem
+# Problems that require you to produce a candidate solution.
+# Problems that require you to generate all possible solutions.
+
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
         ans = []
