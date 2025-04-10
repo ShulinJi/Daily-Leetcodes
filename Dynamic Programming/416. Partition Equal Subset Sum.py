@@ -18,3 +18,33 @@
 
 # 1 <= nums.length <= 200
 # 1 <= nums[i] <= 100
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        mem = {}
+        def find_subset(n, current_sum):
+            if current_sum == target_sum:
+                return True
+            
+            if n == -1 or current_sum > target_sum:
+                return False
+            
+            key = (n, current_sum)
+            if key in mem:
+                return mem[key]
+            result = find_subset(n - 1, current_sum + nums[n]) or find_subset(n - 1, current_sum)
+            mem[key] = result
+            
+            return result
+
+        total_sum = sum(nums)
+        if total_sum % 2:
+            return False
+        target_sum = total_sum // 2
+
+        return find_subset(len(nums) - 1, 0)
+
+        
+
+
+
+        
