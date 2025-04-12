@@ -73,6 +73,7 @@ class Solution:
         n = len(nums)
 
         # construct a dp table of size (n+1) x (subset_sum + 1)
+        # so it basically is like for table[i][j], is saying can we find the subset_sum of j by using some numbers in first i numbers
         dp = [[False] * (subset_sum + 1) for _ in range(n + 1)]
         dp[0][0] = True
         for i in range(1, n + 1):
