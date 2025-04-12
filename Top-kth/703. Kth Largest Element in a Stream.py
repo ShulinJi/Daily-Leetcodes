@@ -49,6 +49,28 @@
 # -104 <= nums[i] <= 104
 # -104 <= val <= 104
 # At most 104 calls will be made to add.
+class KthLargest:
+    def __init__(self, k: int, nums: List[int]):
+        self.min_heap = []
+        self.k = k
+
+        for num in nums:
+            self.add(num)
+
+    def add(self, val: int) -> int:
+        # Add to our min_heap if we haven't processed k elements yet
+        # or if val is greater than the top element (the k-th largest)
+
+        # a min-heap that only keeps the top k elements that if the new value is bigger than the first element (k-th largest since smallest on top)
+        # we add it and pop the top (k-th element) automatically replaced with k - 1 th element since we added a new bigger element
+        if len(self.min_heap) < self.k or val > self.min_heap[0]:
+            heapq.heappush(self.min_heap, val)
+            # we added a new larger number, now heap[0] is the k+1 th largest, need to pop to maintain
+            if len(self.min_heap) > self.k:
+                heapq.heappop(self.min_heap)
+        return self.min_heap[0]
+
+
 
 class KthLargest:
 
