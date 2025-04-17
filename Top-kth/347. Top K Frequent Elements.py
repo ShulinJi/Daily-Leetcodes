@@ -22,3 +22,11 @@
 
 # Follow up: Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
 
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        # nlogk time and O(N + k)
+        num_count = Counter(nums)
+        return heapq.nlargest(k, count.keys(), key=count.get)
+
+
+        
