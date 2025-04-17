@@ -28,5 +28,22 @@ class Solution:
         num_count = Counter(nums)
         return heapq.nlargest(k, count.keys(), key=count.get)
 
+# same as above but implemented the nlargest in hand
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        # O(nlogk) time and O(N + k)
+        num_count = Counter(nums)
 
+        # return heapq.nlargest(k, count.keys(), key=count.get)\
+        # same as above
+        result = []
+        for key, freq in num_count.items():
+            if len(result) < k:
+                heapq.heappush(result, (freq, key))
+            else:
+                # if it is bigger than the Kth element since it is min-heap default for python
+                if freq > result[0][0]:
+                    heapq.heappop(result)
+                    heapq.heappush(result, (freq, key))
         
+        return [char for _, char in result]
