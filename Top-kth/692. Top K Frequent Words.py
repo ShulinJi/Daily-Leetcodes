@@ -32,6 +32,7 @@ class Pair:
         self.word = word
         self.freq = freq
 
+    # operator overload
     def __lt__(self, p):
         # compare freq first, then if equal then we compare order of words
         return self.freq < p.freq or (self.freq == p.freq and self.word > p.word)
@@ -41,6 +42,8 @@ class Solution:
         word_freq = Counter(words)
         result = []
         for word, freq in word_freq.items():
+            # since we already did the operator overload, wee don't need to compare again since the pop wil automatically pop the correct ones
+            # based on the word and freq
             heapq.heappush(result, Pair(word, freq))
             if len(result) > k:
                 heapq.heappop(result)
@@ -51,6 +54,7 @@ class Solution:
             #         heapq.heappop(result)
             #         heapq.heappush(result, Pair(freq, word))
 
+        # pop the result one by one to maintain the order of from max to min since it is a default min-heap, minimum is at the top
         res = [0] * len(result)
         index = len(result) - 1
         while result:
