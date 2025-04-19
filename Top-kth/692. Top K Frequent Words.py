@@ -63,3 +63,16 @@ class Solution:
             index -= 1
         return res
 
+
+# Using max-heap to avoid the problem of popping smallest item in heap, instead we are poping the max
+from collections import Counter
+from heapq import heapify, heappop
+
+
+class Solution:
+    def topKFrequent(self, words: List[str], k: int) -> List[str]:
+        cnt = Counter(words)
+        heap = [(-freq, word) for word, freq in cnt.items()]
+        heapify(heap)
+
+        return [heappop(heap)[1] for _ in range(k)]
