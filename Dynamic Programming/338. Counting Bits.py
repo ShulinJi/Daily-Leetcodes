@@ -55,6 +55,11 @@ class Solution:
 
 class Solution:
     def countBits(self, n: int) -> List[int]:
+        # O(n) runtime, and O(1) space complexity if output array doesn't count 
+        # For each integer x, in the range 1 to n, we need to perform a constant number of operations which does not depend on the number of bits in x
+        # The outer loop defines the boundaries of each block: 1, 2, 4, 8, 16, ...
+        # These are powers of 2: they mark where the number of bits increases by 1.
+        # The inner loop fills in the values within each block, based on values from the previous block.
         ans = [0] * (n + 1)
         x = 0
         b = 1
