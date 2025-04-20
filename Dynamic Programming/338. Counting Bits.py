@@ -61,6 +61,8 @@ class Solution:
         
         # [0, b) is calculated
         # P(x+b)=P(x)+1,b=2 m>x
+        # since 2^0 = 1(0), 2^1 = 2(10), 2^2 = 4(100), 2^3 = 8 (1000), every time we move by 1 bit, we add one more 
+        # new_num = old_num + b, old_num = 3 → 0b011, b = 4 = 2^2, new_num = 3 + 4 = 7 → 0b111, popcount(7) = popcount(3) + 1 = 2 + 1 = 3
         while b <= n:
             # generate [b, 2b) or [b, n) from [0, b)
             while x < b and x + b <= n:
