@@ -37,17 +37,24 @@
 
 class Solution:
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        # form a pair of 
         num_map = {}
+        # stack used to store the numbers that are smallers, wait for the one that is larger
         stack = []
-
+        # loop through nums2
         for num in nums2:
+            # we find a larger number that is bigger than numbers in stack, the pair is found until current num < stack[-1]
+            # then we keep waiting
             while stack and num > stack[-1]:
                 num_map[stack.pop()] = num
             stack.append(num)
         
+        # if we have looped through the nums2 and stack hasn't been exhausted, then it means we still have some mor nums that couldn't find num
+        # that is larger than it, we mark it as -1
         while stack:
             num_map[stack.pop()] = -1
         
+        # loop through nums1 to get answer
         ans = []
         for num in nums1:
             ans.append(num_map[num])
