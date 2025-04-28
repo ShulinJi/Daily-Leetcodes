@@ -45,3 +45,19 @@ class Solution:
             right += 1
         
         return ans
+
+
+
+        # more efficient solution by not shrinking the size of window
+        while right < len(nums):
+            if nums[right] == 0:
+                k -= 1
+            
+            if k < 0:
+                if nums[left] == 0:
+                    k += 1
+                left += 1
+            right += 1
+        
+        # not right - left - 1 b/c while loop at the end right will get plus 1 before condition break( < len(nums))!
+        return right - left
