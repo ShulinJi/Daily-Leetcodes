@@ -24,6 +24,8 @@
 
 
 # My own solution by shrinking the window size, runtime still O(n)
+
+
 class Solution:
     def longestOnes(self, nums: List[int], k: int) -> int:
         left = 0
@@ -43,4 +45,3 @@ class Solution:
             right += 1
         
         return ans
-
