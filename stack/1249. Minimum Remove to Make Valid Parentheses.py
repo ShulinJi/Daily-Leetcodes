@@ -31,3 +31,25 @@
 # s[i] is either '(' , ')', or lowercase English letter.
 
 
+class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+        index_to_remove = set()
+        stack = []
+        for i, char in enumerate(s):
+            if char not in "()":
+                continue
+            if char == "(":
+                stack.append(i)
+            elif not stack:
+                index_to_remove.add(i)
+            else:
+                stack.pop()
+        
+        while stack:
+            index_to_remove.add(stack.pop())
+
+        answer = ""
+        for i in range(len(s)):
+            if i not in index_to_remove:
+                answer += s[i]
+        return answer
