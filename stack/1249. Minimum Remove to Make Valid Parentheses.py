@@ -33,18 +33,26 @@
 
 class Solution:
     def minRemoveToMakeValid(self, s: str) -> str:
+        # O(n) space and time complexity
+        # set of indexes to remove after traverse 
         index_to_remove = set()
+        # stack to store indexes of "(" where we need a pending ")"
         stack = []
         for i, char in enumerate(s):
+            # if it is not parenthese, continue
             if char not in "()":
                 continue
+            # if it is (, then we add it to the stack wating for its pair )
             if char == "(":
                 stack.append(i)
+            # if stack is empty and we find a ), then need to remove this b/c it won't be paired
             elif not stack:
                 index_to_remove.add(i)
+            # else, we find ) and have a pending (, we pop that (.
             else:
                 stack.pop()
         
+        # add whatever left in stack to removal list b/c it is unpaired
         while stack:
             index_to_remove.add(stack.pop())
 
