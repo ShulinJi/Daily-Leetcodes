@@ -30,6 +30,8 @@ class Solution:
 
         output = []
         for char in s:
+            # if duplicate, we pop the last b/c it shoul be removed
+            # the end result is, if there's any duplicate, it will be all poped from output
             if output and char == output[-1]:
                 output.pop()
             else:
