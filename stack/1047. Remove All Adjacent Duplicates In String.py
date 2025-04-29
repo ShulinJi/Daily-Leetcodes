@@ -23,3 +23,18 @@
 # 1 <= s.length <= 105
 # s consists of lowercase English letters.
 
+class Solution:
+    def removeDuplicates(self, s: str) -> str:
+        if len(s) < 2:
+            return s
+
+        output = []
+        for char in s:
+            if output and char == output[-1]:
+                output.pop()
+            else:
+                output.append(char)
+        
+        return "".join(output)
+
+
