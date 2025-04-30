@@ -30,17 +30,29 @@
 # All the strings of wordDict are unique.
 
 
+# bottom-up approach 
+# [False, False, False, False, True, False, False, True, False, False, False, False, True]
+# this is the output for example "applepenapple", and ["apple","pen"]
+
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
         dp = [False] * len(s)
         
         for i in range(len(s)):
+            # check for each word that if it can form a word in the wordDict
             for word in wordDict:
+                # only serve for the purpose of first word (initial condi) that could happen that i < len(word)
                 if i < len(word) - 1:
                     continue
+                
+                # check dp[i - len(word)] so that this is a valid start (we can continue form words from there)
+                # i == len(word) - 1 only for the first word purposes! 
                 if dp[i - len(word)] or i == len(word) - 1:
+                    # we check if the words are matching 
                     if s[i - len(word) + 1: i + 1] == word:
+                        # if yes, we found a word that matches and break
                         dp[i] = True
                         break
-                        
+                    
+        # if the last one is True, meaning that we have went through all the string and found out that every words have a match 
         return dp[-1]
