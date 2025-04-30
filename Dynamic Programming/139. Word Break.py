@@ -56,3 +56,26 @@ class Solution:
                     
         # if the last one is True, meaning that we have went through all the string and found out that every words have a match 
         return dp[-1]
+
+
+# top-down approach, mem-recursion approach
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        # top-down approach
+        @cache
+        def dp(i):
+            # if we reach the 0 and call dp(-1), means all the previous search has been met, which implies that all previous search are true
+            # so the whole search tree is true b/c we need and dp(i - len(word)) condition to be met b/c if cannot reach 0 if it returned false
+            # it means the string is breakable!
+            if i < 0:
+                return True
+
+            for word in wordDict:
+                # for each word, check if the word matches and if its previous string are also breakable (both have to meet to ensure that our words 
+                # start at the correct index (not jumping through indexes))
+                if s[i - len(word) + 1: i + 1] == word and dp(i - len(word)):
+                    return True
+            
+            return False
+    
+        return dp(len(s) - 1)
