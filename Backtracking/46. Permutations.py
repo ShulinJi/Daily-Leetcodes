@@ -24,9 +24,9 @@
 
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
+        # Time complexity, what you should say in an interview: O(n⋅n!)
         ans = []
         def backtrack(curr):
-
             if len(curr) == len(nums):
                 ans.append(list(curr))
                 return 
