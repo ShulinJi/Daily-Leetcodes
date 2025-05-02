@@ -34,3 +34,25 @@ class Solution:
         
         backtrack([], 1)
         return ans
+
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        ans = []
+        def backtrack(curr, first_num):
+            if len(curr) == k:
+                ans.append(list(curr))
+                return 
+            
+            # extra method to prune the ones that already gurantee to fail!
+            # ex. n = 5, k = 3, then we are at curr = [4], and there is no way we could get an valid answer through this pass, so we don't explore [4, 5]
+            needed = k - len(curr)
+            remain = n - first_num + 1
+            available = remain - needed
+            for num in range(first_num, first_num + available + 1):
+                curr.append(num)
+                backtrack(curr, num + 1)
+                curr.pop()
+        
+        backtrack([], 1)
+        return ans
