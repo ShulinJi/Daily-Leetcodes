@@ -15,3 +15,22 @@
 # Input: n = 1, k = 1
 # Output: [[1]]
 # Explanation: There is 1 choose 1 = 1 total combination.
+
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        ans = []
+        def backtrack(curr, first_num):
+            # if we have found k element already, we copy the list by either list(), or curr[:], otherwise, we only copied the address
+            if len(curr) == k:
+                ans.append(list(curr))
+                return 
+            
+            # we try to find all possible solutions and avoid duplicate by only considering the ones that's bigger than current number
+            for num in range(first_num, n + 1):
+                curr.append(num)
+                backtrack(curr, num + 1)
+                curr.pop()
+        
+        backtrack([], 1)
+        return ans
