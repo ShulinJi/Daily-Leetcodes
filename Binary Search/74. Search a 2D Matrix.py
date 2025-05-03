@@ -30,6 +30,8 @@
 # my own solution in Log(m * n)
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        # first binary search to find the correct row
+        # Use O(log m)
         left = 0
         right = len(matrix)
 
@@ -40,6 +42,8 @@ class Solution:
             elif target > matrix[mid][-1]:
                 left = mid + 1
             else:
+                # if we get to this section, it means we have found the correct row that row[0] target < row[-1]
+                # then we do a second binary search that find matrix[mid][i] that if there's any number == target 
                 left = 0
                 right = len(matrix[0])
                 while left < right:
