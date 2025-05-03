@@ -26,3 +26,29 @@
 # n == matrix[i].length
 # 1 <= m, n <= 100
 # -104 <= matrix[i][j], target <= 104
+
+# my own solution in Log(m * n)
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        left = 0
+        right = len(matrix)
+
+        while left < right:
+            mid = (left + right) // 2
+            if target < matrix[mid][0]:
+                right = mid
+            elif target > matrix[mid][-1]:
+                left = mid + 1
+            else:
+                left = 0
+                right = len(matrix[0])
+                while left < right:
+                    inner_mid = (left + right) // 2
+                    if target == matrix[mid][inner_mid]:
+                        return True
+                    elif target < matrix[mid][inner_mid]:
+                        right = inner_mid
+                    else:
+                        left = inner_mid + 1
+
+        return False
