@@ -33,6 +33,8 @@ class Solution:
         right = len(nums) - 1
         while left < right:
             mid = (left + right) // 2
+            # mid is bigger than the next, then answer on the left side
+            # mid + 1 is always inbound
             if nums[mid] > nums[mid + 1]:
                 right = mid
             else:
