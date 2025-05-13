@@ -46,7 +46,7 @@ class Solution:
             return False
 
 
-        # add number of [] with nuber of courses
+        # add number of [] with number of courses
         # index represents the course number and content represents its prerequisite courses
         adj = [[] for _ in range(numCourses)]
         for prerequisite in prerequisites:
