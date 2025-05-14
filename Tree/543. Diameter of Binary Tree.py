@@ -34,14 +34,17 @@ class Solution:
         max_length = 0
         def find_diameter(node):
             nonlocal max_length
+            # after leaf node, depth is 0
             if not node:
                 return 0
             
+            # traverse both left and right
             left = find_diameter(node.left)
             right = find_diameter(node.right)
-
+            # find the max diameter by adding max left and max right depth
             max_length = max(left + right, max_length)
 
+            # add 1 because we consider the edge back to parent node
             return 1 + max(left, right)
 
         find_diameter(root)
