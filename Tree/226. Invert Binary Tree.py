@@ -25,3 +25,21 @@ class Solution:
                 queue.append(current.right)
         
         return root
+
+# my recursion solution
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        # python always pass by reference!
+        self.invert_tree(root)
+        return root
+    def invert_tree(self, node):
+        if not node:
+            return 
+        if not node.left and not node.right:
+            return 
+        
+        self.invertTree(node.left)
+        self.invertTree(node.right)
+
+        node.left, node.right = node.right, node.left
+        return
