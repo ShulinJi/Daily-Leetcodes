@@ -33,31 +33,43 @@ class Solution:
         answers = []
         def backtrack(index, pre_operand, current_operand, value, string):
             if index == N:
+                # to check current_operand == 0, it means we have already done the operation and there is no in-progress digits
+                # if not == 0, it means we still have digits that are waiting for itself to get assigned an operator, but we already reached the end, so not valid
+                # we need to assign operator earlier than this, b/c there is no num[N]
                 if value == target and current_operand == 0:
+                    # string[1:] because we ignore the very first sign at the beginning of operation
                     answers.append("".join(string[1:]))
                 return 
             
+            # if we did + or - or *, the current_operand would be 0, and current_operand would just be the normal num[index]
             current_operand = current_operand * 10 + int(num[index])
             str_op = str(current_operand)
 
+            # we try to combine digits together, current_operand will be passed down to form new digits
+            # Use current_operand > 0 to avoid combine digits like "05"
             if current_operand > 0:
                 backtrack(index + 1, pre_operand, current_operand, value, string)
             
+            # we try addition
             string.append("+")
             string.append(str_op)
             backtrack(index + 1, current_operand, 0, value + current_operand, string)
             string.pop()
             string.pop()
 
+            # if we are at the start of the operation
             if string:
+                # we try subtraction
                 string.append("-")
                 string.append(str_op)
                 backtrack(index + 1, -current_operand, 0, value - current_operand, string)
                 string.pop()
                 string.pop()
 
+                # we try multiplication
                 string.append("*")
                 string.append(str_op)
+                # we first undo the previous operand by value - pre_operand, and then we perform multiplication to ensure logical correctness (first * then + or -)
                 backtrack(index + 1, current_operand * pre_operand, 0, value - pre_operand 
                 + (current_operand * pre_operand), string)
                 string.pop()
