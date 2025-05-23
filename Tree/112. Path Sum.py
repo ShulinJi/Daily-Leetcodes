@@ -60,4 +60,17 @@ class Solution:
             right = False
 
         return True if left or right else False
+
+# optimized code! more clean and readable!
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:
+            return False
         
+        # If it's a leaf node, check if the remaining sum equals the node's value
+        if not root.left and not root.right:
+            return targetSum == root.val
+        
+        # Recur on left and right subtrees with the reduced target
+        return (self.hasPathSum(root.left, targetSum - root.val) or
+                self.hasPathSum(root.right, targetSum - root.val))
