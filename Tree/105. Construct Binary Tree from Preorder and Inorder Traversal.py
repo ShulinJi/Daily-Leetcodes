@@ -31,6 +31,9 @@
 #         self.right = right
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        # O(n) and O(n)
+        # first element of preorder would be the root, root -> left -> right
+        # then we find the index of this element in inorder array, b/c inroder left -> root -> right, then the left of the root is left subtree, same for right
         preorder_index = 0
         def array_to_tree(left, right):
             nonlocal preorder_index
