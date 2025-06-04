@@ -33,10 +33,12 @@ class Solution:
         self.min_diff = float("inf")
         self.prev = None
 
+        # use inorder traversal to avoid checking random nodes to reduce the traversal complexity from O(n^2) to O(n)
         def inorder(node):
             if node is None:
                 return 
             inorder(node.left)
+            # b/c inorder traversal is sorted, then we only need to check the close pairs which is current one and prev one
             if self.prev is not None:
                 self.min_diff = min(self.min_diff, node.val - self.prev)
             self.prev = node.val
