@@ -34,6 +34,8 @@ class Solution:
         stack = []
 
         while True:
+            # Traverse in inorder so that the value is sorted
+            # keep traverse to the left until None
             while root:
                 stack.append(root)
                 root = root.left
