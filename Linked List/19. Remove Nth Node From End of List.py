@@ -34,6 +34,8 @@
 #         self.next = next
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+
+        # find the total nnumber of nodes in linked list
         number_of_nodes = 0
         temp_head = head
         while temp_head is not None:
@@ -42,6 +44,7 @@ class Solution:
         
         # find the nodes that needs to be removed
         node_to_remove = number_of_nodes - n
+        # record prev(nodes before the removed one) and curr(nodes to be removed)
         curr = head
         prev = None
         while node_to_remove > 0:
@@ -49,6 +52,7 @@ class Solution:
             curr = curr.next
             node_to_remove -= 1
         
+        # skip the curr node to delete it. If it is the head (prev == None) then simply skip the head
         if prev:
             prev.next = curr.next
         else:
