@@ -25,6 +25,9 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
+
+# O(n) and O(1) complexity
 class Solution:
     def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
         if head is None:
@@ -33,17 +36,23 @@ class Solution:
         prev = None
         curr = head
         while curr is not None:
+            # if we found a duplicate, we skip the duplicates
             dup = False
             while curr.next is not None and curr.val == curr.next.val:
                 curr = curr.next
                 dup = True
+            
+            # if duplicate, prev is the one before duplicate node
             if dup:
+                # if it includes the head, then we set the head to the next new non-dup node
                 if prev is None:
                     head = curr.next
+                # if it is in middle, then just attach prev to the next non-dup node
                 else:
                     prev.next = curr.next
             else:
                 prev = curr
+            
             curr = curr.next
         
         return head
