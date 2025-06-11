@@ -37,11 +37,13 @@ class Solution:
             tail = tail.next
         # move number of rotation nodes from back to front
         rotation = k % length
+        # if rotation == 0, then it means we don't need to rotate and just return the original
         if rotation == 0:
             return head
-        # nth node to start to move to front
+        # find nth node to start to move to front (nth node + 1 is the one that gets moved)
         nth_node = length - rotation
 
+        # find the nth node
         curr = head
         prev = None
         while nth_node > 0:
@@ -49,6 +51,7 @@ class Solution:
             curr = curr.next
             nth_node -= 1
         
+        # if curr is None, it means we only have 1 node
         if curr is None:
             return head
         # new tail
