@@ -26,20 +26,27 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
+# O(n) and O(1)
 class Solution:
     def partition(self, head: Optional[ListNode], x: int) -> Optional[ListNode]:
         if not head:
             return None
+
+        # create 2 lists for before and after (put all nodes that are smaller in before, otheres in after)
         before = ListNode(0)
         after = ListNode(0)
         before_head = before
         after_head = after
             
         curr = head
+        # record the tail of before list so that we could attach it to after list
         before_tail = before
         while curr is not None:
+            # record the next node b/c we are going to detach current node from linked list to before/after list
             next_node = curr.next
             if curr.val < x:
+                # remove node from linked list and add it to before list
                 curr.next = None
                 before.next = curr
                 before = before.next
@@ -50,11 +57,13 @@ class Solution:
                 after = after.next
             curr = next_node
 
+        # if either of the list is None, then we just return the other one
         if before_head.next is None:
             return after_head.next
         if after_head.next is None:
             return before_head.next
         
+        # attach the tail of before list to the head of the after list
         before_tail.next = after_head.next
         return before_head.next
 
