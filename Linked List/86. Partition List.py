@@ -20,3 +20,43 @@
 # The number of nodes in the list is in the range [0, 200].
 # -100 <= Node.val <= 100
 # -200 <= x <= 200
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def partition(self, head: Optional[ListNode], x: int) -> Optional[ListNode]:
+        if not head:
+            return None
+        before = ListNode(0)
+        after = ListNode(0)
+        before_head = before
+        after_head = after
+            
+        curr = head
+        before_tail = before
+        while curr is not None:
+            next_node = curr.next
+            if curr.val < x:
+                curr.next = None
+                before.next = curr
+                before = before.next
+                before_tail = curr
+            else:
+                curr.next = None
+                after.next = curr
+                after = after.next
+            curr = next_node
+
+        if before_head.next is None:
+            return after_head.next
+        if after_head.next is None:
+            return before_head.next
+        
+        before_tail.next = after_head.next
+        return before_head.next
+
+
+            
