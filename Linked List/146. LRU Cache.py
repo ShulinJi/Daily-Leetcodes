@@ -116,9 +116,9 @@ class LRUCache:
 # In C++, we will be using std::list, which implements the doubly linked list.
 
 # In Python, we will be using collections.OrderedDict. This is similar to the Java data structure - it is a hash map that maintains insertion order.
-# import collections
 
 
+import collections
 class LRUCache:
     def __init__(self, capacity: int):
         self.capacity = capacity
