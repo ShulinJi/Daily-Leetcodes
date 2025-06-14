@@ -37,4 +37,66 @@
 # 0 <= value <= 105
 # At most 2 * 105 calls will be made to get and put.
 
+# O(1) for runtime of put and get and O(capacity) for space
+# create a class for list nodes
+class ListNode:
+    def __init__(self, key, val):
+        self.key = key
+        self.val = val
+        self.next = None
+        self.prev = None
 
+class LRUCache:
+    # Use doubly linked list(have prev and next both way) so that we can delete a node at any postion
+    # Need reference for both tail and head b/c we need tail so that we can add new value and update
+    # Need reference for head b/c need to remove the LRU node
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.dic = {}
+        self.head = ListNode(-1, -1)
+        self.tail = ListNode(-1, -1)
+
+        # initialize the doubly linked list 
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def get(self, key: int) -> int:
+        if key not in self.dic:
+            return -1
+        
+        node = self.dic[key]
+        self.remove(node)
+        self.add(node)
+        return node.val
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.dic:
+            old_node = self.dic[key]
+            self.remove(old_node)
+        
+        node = ListNode(key, value)
+        self.dic[key] = node
+        self.add(node)
+
+        if len(self.dic) > self.capacity:
+            node_to_delete = self.head.next
+            self.remove(node_to_delete)
+            del self.dic[node_to_delete.key]
+    
+    def add(self, node):
+        previous_end = self.tail.prev
+        # update 4 links between 3 nodes (2 prev, 2 next)(last tail, current new tail, fake tail)
+        previous_end.next = node
+        node.prev = previous_end
+        node.next = self.tail
+        self.tail.prev = node
+    
+    def remove(self, node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
+
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
