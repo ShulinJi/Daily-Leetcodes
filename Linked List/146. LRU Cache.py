@@ -53,6 +53,7 @@ class LRUCache:
     def __init__(self, capacity: int):
         self.capacity = capacity
         self.dic = {}
+        # create fake heads and tails to avoid edge cases (sentenel head)
         self.head = ListNode(-1, -1)
         self.tail = ListNode(-1, -1)
 
@@ -64,20 +65,24 @@ class LRUCache:
         if key not in self.dic:
             return -1
         
+        # update the node by moving it to the end (remove and then add to back)
         node = self.dic[key]
         self.remove(node)
         self.add(node)
         return node.val
 
     def put(self, key: int, value: int) -> None:
+        # we already have the node, then we remove it 
         if key in self.dic:
             old_node = self.dic[key]
             self.remove(old_node)
         
+        # create a new node no matter if we are update or adding new value
         node = ListNode(key, value)
         self.dic[key] = node
         self.add(node)
 
+        # if over capacity, then we delete the head
         if len(self.dic) > self.capacity:
             node_to_delete = self.head.next
             self.remove(node_to_delete)
