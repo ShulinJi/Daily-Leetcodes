@@ -105,3 +105,42 @@ class LRUCache:
 # obj = LRUCache(capacity)
 # param_1 = obj.get(key)
 # obj.put(key,value)
+
+
+
+
+# Using built-in data structure:
+
+# In Java, we will be using LinkedHashMap, which is a hash map that maintains insertion order. It essentially implements the linked list for us in the same data structure as the hash map, with the add and remove methods built into the hash map operations.
+
+# In C++, we will be using std::list, which implements the doubly linked list.
+
+# In Python, we will be using collections.OrderedDict. This is similar to the Java data structure - it is a hash map that maintains insertion order.
+# import collections
+
+
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.dic = collections.OrderedDict()
+
+    def get(self, key: int) -> int:
+        if key not in self.dic:
+            return -1
+
+        self.dic.move_to_end(key)
+        return self.dic[key]
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.dic:
+            self.dic.move_to_end(key)
+
+        self.dic[key] = value
+        if len(self.dic) > self.capacity:
+            self.dic.popitem(False)
+
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
