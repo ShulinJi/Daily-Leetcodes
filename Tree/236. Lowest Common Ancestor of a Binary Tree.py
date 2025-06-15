@@ -29,3 +29,32 @@
 # All Node.val are unique.
 # p != q
 # p and q will exist in the tree.
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+
+# O(n) and O(n)
+class Solution:
+    def __init__(self):
+        self.ans = None
+
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        def findAncestor(node):
+            if not node:
+                return False
+            
+            left = findAncestor(node.left)
+            right = findAncestor(node.right)
+            
+            mid = True if node == p or node == q else False
+            if mid + left + right == 2:
+                self.ans = node
+            
+            return mid or left or right
+        findAncestor(root)
+        return self.ans
