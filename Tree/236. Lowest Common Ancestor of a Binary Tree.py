@@ -48,13 +48,17 @@ class Solution:
             if not node:
                 return False
             
+            # if left, right, mid, any 2 of three are True, it menas we find the lowest common ancestor b/c the current node has p, q on different subtree 
+            # or including itself(mid)
             left = findAncestor(node.left)
             right = findAncestor(node.right)
             
+            # if current node equals to p or q, then we found a node already (mid)
             mid = True if node == p or node == q else False
             if mid + left + right == 2:
                 self.ans = node
             
+            # return True if any of these are True
             return mid or left or right
         findAncestor(root)
         return self.ans
