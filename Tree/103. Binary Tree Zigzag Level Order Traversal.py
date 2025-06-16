@@ -34,11 +34,14 @@ class Solution:
         if root is None:
             return []
         node_list = deque([root])
+
+        # from left to right and from right to left, toggle it everytime 
         left_to_right = True
         ans = []
 
         while node_list:
             level_length = len(node_list)
+            # record the order of nodes from left to right and based on left_to_right, we either reverse the list or keep the original
             curr_level = []
             for i in range(level_length):
                 node = node_list.popleft()
@@ -52,7 +55,8 @@ class Solution:
             else:
                 curr_level.reverse()
                 ans.append(curr_level)
-        
+
+            # toggle the left_to_right switch
             left_to_right = False if left_to_right == True else True
         
         return ans
