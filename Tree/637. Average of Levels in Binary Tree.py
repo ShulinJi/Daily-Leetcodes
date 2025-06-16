@@ -33,7 +33,9 @@ class Solution:
         ans = []
 
         while node_list:
+            # record the length of each level
             level_length = len(node_list)
+            # record the total value of each level
             level_total = 0
             for i in range(level_length):
                 node = node_list.popleft()
@@ -42,6 +44,7 @@ class Solution:
                     node_list.append(node.left)
                 if node.right:
                     node_list.append(node.right)
+            # after each level, we calculate the average
             level_average = level_total / level_length
             ans.append(level_average)
         
