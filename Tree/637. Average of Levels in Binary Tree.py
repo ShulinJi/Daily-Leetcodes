@@ -19,3 +19,30 @@
 
 # The number of nodes in the tree is in the range [1, 104].
 # -231 <= Node.val <= 231 - 1
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
+        node_list = deque([root])
+        ans = []
+
+        while node_list:
+            level_length = len(node_list)
+            level_total = 0
+            for i in range(level_length):
+                node = node_list.popleft()
+                level_total += node.val
+                if node.left:
+                    node_list.append(node.left)
+                if node.right:
+                    node_list.append(node.right)
+            level_average = level_total / level_length
+            ans.append(level_average)
+        
+        return ans
