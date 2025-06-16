@@ -56,12 +56,18 @@ class Solution:
         node_list = deque([root])
 
         while node_list:
+            # number of nodes we need to pop so that we exactly pop the whole level of tree nodes
+            # ex. 1st level: we already have root, which is 1, then we only need to pop one node
+            # then we add 2 nodes, now level+lenght = 2, then we need to pop 2 nodes and then the second nodes is the rightest (ans)
             level_length = len(node_list)
+            # pop the whole level
             for i in range(level_length):
                 node = node_list.popleft()
+                # the node we need
                 if i == level_length - 1:
                     ans.append(node.val)
                 
+                # add the nodes for next level
                 if node.left:
                     node_list.append(node.left)
                 if node.right:
