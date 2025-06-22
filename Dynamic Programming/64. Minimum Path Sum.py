@@ -28,6 +28,8 @@ class Solution:
         m = len(grid)
         n = len(grid[0])
 
+        # populate the matrix with this formula, take the min from either top or left gird since we could only move down and right
+        # grid[row][col] = grid[row][col] + min(grid[row - 1][col], grid[row][col - 1])
         for row in range(m):
             for col in range(n):
                 if row == 0 and col == 0:
