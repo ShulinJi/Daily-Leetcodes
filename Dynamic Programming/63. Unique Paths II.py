@@ -30,3 +30,36 @@
 # n == obstacleGrid[i].length
 # 1 <= m, n <= 100
 # obstacleGrid[i][j] is 0 or 1.
+
+class Solution:
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        m = len(obstacleGrid)
+        n = len(obstacleGrid[0])
+
+        # if the first grid is obstacle, then we cannot move
+        if obstacleGrid[0][0] == 1:
+            return 0
+        
+        # initialize the first step
+        obstacleGrid[0][0] = 1
+        for i in range(1, m):
+            if obstacleGrid[i][0] == 1:
+                obstacleGrid[i][0] = 0
+                continue
+            obstacleGrid[i][0] = obstacleGrid[i - 1][0]
+        
+        for i in range(1, n):
+            if obstacleGrid[0][i] == 1:
+                obstacleGrid[0][i] = 0
+                continue
+            obstacleGrid[0][i] = obstacleGrid[0][i - 1]
+        
+        for i in range(1, m):
+            for j in range(1, n):
+                if obstacleGrid[i][j] == 0:
+                    obstacleGrid[i][j] = obstacleGrid[i - 1][j] + obstacleGrid[i][j - 1]
+                else:
+                    # it is an obstacle at the current grid
+                    obstacleGrid[i][j] = 0
+        
+        return obstacleGrid[m - 1][n - 1]
