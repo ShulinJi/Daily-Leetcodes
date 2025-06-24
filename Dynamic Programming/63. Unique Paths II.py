@@ -31,6 +31,7 @@
 # 1 <= m, n <= 100
 # obstacleGrid[i][j] is 0 or 1.
 
+# O(MxN) O(1) (no extra space since modified the input array)
 class Solution:
     def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
         m = len(obstacleGrid)
@@ -54,12 +55,14 @@ class Solution:
                 continue
             obstacleGrid[0][i] = obstacleGrid[0][i - 1]
         
+        # the current grid is the sum of the left and top grid number
         for i in range(1, m):
             for j in range(1, n):
                 if obstacleGrid[i][j] == 0:
                     obstacleGrid[i][j] = obstacleGrid[i - 1][j] + obstacleGrid[i][j - 1]
                 else:
-                    # it is an obstacle at the current grid
+                    # it is an obstacle at the current grid, set it to 0 since it is not valid path
+                    # 0 does not contribute to path numbers
                     obstacleGrid[i][j] = 0
         
         return obstacleGrid[m - 1][n - 1]
