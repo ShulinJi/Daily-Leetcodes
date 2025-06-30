@@ -29,3 +29,32 @@
 # -1000 <= asteroids[i] <= 1000
 # asteroids[i] != 0
 
+# O(n) and O(n)
+class Solution:
+    def asteroidCollision(self, asteroids: List[int]) -> List[int]:
+        stack = []
+
+        for i in range(len(asteroids)):
+            # alive is True if the new asteroids is still added to the stack
+            # else it is destroyed
+            alive = True
+
+            # case where collision would happen
+            while stack and stack[-1] > 0 and asteroids[i] < 0:
+                # the left asteroids is bigger, new asteroids gets destroyed
+                if abs(stack[-1]) > abs(asteroids[i]):
+                    alive = False
+                    break
+                # Both asteroids get destroyed
+                elif abs(stack[-1]) == abs(asteroids[i]):
+                    alive = False
+                    stack.pop()
+                    break
+                # new asteroid survives, old asteroid gets destroyed
+                else:
+                    stack.pop()
+            
+            if alive:
+                stack.append(asteroids[i])
+    
+        return stack
