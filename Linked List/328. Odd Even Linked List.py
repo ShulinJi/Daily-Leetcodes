@@ -36,15 +36,18 @@ class Solution:
         if head is None or head.next is None:
             return head
         
+        # create 2 heads for odd and even numebers
         oddHead, odd = head, head
         evenHead, even = head.next, head.next
 
+        # keep traversal, the next node of even is odd, the next node of odd is even
         while even and even.next:
             odd.next = even.next
             odd = odd.next
             even.next = odd.next
             even = even.next
         
+        # after the traversal, we attach the even list to the odd list
         odd.next = evenHead
 
         return head
