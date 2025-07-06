@@ -37,14 +37,18 @@
 class Solution:
     def compress(self, chars: List[str]) -> int:
         i = 0
+        # track the answer
         res = 0
         while i < len(chars):
             group_length = 1
+            # if encounter the same characters, add one more to group_length
             while (i + group_length < len(chars)
                    and chars[i + group_length] == chars[i]):
                 group_length += 1
+            # add the character to the answer
             chars[res] = chars[i]
             res += 1
+            # if the length is bigger than 1, then there is a potential of double digits (ex. 12), meaning two characters needed to append
             if group_length > 1:
                 str_repr = str(group_length)
                 chars[res:res+len(str_repr)] = list(str_repr)
