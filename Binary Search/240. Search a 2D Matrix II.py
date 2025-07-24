@@ -26,16 +26,24 @@
 # All the integers in each column are sorted in ascending order.
 # -109 <= target <= 109
 
+
+# O(MxN)
+# the enxt row/column is not entirely bigger/smaller than previous one, so 2 binary search does not work here
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         m, n = len(matrix), len(matrix[0])
         row, col = 0, n - 1
         
+        # start from top right corner, we can start from either corner, just change the col/row +-
         while row < m and col >= 0:
             if matrix[row][col] == target:
                 return True
+            # we move to a smaller element col -= 1, because these rules
+            # All the integers in each row are sorted in ascending order.
+            # All the integers in each column are sorted in ascending order.
             elif matrix[row][col] > target:
                 col -= 1
+            # we move to the bigger element, to the right of the element
             else:
                 row += 1
         
