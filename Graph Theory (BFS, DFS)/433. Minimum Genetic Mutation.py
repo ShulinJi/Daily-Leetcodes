@@ -27,6 +27,13 @@
 # startGene.length == endGene.length == bank[i].length == 8
 # startGene, endGene, and bank[i] consist of only the characters ['A', 'C', 'G', 'T'].
 
+
+
+
+# Use BFS instead of DFS b/c we want to find minmum path(shortest path), going with DFS will need to explore more paths that does not lead to optimal
+
+# DFS: when needing to explore all possibilities / any/all/ paths => DFS
+# BFS: shortest paths
 class Solution:
     def minMutation(self, startGene: str, endGene: str, bank: List[str]) -> int:
         visited = {startGene}
@@ -39,6 +46,10 @@ class Solution:
             
             for c in "ACGT":
                 for i in range(len(curr)):
+                    # add a mutation, insert a new character and skip one original character (replace)
+                    # Python string slicing is safe and forgiving.
+                    # Python slicing will never throw an error if curr[i + 1:], i + 1 is bigger than length, it still returns empty string ""
+                    # curr[i + 1:] does not cause index out of bound, when i + 1 is equal to the length of the string, Python just returns an empty string ""
                     new_string = curr[:i] + c + curr[i + 1:]
                     if new_string not in visited and new_string in bank:
                         queue.append((new_string, steps + 1))
