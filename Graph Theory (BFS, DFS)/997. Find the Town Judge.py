@@ -35,18 +35,24 @@
 # 1 <= ai, bi <= n
 
 
+# O(E) and O(n)
 class Solution:
     def findJudge(self, n: int, trust: List[List[int]]) -> int:
+        # if there are less than n - 1 entries, it means there couldn't be one to be trusted by everyone
         if len(trust) < n - 1:
             return -1
 
         trusted = [0] * (n + 1)
         be_trusted = [0] * (n + 1)
 
+        # for each entry, we increment the trust and be_trusted 
         for a, b in trust:
             trusted[a] += 1
             be_trusted[b] += 1
         
+        # There couldn't be more than 1 judges b/c if there are two judges, they would have to trust each other, but a judge cannot trust anyone, so it is against the rule
+
+        # and if we find any entries that satisfy all the conditions
         for i in range(1, n + 1):
             if be_trusted[i] == n - 1 and trusted[i] == 0:
                 return i
