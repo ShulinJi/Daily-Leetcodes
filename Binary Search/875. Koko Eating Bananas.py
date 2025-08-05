@@ -29,6 +29,8 @@
 # 1 <= piles[i] <= 109
 
 
+# Brute force solution by adding 1 to the eating rate until the total hours taken is less than or equal to h.
+# O(n * h) time complexity, where n is the number of piles.
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
         eating_rate = 1
