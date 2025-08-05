@@ -29,6 +29,7 @@
 # 1 <= piles[i] <= 109
 
 # Binary search solution to find the minimum eating speed k.
+# O(n * log(max(piles))) time complexity, where n is the number of piles and max(piles) is the maximum number of bananas in a pile.
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
         # min_step = 1
