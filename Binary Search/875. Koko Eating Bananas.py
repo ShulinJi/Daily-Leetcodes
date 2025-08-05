@@ -28,6 +28,30 @@
 # piles.length <= h <= 109
 # 1 <= piles[i] <= 109
 
+# Binary search solution to find the minimum eating speed k.
+class Solution:
+    def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        # min_step = 1
+        # max_step = max(piles) to ensure we can eat all bananas in the worst case, there is no point in eating faster than the largest pile.
+        min_step = 1
+        max_step = max(piles)
+
+        # Binary search to find the minimum eating speed k.
+        # use < intead of <=  pattern ensures the loop ends when min_step == max_step, which is the smallest valid k
+        while min_step < max_step:
+            mid = min_step + (max_step - min_step) // 2
+            total_hour = 0
+            for bananas in piles:
+                total_hour += math.ceil(bananas / mid)
+            # If the total hours taken is less than or equal to h, we can try to eat slower (increase k). (try to find minimum k, optimal solution)
+            if total_hour <= h:
+                # mid is valid, so we can try to find a smaller k, instread of mid + 1
+                max_step = mid
+            else:
+                # mid is too slow(not valid, not satisfy the if condition), we need to increase k, we skip mid and search in the right half, use mid + 1
+                min_step = mid + 1
+
+        return max_step
 
 # Brute force solution by adding 1 to the eating rate until the total hours taken is less than or equal to h.
 # O(n * h) time complexity, where n is the number of piles.
