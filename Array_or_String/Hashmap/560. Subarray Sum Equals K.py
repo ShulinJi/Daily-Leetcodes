@@ -20,6 +20,21 @@
 # -1000 <= nums[i] <= 1000
 # -107 <= k <= 107
 
+
+# Brute force solution by checking all subarrays.
+# O(n^2) time complexity, where n is the length of the nums array.
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        count = 0
+        for i in range(len(nums)):
+            sums = 0
+            for j in range(i, len(nums)):
+                sums += nums[j]
+                if sums == k:
+                    count += 1
+        
+        return count
+
 # O(n^2) time complexity solution using prefix sums. O(n) space complexity.
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
