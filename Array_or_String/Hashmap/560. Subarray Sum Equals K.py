@@ -20,6 +20,20 @@
 # -1000 <= nums[i] <= 1000
 # -107 <= k <= 107
 
+# O(n) time complexity solution using a hashmap to store the frequency of prefix sums. O(n) space complexity.
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        # prefix sum: sums[i] = sum of nums[0..i], freq: frequency of prefix sums
+        # the case that sums == k is already covered when sums - k == 0, that's why we initialize freq[0] = 1
+        freq = {0:1}
+        count = 0
+        sums = 0
+        for i in range(len(nums)):
+            sums += nums[i]
+            # if there is a prefix sum that equals to sums - k, then there is a subarray that sums to k
+            count += freq.get(sums - k, 0)
+            freq[sums] = freq.get(sums, 0) + 1 
+        return count
 
 # Brute force solution by checking all subarrays.
 # O(n^2) time complexity, where n is the length of the nums array.
