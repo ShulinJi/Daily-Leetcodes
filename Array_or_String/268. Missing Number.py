@@ -52,8 +52,12 @@
 
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
+        # Calculate the sum of the first n natural numbers
         current_sum = sum(nums)
+
+        # Use Gauss' formula to calculate the expected sum of the first n natural numbers
         n = len(nums)
         expected_sum = (n * (n + 1)) // 2
-
+        
+        # The missing number is the difference between the expected sum and the current sum
         return expected_sum - current_sum
