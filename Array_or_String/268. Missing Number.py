@@ -50,6 +50,7 @@
 # Follow up: Could you implement a solution using only O(1) extra space complexity and O(n) runtime complexity?
 
 
+# O(n) time complexity solution using Gauss' formula. O(1) space complexity.
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
         # Calculate the sum of the first n natural numbers
@@ -58,6 +59,6 @@ class Solution:
         # Use Gauss' formula to calculate the expected sum of the first n natural numbers
         n = len(nums)
         expected_sum = (n * (n + 1)) // 2
-        
+
         # The missing number is the difference between the expected sum and the current sum
         return expected_sum - current_sum
