@@ -51,6 +51,8 @@ class Solution:
 
         while left < right:
             mid = (left + right) // 2
+
+            # count how many days it takes to ship with the current mid capacity
             count = 0
             temp_sum = 0
             for i in range(len(weights)):
@@ -61,8 +63,11 @@ class Solution:
                     temp_sum += weights[i]
             if temp_sum != 0:
                 count += 1
+
+            # if the count of days exceeds the limit, we need to increase the capacity
             if count > days:
                 left = mid + 1
+            # if the count of days is within the limit, we can try to reduce the capacity
             else:
                 right = mid
         
