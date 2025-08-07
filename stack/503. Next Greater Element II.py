@@ -22,13 +22,17 @@
 # 1 <= nums.length <= 104
 # -109 <= nums[i] <= 109
 
+# O(n) time complexity solution using a stack. O(n) space complexity.
 class Solution:
     def nextGreaterElements(self, nums: List[int]) -> List[int]:
         n = len(nums)
         res = [-1] * n
         stack = []
 
+        # Traverse the array backwards twice to simulate circular behavior
         for i in range(2 * n - 1, -1, -1):
+            # Maintain the stack to find the next greater element
+            # Pop elements from the stack that are less than or equal to the current element because they cannot be the next greater element
             while stack and nums[stack[-1]] <= nums[i % n]:
                 stack.pop()
             if stack:
