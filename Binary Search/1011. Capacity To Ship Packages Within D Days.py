@@ -42,3 +42,28 @@
 # 1 <= days <= weights.length <= 5 * 104
 # 1 <= weights[i] <= 500
 
+# O(n log(sum(weights))) time complexity solution using binary search. O(1) space complexity.
+class Solution:
+    def shipWithinDays(self, weights: List[int], days: int) -> int:
+        # left is the maximum weight of a single package (we need to ensure that the ship can carry all possible packages), right is the sum of all weights
+        left = max(weights)
+        right = sum(weights)
+
+        while left < right:
+            mid = (left + right) // 2
+            count = 0
+            temp_sum = 0
+            for i in range(len(weights)):
+                if temp_sum + weights[i] > mid:
+                    count += 1
+                    temp_sum = weights[i]
+                else:
+                    temp_sum += weights[i]
+            if temp_sum != 0:
+                count += 1
+            if count > days:
+                left = mid + 1
+            else:
+                right = mid
+        
+        return right
