@@ -27,6 +27,7 @@ class Solution:
     def nextGreaterElements(self, nums: List[int]) -> List[int]:
         n = len(nums)
         res = [-1] * n
+        # stack to keep indexes of the elements that are candidates for the next greater element
         stack = []
 
         # Traverse the array backwards twice to simulate circular behavior
@@ -38,5 +39,25 @@ class Solution:
             if stack:
                 res[i % n] = nums[stack[-1]]
             stack.append(i % n)
+        
+        return res
+
+
+# O(n) time complexity solution using a stack. O(n) space complexity.
+# Forward traversal
+class Solution:
+    def nextGreaterElements(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        res = [-1] * n
+        # stack to store indexes of elements that we have not yet found the next greater element for
+        stack = []
+
+        # forward
+        for i in range(2 * n):
+            while stack and nums[stack[-1]] < nums[i % n]:
+                idx = stack.pop()
+                res[idx] = nums[i % n]
+            if i < n:
+                stack.append(i % n)
         
         return res
