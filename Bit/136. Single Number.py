@@ -30,7 +30,7 @@
 # -3 * 104 <= nums[i] <= 3 * 104
 # Each element in the array appears twice except for one element which appears only once.
 
-
+# O(n) time, O(1) space
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
         a = 0
