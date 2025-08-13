@@ -22,6 +22,29 @@
 
 # 1 <= n <= 231 - 1
 
+# O(log(n)) time, O(1) space, binary search solution
+class Solution:
+    def arrangeCoins(self, n: int) -> int:
+        left = 0
+        right = n
+
+        while left <= right:
+            mid = left + (right - left) // 2
+            # calculate the number of coins needed to complete mid rows
+            # using the formula for the sum of the first k natural numbers: k * (k + 1) // 2
+            curr = mid * (mid + 1) // 2
+            if curr == n:
+                return mid
+            if curr > n:
+                right = mid - 1
+            else:
+                left = mid + 1
+
+        # when we exit the loop, right is the largest number such that right * (right + 1) // 2 <= n, so we return right b/c we 
+        # want the maximum 
+        return right
+
+
 
 # # O(sqrt(n)) time, O(1) space
 class Solution:
