@@ -44,7 +44,14 @@ class Solution:
         # want the maximum 
         return right
 
-
+# O(1) time, O(1) space, mathematical solution
+# This solution uses the quadratic formula to find the maximum number of complete rows
+class Solution:
+    def arrangeCoins(self, n: int) -> int:
+        # Using the formula k(k + 1) <= 2n, we can rearrange it to find k
+        # (k +0.5) ^ 2 - 0.25 <= 2n
+        # k = (sqrt(2n + 0.25) - 0.5)
+        return (int)((2 * n + 0.25)**0.5 - 0.5)
 
 # # O(sqrt(n)) time, O(1) space
 class Solution:
