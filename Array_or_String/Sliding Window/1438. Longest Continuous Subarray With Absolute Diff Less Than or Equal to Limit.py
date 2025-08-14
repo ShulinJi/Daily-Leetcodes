@@ -35,6 +35,7 @@
 # 1 <= nums[i] <= 109
 # 0 <= limit <= 109
 
+# O(n log n) time, O(n) space, sliding window with heaps solution
 class Solution:
     def longestSubarray(self, nums: List[int], limit: int) -> int:
         max_heap = []
@@ -43,11 +44,14 @@ class Solution:
         left = 0
         ans = 0
 
+        # Using two heaps to maintain the maximum and minimum values in the current window
         for right in range(len(nums)):
             heapq.heappush(max_heap, (-nums[right], right))
             heapq.heappush(min_heap, (nums[right], right))
 
+            # Ensure the current window maintains the absolute difference condition
             while -max_heap[0][0] - min_heap[0][0] > limit:
+                # Pop elements from the heaps until we are in the current window
                 left = min(max_heap[0][1], min_heap[0][1]) + 1
 
                 while max_heap[0][1] < left:
