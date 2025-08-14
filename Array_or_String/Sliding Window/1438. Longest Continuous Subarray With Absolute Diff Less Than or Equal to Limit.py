@@ -36,6 +36,7 @@
 # 0 <= limit <= 109
 
 # O(n) time, O(n) space, sliding window solution, using deques to maintain the max and min values in the current window
+# hard to understand, but it works well for the problem
 class Solution:
     def longestSubarray(self, nums: List[int], limit: int) -> int:
         max_deque = deque()
