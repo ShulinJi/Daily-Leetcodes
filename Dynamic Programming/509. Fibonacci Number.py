@@ -27,6 +27,22 @@
 
 # 0 <= n <= 30
 
+
+class Solution:
+    def fib(self, n: int) -> int:
+        if n < 2:
+            return n
+
+        current = 0
+        prev1 = 0
+        prev2 = 1
+
+        for i in range(2, n + 1):
+            current = prev1 + prev2
+            prev1 = prev2
+            prev2 = current
+        
+        return current
 # O(n) time complexity, O(n) space complexity
 # Approach 2: Bottom-Up Approach using Tabulation
 class Solution:
