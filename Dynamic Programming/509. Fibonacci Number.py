@@ -27,22 +27,27 @@
 
 # 0 <= n <= 30
 
-
+# O(n) time complexity, O(1) space complexity
+# Approach 1: Iterative Bottom-Up Approach
 class Solution:
     def fib(self, n: int) -> int:
         if n < 2:
             return n
 
+        # Initialize the first two Fibonacci numbers
         current = 0
         prev1 = 0
         prev2 = 1
 
+        # Iterate from 2 to n to calculate Fibonacci numbers iteratively
         for i in range(2, n + 1):
             current = prev1 + prev2
+            # Update the previous two Fibonacci numbers prev1 becomes prev2, and current becomes prev1 because we only need the last two numbers
             prev1 = prev2
             prev2 = current
         
         return current
+
 # O(n) time complexity, O(n) space complexity
 # Approach 2: Bottom-Up Approach using Tabulation
 class Solution:
