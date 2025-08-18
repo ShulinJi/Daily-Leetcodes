@@ -24,7 +24,7 @@
 # s and t consist of lowercase English letters.
 
 
-
+# O(1) space because 26 characters | O(n) time
 class Solution:
     def findTheDifference(self, s: str, t: str) -> str:
         hashmap = {}
@@ -32,6 +32,7 @@ class Solution:
             hashmap[char] = hashmap.get(char, 0) + 1
         
         for char in t:
+            # If char is not in hashmap or its count is 0, then it's the added character
             if char not in hashmap or hashmap[char] == 0:
                 return char
             else:
