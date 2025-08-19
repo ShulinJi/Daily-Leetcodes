@@ -18,6 +18,24 @@
 # 1 <= nums1.length, nums2.length <= 1000
 # 0 <= nums1[i], nums2[i] <= 1000
 
+# O(n) time | O(n) space but better space complexity than using a set since we are using only one hashmap to track counts
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        dict1 = {}
+        ans = []
+        # Count occurrences of each number in nums1 with only 1 occurrence since we want unique elements
+        for x in nums1:
+            dict1[x] = 1
+
+        # Check if numbers in nums2 are in dict1 and have a count of 1
+        for x in nums2:
+            if x in dict1 and dict1[x] == 1:
+                # If found, append to result and set count to 0 to avoid duplicates
+                ans.append(x)
+                dict1[x] = 0
+        
+        return ans
+
 # O(n) time | O(n) space
 class Solution:
     def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
