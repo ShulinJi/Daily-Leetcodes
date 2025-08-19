@@ -24,3 +24,22 @@
 # Constraints:
 
 # -231 <= n <= 231 - 1
+
+# O(log n) time | O(1) space
+class Solution:
+    def isUgly(self, n: int) -> bool:
+        # Check if n is less than or equal to 0, since ugly numbers are positive integers
+        if n <= 0:
+            return False
+
+        # Continuously divide n by 2, 3, or 5 until it can no longer be divided
+        while n > 1:
+            if n % 2 == 0:
+                n = n // 2
+            elif n % 3 == 0:
+                n = n // 3
+            elif n % 5 == 0:
+                n = n // 5
+            else:
+                return False
+        return True
