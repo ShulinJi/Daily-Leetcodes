@@ -28,3 +28,29 @@
  
 
 # Note: This question is the same as 2410: Maximum Matching of Players With Trainers.
+
+# O(n log n) time and O(n) space with sorting and two pointers
+class Solution:
+    def findContentChildren(self, g: List[int], s: List[int]) -> int:
+        if len(g) == 0 or len(s) == 0:
+            return 0
+
+        # Sort both arrays and use two pointers to find the maximum number of content children
+        g.sort()
+        s.sort()
+
+        # p1 points to the greed factor array, p2 points to the size array
+        p1 = 0
+        p2 = 0
+
+        # If the size of the cookie is greater than or equal to the greed factor of the child, we can assign the cookie to the child
+        # and move both pointers to the next child and the next cookie and stop as soon as we reach the end of either array
+        while p1 < len(g) and p2 < len(s):
+            if s[p2] >= g[p1]:
+                p1 += 1
+                p2 += 1
+            else:
+                p2 += 1
+        
+        # return p1, which is the number of content children
+        return p1
