@@ -21,6 +21,7 @@
 # 2 <= nums.length <= 104
 # 1 <= nums[i] <= 104
 
+# O(n) time and O(1) space
 class Solution:
     def findErrorNums(self, nums: List[int]) -> List[int]:
         n = len(nums)
@@ -28,6 +29,10 @@ class Solution:
 
         dup = 0
         missing = 0
+        # For each number we encounter, we flip the sign of the number at the index corresponding to that number
+        # If we encounter a number whose corresponding index is already negative, it means we've seen that number before (duplicate)
+        # the array should end up with one positive number and the rest negative numbers
+        # After processing all numbers, the index which has a positive value indicates the missing number
         for n in nums:
             if nums[abs(n) - 1] < 0:
                 dup = abs(n)
@@ -36,6 +41,7 @@ class Solution:
             else:
                 nums[abs(n) - 1] *= -1
         
+        # find the index which has a positive value, that index + 1 is the missing number because the numbers are from 1 to n not 0 to n-1
         for i in range(len(nums)):
             if nums[i] > 0:
                 missing = i + 1
