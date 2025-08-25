@@ -31,6 +31,12 @@ class Solution:
         for i in range(len(nums)):
             sums += nums[i]
             # if there is a prefix sum that equals to sums - k, then there is a subarray that sums to k
+            #  The reason that we keep accumulating the count is that there could be multiple prefix sums that equal to sums - k
+            # h[sums - k] gives us the number of times that prefix sum has occurred so far (how many different subarrays ending at the current index sum to k)
+            # h[curr_sum - k] = how many different “paths” (prefix sums) we’ve seen before that, when paired with the current end, give us a subarray of sum k
+            # “Every prefix occurrence is a possible checkpoint. As the end moves, each checkpoint spawns a new subarray — so we keep accumulating, not resetting.”
+            #  it's like slicing the array at different points to form subarrays that sum to k, and we are recording the checkpoint
+
             count += freq.get(sums - k, 0)
             freq[sums] = freq.get(sums, 0) + 1 
         return count
