@@ -53,11 +53,13 @@ class Solution:
             # first increase as we traverse col, then fixed at last col
             col = d if d < M else M - 1
 
+            # traverse the diagonal
             while row < N and col >= 0:
                 mid.append(mat[row][col])
                 row += 1
                 col -= 1
             
+            # even diagonal needs to be reversed since we need the zigzag pattern
             if d % 2 == 0:
                 results.extend(mid[::-1])
             else:
