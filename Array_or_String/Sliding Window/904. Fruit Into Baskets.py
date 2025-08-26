@@ -32,3 +32,33 @@
 
 # 1 <= fruits.length <= 105
 # 0 <= fruits[i] < fruits.length
+
+# O(n) time complexity solution using sliding window. O(1) space complexity since the types of fruits are limited to 2.
+class Solution:
+    def totalFruit(self, fruits: List[int]) -> int:
+        if len(fruits) <= 2:
+            return len(fruits)
+
+        count = 0
+        left = 0
+        # tpyes of fruit and their frequency
+        types = {}
+        for right in range(len(fruits)):
+            # add the fruit type to the map
+            if fruits[right] not in types:
+                types[fruits[right]] = 1
+            else:
+                types[fruits[right]] += 1
+                
+            # if there are more than 2 types of fruits, shrink the window from the left
+            while len(types) > 2:
+                # shrink the window from the left
+                types[fruits[left]] -= 1
+                # if the frequency of the fruit type becomes 0, remove it from the map
+                if types[fruits[left]] == 0:
+                    del types[fruits[left]]
+                left += 1
+            
+            count = max(count, right - left + 1)
+        
+        return count
