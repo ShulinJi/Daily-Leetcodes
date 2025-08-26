@@ -33,3 +33,34 @@
 # 1 <= m, n <= 104
 # 1 <= m * n <= 104
 # -105 <= mat[i][j] <= 105
+
+
+# O(M * N) time complexity, O(min(N, M)) space complexity
+class Solution:
+    def findDiagonalOrder(self, mat: List[List[int]]) -> List[int]:
+        if not mat or not mat[0]:
+            return []
+        
+        M, N = len(mat[0]), len(mat)
+
+        results = []
+        mid = []
+
+        for d in range(N + M - 1):
+            mid.clear()
+            # +1 b/c we start at row 1 afyer hits the corner (corner included in the last column)
+            row = 0 if d < M else d - M + 1
+            # first increase as we traverse col, then fixed at last col
+            col = d if d < M else M - 1
+
+            while row < N and col >= 0:
+                mid.append(mat[row][col])
+                row += 1
+                col -= 1
+            
+            if d % 2 == 0:
+                results.extend(mid[::-1])
+            else:
+                results.extend(mid)
+        
+        return results
