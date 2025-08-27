@@ -44,16 +44,30 @@
 # It is guaranteed that there is at least one user who visited at least three websites.
 # All the tuples [username[i], timestamp[i], website[i]] are unique.
 
+# time complexity: O(N^3) where N is the number of website visits (), sorting takes O(N log N)
+# space complexity: O(U + P) where U is the number of users and P is the number of patterns
 class Solution:
     def mostVisitedPattern(self, username: List[str], timestamp: List[int], website: List[str]) -> List[str]:
         users = defaultdict(list)
 
+        # The timestamps may not always be pre-ordered (one of the testcases)
+		# Sort first based on user, then time (grouping by user)
+		# This also helps to maintain order of websites visited in the later part of the solution
         for user, time, site in sorted(zip(username, timestamp, website), key=lambda x: (x[0], x[1])):
             users[user].append(site)
         
         patterns = Counter()
 
+        # Get unique 3-sequence (note that website order will automatically be maintained)
+		# Note that we take the set of each 3-sequence for each user as they may have repeats
+		# For each 3-sequence, count number of users
+
+        # 1. first get all possible 3-sequences combinations(sites, 3)
+		# 2. then, count each one once (set)
+		# 3. finally, count the number of times we've seen the 3-sequence for every user (patterns.update(Counter)) 
+		# - updating a dictionary will update the value for existing keys accordingly (int in this case)
         for users, sites in users.items():
             patterns.update(Counter(set(combinations(sites, 3))))
-        
+
+        # get most frequent 3-sequence sorted lexicographically
         return max(sorted(patterns), key=patterns.get)
