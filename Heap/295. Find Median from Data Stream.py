@@ -62,7 +62,8 @@ class MedianFinder:
         return (median1 + median2) / 2.0
 
 # If 99% of all integer numbers from the stream are in the range [0, 100], how would you optimize your solution?
-
+we could use the counting array method for numbers in the range [0, 100] and a separate data structure (like two heaps) for numbers outside this range. 
+This would allow us to efficiently manage the majority of numbers while still being able to handle outliers.
 
 # use two heaps, max heap for the smaller part, min heap for the bigger part
 # time complexity: O(logN) for addNum, O(1) for findMedian
