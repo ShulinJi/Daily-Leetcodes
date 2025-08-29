@@ -31,6 +31,36 @@
 # p contains only lowercase English letters, '.', and '*'.
 # It is guaranteed for each appearance of the character '*', there will be a previous valid character to match.
 
+# time complexity: O(S * P) where S is the length of string and P is the length of pattern
+# Top-down DP with memoization
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        memo = {}
+
+        def dp(i, j):
+            # if we have already computed the result for this state, return it
+            if (i, j) not in memo:
+                # if we exhausted the pattern but the text is still not empty, then not match false
+                if j == len(p):
+                    ans = i == len(s)
+                else:
+                    # first char matches if s is not empty and the first char of p is either '.' or matches the first char of s
+                    # counter-example: s = "a", p = "b", without checking first char
+                    first_match = i < len(s) and p[j] in {s[i], "."}
+                    # 2 cases, first is to skip the pattern a*, or we keep matching aaaa with a* (consume)
+                    # if we have a '*' in the next position of p
+                    if j + 1 < len(p) and p[j + 1] == "*":
+                        ans = dp(i, j + 2) or first_match and dp(i + 1, j)
+                    else:
+                        # move to next char in both s and p if first char matches
+                        ans = first_match and dp(i + 1, j + 1)
+                
+                memo[i, j] = ans
+            return memo[i, j]
+
+        return dp(0, 0)
+    
+# TLE 
 # time complexity: O((T+P) * 2 ^(T + P)) where S is the length of string and T is the length of pattern
 class Solution:
     def isMatch(self, s: str, p: str) -> bool:
