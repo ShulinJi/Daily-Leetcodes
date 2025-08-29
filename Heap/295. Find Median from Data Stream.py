@@ -34,12 +34,38 @@
  
 
 # Follow up:
-
 # If all integer numbers from the stream are in the range [0, 100], how would you optimize your solution?
+we could use a counting array of size 101 to store the frequency of each number. This would allow us to find the median in O(100) = O(1) time.
+this serves as a counting sort method by counting total numbers of elements and find the median position
+class MedianFinder:
+    def __init__(self):
+        self.count = [0] * 101   # frequency array for [0..100]
+        self.total = 0           # number of elements seen
+
+    def addNum(self, num: int) -> None:
+        self.count[num] += 1
+        self.total += 1
+
+    def findMedian(self) -> float:
+        mid1, mid2 = (self.total + 1) // 2, (self.total + 2) // 2
+        cumulative = 0
+        median1 = median2 = None
+
+        for i in range(101):
+            cumulative += self.count[i]
+            if median1 is None and cumulative >= mid1:
+                median1 = i
+            if median2 is None and cumulative >= mid2:
+                median2 = i
+                break
+
+        return (median1 + median2) / 2.0
+
 # If 99% of all integer numbers from the stream are in the range [0, 100], how would you optimize your solution?
 
 
-
+# use two heaps, max heap for the smaller part, min heap for the bigger part
+# time complexity: O(logN) for addNum, O(1) for findMedian
 class MedianFinder:
     def __init__(self):
         # python default mean heap
@@ -51,10 +77,12 @@ class MedianFinder:
         heapq.heapify(self.min_heap)
 
     def addNum(self, num: int) -> None:
+        # always add to max heap first
         heapq.heappush(self.max_heap, -num)
         heapq.heappush(self.min_heap, -self.max_heap[0])
         heapq.heappop(self.max_heap)
 
+        # balance the size
         if len(self.max_heap) < len(self.min_heap):
             heapq.heappush(self.max_heap, -self.min_heap[0])
             heapq.heappop(self.min_heap)
@@ -65,9 +93,9 @@ class MedianFinder:
         else:
             return (-self.max_heap[0] + self.min_heap[0]) * 0.5
 
-
-# class MedianFinder:
-
+# basic solution, not optimal
+# O(nlogn)
+class MedianFinder:
     def __init__(self):
         self.stream = []
 
