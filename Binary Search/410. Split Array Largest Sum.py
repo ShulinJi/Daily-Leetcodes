@@ -26,9 +26,16 @@
 # 0 <= nums[i] <= 106
 # 1 <= k <= min(50, nums.length)
 
+# O(n log m) time complexity where n is the number of elements in nums and m is the range of possible sums (from max(nums) to sum(nums)).
 class Solution:
     def splitArray(self, nums: List[int], k: int) -> int:
-        # as we iterate over each element, we must decide whether to add the element to the current subarray or to start a new subarray. This decision will depend on the number of subarrays we have already made. In other words, each decision we make is affected by the previous decisions we have made. Second, the problem is asking to minimize the largest sum of subarrays.
+        # we first set a number X that is greater than or equal to the maximum element in nums so that no single element exceeds X 
+        # and we can split the array accordingly. Then this function calculates the minimum number of subarrays needed such that 
+        # no subarray has a sum greater than X by iterating through the array and accumulating the sum of elements until adding another element would exceed X.
+        # which means we need to start a new subarray and increment the count of subarrays.(split + 1)
+        # then if the calculated number of subarrays is less than or equal to k, we try to find a smaller maximum sum by adjusting the right boundary.
+        # otherwise, we need to increase the maximum sum by adjusting the left boundary.
+
         def min_subarray_required(max_sum):
             current_sum = 0
             splits_required = 0
@@ -42,10 +49,13 @@ class Solution:
             
             return splits_required + 1
         
+        # left is the minimum possible largest sum (the largest single element in nums) because we cannot have a subarray with a sum less than the largest element.
+        # right is the maximum possible largest sum (the sum of all elements in nums) because one valid split is to have all elements in one subarray.
         left = max(nums)
         right = sum(nums)
         minimum_largest_split_sum = None
 
+        # won't have infinite loop because left and right will converge because right and left are both updated after each iteration
         while left <= right:
             max_allowed = (left + right) // 2
             if min_subarray_required(max_allowed) <= k:
