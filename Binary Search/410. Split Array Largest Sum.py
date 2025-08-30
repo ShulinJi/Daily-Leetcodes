@@ -25,3 +25,34 @@
 # 1 <= nums.length <= 1000
 # 0 <= nums[i] <= 106
 # 1 <= k <= min(50, nums.length)
+
+class Solution:
+    def splitArray(self, nums: List[int], k: int) -> int:
+        # as we iterate over each element, we must decide whether to add the element to the current subarray or to start a new subarray. This decision will depend on the number of subarrays we have already made. In other words, each decision we make is affected by the previous decisions we have made. Second, the problem is asking to minimize the largest sum of subarrays.
+        def min_subarray_required(max_sum):
+            current_sum = 0
+            splits_required = 0
+
+            for element in nums:
+                if current_sum + element <= max_sum:
+                    current_sum += element
+                else:
+                    current_sum = element
+                    splits_required += 1
+            
+            return splits_required + 1
+        
+        left = max(nums)
+        right = sum(nums)
+        minimum_largest_split_sum = None
+
+        while left <= right:
+            max_allowed = (left + right) // 2
+            if min_subarray_required(max_allowed) <= k:
+                right = max_allowed - 1
+                minimum_largest_split_sum = max_allowed
+            else:
+                left = max_allowed + 1
+        
+        return minimum_largest_split_sum
+        
