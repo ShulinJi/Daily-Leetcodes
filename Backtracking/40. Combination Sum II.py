@@ -46,6 +46,9 @@ class Solution:
                 return 
             
             for i in range(start, len(candidates)):
+                # so, since we want to avoid duplicates, it doesn't matter which 1 we pick, we only need 1 because all others are the same (result duplicate), 
+                # but we don't ignore the first one (default one), then we cna cover all the cases and we only need 101 branches
+                # prunes the tree by skipping over duplicate candidates at the same recursive depth
                 if i > start and candidates[i] == candidates[i-1]:
                     continue
                 comb.append(candidates[i])
