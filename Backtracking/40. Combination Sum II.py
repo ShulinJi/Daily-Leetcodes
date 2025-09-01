@@ -46,6 +46,8 @@ class Solution:
                 return 
             
             for i in range(start, len(candidates)):
+                if i > start and candidates[i] == candidates[i-1]:
+                    continue
                 comb.append(candidates[i])
                 backtracking(remain - candidates[i], comb, i + 1)
                 comb.pop()
