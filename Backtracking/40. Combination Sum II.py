@@ -31,3 +31,24 @@
 # 1 <= candidates.length <= 100
 # 1 <= candidates[i] <= 50
 # 1 <= target <= 30
+
+# time limit exceeded on large test cases like 100 candidates with value 1 and target 30
+# O(2^n) time complexity in the worst case, where n is the number of candidates. This is because, in the worst case, we may explore all possible combinations of candidates.
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        # sort candidates to handle duplicates and make it easier to manage combinations
+        candidates.sort()
+        results = set()
+        def backtracking(remain, comb, start):
+            if remain == 0:
+                results.add(tuple(comb))
+            elif remain < 0:
+                return 
+            
+            for i in range(start, len(candidates)):
+                comb.append(candidates[i])
+                backtracking(remain - candidates[i], comb, i + 1)
+                comb.pop()
+            
+        backtracking(target, [], 0)
+        return [list(x) for x in results]
