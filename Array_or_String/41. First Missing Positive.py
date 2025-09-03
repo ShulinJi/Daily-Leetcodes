@@ -28,20 +28,33 @@
 class Solution:
     def firstMissingPositive(self, nums: List[int]) -> int:
         contains1 = False
+        # replace negative numbers, zeros, and numbers larger than n by 1s
+        # after this convertion, nums will contain only positive numbers range from 1 to n
+        # and the index out of range won't happen as a result
         for i in range(len(nums)):
             if nums[i] == 1 and contains1 == False:
                 contains1 = True
             elif nums[i] <= 0 or nums[i] > len(nums):
                 nums[i] = 1
         
+        # if 1 is not in the array, then the answer is 1
         if contains1 == False:
             return 1
         
+        # use the index as a hash key and the sign of the number as a presence detector
+        # for example, if nums[1] is negative that means number `1` is present in the array
+        # if nums[1] is positive - number 1 is missing because we only convert numbers to negative when we see them in the array
+        # so we never see the number if nums[i] is positive
+        
+        # For an array of length n, the smallest missing positive must lie in the range [1, n+1].
+        # It can’t be > n+1, because if 1..n are all present, then the answer must be n+1.
+        # It can’t be ≤ 0, since we’re only looking for positive numbers.
         for i in range(len(nums)):
             value = abs(nums[i])
             if value == len(nums):
                 nums[0] = -abs(nums[0])
             else:
+                # use abs to avoid double negative situation
                 nums[value] = -abs(nums[value])
         
         # try to find the first missing positive
