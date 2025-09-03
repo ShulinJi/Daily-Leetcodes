@@ -57,7 +57,8 @@ class Solution:
                 # use abs to avoid double negative situation
                 nums[value] = -abs(nums[value])
         
-        # try to find the first missing positive
+        # try to find the first missing positive since all the numebrs in the array were originally positive and we converted them to negative while seeeing them
+        # if nums[i] is positive, that means we never see number i in the array
         for i in range(1, len(nums)):
             if nums[i] > 0:
                 return i
