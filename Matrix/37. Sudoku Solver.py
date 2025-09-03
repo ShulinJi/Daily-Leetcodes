@@ -26,6 +26,11 @@
 # board[i][j] is a digit or '.'.
 # It is guaranteed that the input board has only one solution.
 
+# O(1) space complexity, since the board size is fixed (9x9), the space used by the dictionaries and recursion stack is constant.
+# number of operations (9!)^9
+# Let's consider one row, i.e. not more than 9 cells to fill. There are not more than 9 possibilities for the first number to put, not more than 9×8 for the second one, 
+# not more than 9×8×7 for the third one, etc. In total that results in not more than 9! possibilities for just one row, which means no more than (9!) 
+# 9 operations in total.
 class Solution:
     def solveSudoku(self, board: List[List[str]]) -> None:
         """
