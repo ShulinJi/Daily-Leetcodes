@@ -30,6 +30,8 @@
 class Solution:
     def maximalRectangle(self, matrix: List[List[str]]) -> int:
         # leetcode 84: Largest Rectangle in Histogram
+        # The way left and right limit works because we are trying to find the max area for each
+        # height, and the left, right limit are the boundaries for this specific height
         def find_max_area_histogram(heights):
             stack = [-1]
             max_area = 0
