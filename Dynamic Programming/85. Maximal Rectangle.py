@@ -25,6 +25,49 @@
 # 1 <= row, cols <= 200
 # matrix[i][j] is '0' or '1'.
 
+# O(m * n) time complexity
+# O(n) space complexity
+class Solution:
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+        # leetcode 84: Largest Rectangle in Histogram
+        def find_max_area_histogram(heights):
+            stack = [-1]
+            max_area = 0
+            for i in range(len(heights)):
+                # found a right limit at i, pop
+                while stack[-1] != -1 and heights[stack[-1]] >= heights[i]:
+                    curr_height = heights[stack.pop()]
+                    # right limit is i, left limit is stack[-1] because it is the first one smaller than curr_height
+                    curr_width = i - stack[-1] - 1
+                    max_area = max(max_area, curr_height * curr_width)
+                stack.append(i)
+
+            # we have some left that right limit is not found (it is smallest from his on to the end)
+            while stack[-1] != -1:
+                curr_height = heights[stack.pop()]
+                curr_width = len(heights) - stack[-1] - 1
+                max_area = max(max_area, curr_height * curr_width)
+            
+            return max_area
+
+        if not matrix:
+            return 0
+
+        # dp[j] := the height of histogram at column j or the max consecutive 1s at column j ending at row i, it is column wise
+        dp = [0] * len(matrix[0])
+        maxarea = 0
+        # O(N)
+        for i in range(len(matrix)):
+            # O(M)
+            for j in range(len(matrix[0])):
+                # update the height of histogram at column j for each row i
+                dp[j] = dp[j] + 1 if matrix[i][j] == "1" else 0
+            # each time we update the histogram, we find the max area in it again
+            # O(M) time complexity
+            maxarea = max(maxarea, find_max_area_histogram(dp))
+        
+        return maxarea
+
 # O(m * n * n) time complexity (m*n for traversing the matrix, n for traversing upwards to find the max area)
 # O(m * n) space complexity
 class Solution:
