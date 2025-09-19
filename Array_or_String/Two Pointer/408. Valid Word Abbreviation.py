@@ -41,21 +41,28 @@
 
 class Solution:
     def validWordAbbreviation(self, word: str, abbr: str) -> bool:
+        # Two Pointers, j for abbr, i for word
         i = 0
         j = 0
         while i < len(word) and j < len(abbr):
+            # If it's a letter, check if they are the same because letters must match
             if abbr[j].isalpha():
                 if word[i] != abbr[j]:
                     return False
                 i += 1
                 j += 1
             else:
+                # If it's a number, get the full number
+                # no leading zero
                 if abbr[j] == '0':
                     return False
                 num = 0
+                # get the full number
                 while j < len(abbr) and abbr[j].isdigit():
                     num = num * 10 + int(abbr[j])
                     j += 1
+                # Move the pointer in word by that number since that number means we skip that many characters
                 i += num
         
+        # if we reach the end of both word and abbr, then it's a valid abbreviation.
         return i == len(word) and j == len(abbr)
