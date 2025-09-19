@@ -79,8 +79,12 @@ class Solution:
     # DFS
     def depthSum(self, nestedList: List[NestedInteger]) -> int:
         def dfs(nested_list, depth):
+            # base case
             total = 0
+            # for each list in the nested list, we check if it's an integer or a list
             for nest in nested_list:
+                # If it's an integer, add it to the total multiplied by the depth
+                # If it's a list, call dfs on that list with depth + 1 until we reach the base case
                 if nest.isInteger():
                     total += nest.getInteger() * depth
                 else:
@@ -96,11 +100,15 @@ class Solution:
         total = 0
         depth = 1
         while queue:
+            # process all nodes at the current depth layer by layer
             for i in range(len(queue)):
                 curr_node = queue.popleft()
+                # If it's an integer, add it to the total multiplied by the depth
+                # If it's a list, add all its elements to the queue to process at the next depth (layer)
                 if curr_node.isInteger():
                     total += curr_node.getInteger() * depth
                 else:
+                    # extend the queue with all elements in the current list    
                     queue.extend(curr_node.getList())
             
             depth += 1
