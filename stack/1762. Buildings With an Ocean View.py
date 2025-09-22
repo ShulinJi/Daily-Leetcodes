@@ -28,6 +28,19 @@
 # 1 <= heights.length <= 105
 # 1 <= heights[i] <= 109
 
+class Solution:
+    def findBuildings(self, heights: List[int]) -> List[int]:
+        # traverse from right to left
+        ans = []
+        for i in range(len(heights) - 1, -1, -1):
+            # if we found a taller building, it can see the ocean, record it
+            if not ans or heights[i] > heights[ans[-1]]:
+                ans.append(i)
+        
+        # reverse the answer to get the increasing order b/c we started from the right
+        ans.reverse()
+        return ans
+
 
 class Solution:
     def findBuildings(self, heights: List[int]) -> List[int]:
@@ -35,9 +48,11 @@ class Solution:
         if len(heights) == 0:
             return []
         stack = []
+        # monotonic decreasing stack
         for i in range(len(heights)):
             if not stack:
                 stack.append(i)
+            # pop the stack if we find a taller building => gets blocked
             while stack and heights[stack[-1]] <= heights[i]:
                 stack.pop()
             stack.append(i) 
