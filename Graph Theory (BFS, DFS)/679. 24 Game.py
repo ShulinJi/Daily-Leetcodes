@@ -28,3 +28,32 @@
 # cards.length == 4
 # 1 <= cards[i] <= 9
 
+class Solution:
+    def generate_possible_comb(self, card1, card2):
+        res = [card1 + card2, card1 - card2, card2 - card1, card1 * card2]
+        if card1 != 0:
+            res.append(card2 / card1)
+        if card2 != 0:
+            res.append(card1 / card2)
+        return res
+
+    def judgePoint24(self, cards: List[int]) -> bool:
+        if len(cards) == 1:
+            return True if abs(cards[0] - 24) <= 0.1 else False
+        
+        for i in range(len(cards)):
+            for j in range(i + 1, len(cards)):
+                new_list = []
+                for x in range(len(cards)):
+                    if x != i and x != j:
+                        new_list.append(cards[x])
+                
+                for res in self.generate_possible_comb(cards[i], cards[j]):
+                    new_list.append(res)
+
+                    if self.judgePoint24(new_list):
+                        return True
+                    
+                    new_list.pop()
+        
+        return False
