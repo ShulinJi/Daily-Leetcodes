@@ -30,6 +30,7 @@
 
 class Solution:
     def generate_possible_comb(self, card1, card2):
+        # generate all possible results from two cards
         res = [card1 + card2, card1 - card2, card2 - card1, card1 * card2]
         if card1 != 0:
             res.append(card2 / card1)
@@ -37,23 +38,28 @@ class Solution:
             res.append(card1 / card2)
         return res
 
+    # use DFS to try all combinations
     def judgePoint24(self, cards: List[int]) -> bool:
+        # base case when only one card left, we evaluate if it is 24 within a tolerance of 0.1 because of floating point precision
         if len(cards) == 1:
             return True if abs(cards[0] - 24) <= 0.1 else False
         
+        # try every two cards and replace them with all possible results, then recurse on the new list of cards
         for i in range(len(cards)):
             for j in range(i + 1, len(cards)):
+                # create a new list without the two selected cards
                 new_list = []
                 for x in range(len(cards)):
                     if x != i and x != j:
                         new_list.append(cards[x])
                 
+                # generate all possible results from the two selected cards
                 for res in self.generate_possible_comb(cards[i], cards[j]):
                     new_list.append(res)
-
+                    # recurse
                     if self.judgePoint24(new_list):
                         return True
-                    
+                    # backtrack
                     new_list.pop()
         
         return False
