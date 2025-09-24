@@ -36,17 +36,21 @@ class Solution:
         m = len(board)
         n = len(board[0])
 
+        # find all positions to be crushed
         def find():
             crush_set = set()
+            # check horizontally 
             for r in range(1, m - 1):
                 for c in range(n):
                     if board[r][c] == 0:
                         continue
+                    # check if the current position and the one above and below are the same, if so, add them to the crush set
                     if board[r][c] == board[r - 1][c] == board[r + 1][c]:
                         crush_set.add((r, c))
                         crush_set.add((r + 1, c))
                         crush_set.add((r - 1, c))
             
+            # check vertically
             for r in range(m):
                 for c in range(1, n - 1):
                     if board[r][c] == 0:
@@ -58,22 +62,33 @@ class Solution:
             
             return crush_set
 
+        # drop the candies that are above the crushed positions, 
         def drop():
+            # traverse vertically column by column
             for c in range(n):
+                # lowest index of zero in the current column
                 lowest_zero = -1
                 for r in range(m - 1, -1, -1):
+                    # if we find a zero, update the lowest index of zero (the one closest to the bottom)
                     if board[r][c] == 0:
                         lowest_zero = max(lowest_zero, r)
+                    # if we find a non-zero and there is a zero below it, swap them
+                    # Use >= 0 is enough because we are traversing from bottom to top, so lowest_zero will always be smaller than r, 
+                    # which means the non-zero we found is always above the lowest zero, then we need to swap them
                     elif lowest_zero >= 0:
                         board[r][c], board[lowest_zero][c] = board[lowest_zero][c], board[r][c]
+                        # after swapping, the lowest zero is now one row above
                         lowest_zero -= 1
 
+        # crush the candies in the crush set by setting them to 0
         def crush(curshed_set):
             for (r, c) in crushed_set:
                 board[r][c] = 0
         
+        # repeat the process until no more candies can be crushed
         crushed_set = find()
         while crushed_set:
+            # three phases: find, crush, drop
             crush(crushed_set)
             drop()
             crushed_set = find()
