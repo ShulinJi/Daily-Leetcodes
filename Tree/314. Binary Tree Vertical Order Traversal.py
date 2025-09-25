@@ -33,22 +33,27 @@
 #         self.left = left
 #         self.right = right
 
-
+# O(n) time | O(n) space
 class Solution:
     def verticalOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         if not root:
             return []
 
+        # min and max column indices to know the range of columns so that we don't have to sort the keys of the dictionary at the end
         min_col = 0
         max_col = 0
         queue = deque([(root, 0)])
+        # store the nodes in each column, key is the column index, value is a list of node values in that column
         column = defaultdict(list)
         column[0].append(root.val)
 
         while queue:
+            # BFS
             curr_node, col = queue.popleft()
+            # update the min and max column indices
             min_col = min(col, min_col)
             max_col = max(col, max_col)
+            # check if left and right children exist, if they do, add them to the queue with their corresponding column index
             if curr_node.left:
                 column[col - 1].append(curr_node.left.val)
                 queue.append((curr_node.left, col - 1))
