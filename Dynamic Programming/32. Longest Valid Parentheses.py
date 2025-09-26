@@ -53,7 +53,6 @@ class Solution:
                 max_length = max(max_length, dp[i])
         return max_length
 
-
 #  stack solution
 # O(n) time | O(n) space
 class Solution:
