@@ -52,6 +52,41 @@ class Solution:
 
                 max_length = max(max_length, dp[i])
         return max_length
+        
+# O(n) time | O(1) space
+# No stack, no DP, two pass solution
+class Solution:
+    def longestValidParentheses(self, s: str) -> int:
+        left, right, max_length = 0, 0, 0
+        # left to right, count number of left and right parentheses
+
+        # Basic idea: whenever we have left == right, we have a valid substring because we avoided cases like ))(, ()) that right > left from left to right
+        # which makes it invalid and we reset the count to 0 to start over, and from right to left, we use left > right to avoid cases like ((), ())(
+        # that left > right from right to left which makes it invalid, and we reset the count to 0 to start over
+        # since left == right, 2*right or 2*left is the length of the valid substring, and we just keep track of the max length
+
+        for i in range(len(s)):
+            if s[i] == "(":
+                left += 1
+            else:
+                right += 1
+            if left == right:
+                max_length = max(max_length, 2 * right)
+            elif right > left:
+                left = right = 0
+        
+        left = right = 0
+        for i in range(len(s) - 1, -1, -1):
+            if s[i] == "(":
+                left += 1
+            else:
+                right += 1
+            if left == right:
+                max_length = max(max_length, 2 * left)
+            elif left > right:
+                left = right = 0
+        
+        return max_length
 
 #  stack solution
 # O(n) time | O(n) space
