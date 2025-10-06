@@ -17,6 +17,20 @@
 # Input: nums = [3,3], target = 6
 # Output: [0,1]
 
+# only one pass needed
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        hashmap = {}
+
+        # store the index of each number in the hashmap if not found a pair
+        # since we are traversing list from left to right, we are sure that the index of the complement is always less than the current index
+        for i in range(len(nums)):
+            complement = target - nums[i]
+            if complement in hashmap:
+                return [i, hashmap[complement]]
+            hashmap[nums[i]] = i
+        
+        return []
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
