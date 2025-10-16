@@ -1,7 +1,63 @@
+# 49. Group Anagrams
+# Solved
+# Medium
+# Topics
+# conpanies icon
+# Companies
+# Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+
+ 
+
+# Example 1:
+
+# Input: strs = ["eat","tea","tan","ate","nat","bat"]
+
+# Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+
+# Explanation:
+
+# There is no string in strs that can be rearranged to form "bat".
+# The strings "nat" and "tan" are anagrams as they can be rearranged to form each other.
+# The strings "ate", "eat", and "tea" are anagrams as they can be rearranged to form each other.
+# Example 2:
+
+# Input: strs = [""]
+
+# Output: [[""]]
+
+# Example 3:
+
+# Input: strs = ["a"]
+
+# Output: [["a"]]
+
+ 
+
+# Constraints:
+
+# 1 <= strs.length <= 104
+# 0 <= strs[i].length <= 100
+# strs[i] consists of lowercase English letters.
+
+
+# O(N*K) runtime, O(N*K) space complexity
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        ans = defaultdict(list)
+        for s in strs:
+            # reset the count for each string
+            count = [0] * 26
+            for c in s:
+                count[ord(c) - ord("a")] += 1
+            # use tuple to make it hashable, use count as the key to group anagrams together since they have the same character count for anagrams
+            ans[tuple(count)].append(s)
+        return list(ans.values())
+
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
 
-        # Fastest answer, use collection.defaultdict, which it initialize the entries automatically, 
+        # O(NKlogK) runtime, O(NK) space complexity
+        # use collection.defaultdict, which it initialize the entries automatically, 
         # don't need to check if a key exists or not
         ans = collections.defaultdict(list)
         for s in strs:
