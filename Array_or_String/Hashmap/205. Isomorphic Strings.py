@@ -32,6 +32,7 @@
 
 class Solution:
     def isIsomorphic(self, s: str, t: str) -> bool:
+        # one kind of character in s maps to only one character in t, so whenver we see a character again, we need to check if it maps to the same character in t
         # two hashmaps used to map each character in string to another character in another string
         s_to_t = {}
         t_to_s = {}
@@ -45,6 +46,8 @@ class Solution:
             # second case, we have seen the map before, but now the characters are not the same
             # ex. p -> a before, and then we have p -> b, a != b, which would be this case
             # one same character cannot be mapped to different characters
+
+            # use get() to avoid key error because char1 or char2 may not be in the hashmap yet
             elif s_to_t.get(char1) != char2 or t_to_s.get(char2) != char1:
                 return False
             
