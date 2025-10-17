@@ -38,6 +38,7 @@ class Solution:
                 new_n += int(x) ** 2
             n = new_n
         
+        # exit the lopp, we either have n == 1 or we have seen a cycle, so if n == 1, we return True, otherwise False
         return n == 1
 
 
