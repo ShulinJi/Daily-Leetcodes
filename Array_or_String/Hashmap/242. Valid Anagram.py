@@ -1,3 +1,5 @@
+
+# O(n) time | O(1) space since the hashmap will have at most 26 keys for aplhabet letters
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         if len(s) != len(t):
