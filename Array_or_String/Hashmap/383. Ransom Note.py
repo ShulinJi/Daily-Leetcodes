@@ -22,6 +22,23 @@
 # 1 <= ransomNote.length, magazine.length <= 105
 # ransomNote and magazine consist of lowercase English letters.
 
+# O(m + n) time | O(1) space - since only lowercase English letters are used, and only 1 hashmap is used
+class Solution:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        if len(ransomNote) > len(magazine):
+            return False
+        
+        frequencyCounter = Counter(magazine)
+        for char in ransomNote:
+            if char in frequencyCounter:
+                if frequencyCounter[char] > 0:
+                    frequencyCounter[char] -= 1
+                else:
+                    return False
+            else:
+                return False
+
+        return True
 
 class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
