@@ -28,6 +28,8 @@ class Solution:
         freq = {0:1}
         count = 0
         sums = 0
+        # keep track of prefix sum, and whenever we find a sum - k, we add how many times that sum - k have occurred in the hashmap
+        # because the counter represents how many different ways of subarray we can form that sum - k.
         for i in range(len(nums)):
             sums += nums[i]
             # if there is a prefix sum that equals to sums - k, then there is a subarray that sums to k
@@ -37,6 +39,8 @@ class Solution:
             # “Every prefix occurrence is a possible checkpoint. As the end moves, each checkpoint spawns a new subarray — so we keep accumulating, not resetting.”
             #  it's like slicing the array at different points to form subarrays that sum to k, and we are recording the checkpoint
 
+
+            # it means we try to find value corresponding to key (sums - k), if we can't find it, return defualt 0
             count += freq.get(sums - k, 0)
             freq[sums] = freq.get(sums, 0) + 1 
         return count

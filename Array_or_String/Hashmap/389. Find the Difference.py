@@ -24,6 +24,19 @@
 # s and t consist of lowercase English letters.
 
 
+class Solution:
+    def findTheDifference(self, s: str, t: str) -> str:
+        sCounter = Counter(s)
+
+        for char in t:
+            if char not in sCounter or sCounter[char] == 0:
+                return char
+            else:
+                sCounter[char] -= 1
+        
+        return True
+
+
 # O(1) space because 26 characters | O(n) time
 class Solution:
     def findTheDifference(self, s: str, t: str) -> str:
