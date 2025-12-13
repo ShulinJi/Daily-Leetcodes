@@ -101,6 +101,8 @@ class Solution:
             return None
         
         # now we know we have a cycle 
+        # move one pointer to the head, keep the other at the meeting point
+        # based on Flyod's algorithm, they will meet at the entrance of the cycle, with proof above
         fast = head
         while fast != slow:
             fast = fast.next

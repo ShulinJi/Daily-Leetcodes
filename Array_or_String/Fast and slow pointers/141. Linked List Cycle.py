@@ -44,6 +44,7 @@
 #         self.next = None
 
 
+# Floyd's cycle-finding algorithm
 # if there is no cycle, fast pointer will reach the end (None) and we return False
 # if there is a cycle, fast pointer and slow pointer will enter the cycle and b/c fast is moving faster, it will 
 # eventually catch up with slow pointer, we return True
