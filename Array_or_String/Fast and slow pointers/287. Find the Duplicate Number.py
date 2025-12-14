@@ -52,6 +52,9 @@ class Solution:
         
         return duplicate
 
+# O(n) time and O(1) space using Floyd's Tortoise and Hare (Cycle Detection)
+# the problem forms a cycle because there is a duplicate number that points to the same index so that when 
+# we traverse the array using the values as indices, we will jump to the same index twice, forming a cycle
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
         # O(n) time and O(1) space using Floyd's Tortoise and Hare (Cycle Detection)
@@ -74,19 +77,3 @@ class Solution:
             fast = nums[fast]
         
         return slow
-
-        # Negating the numebrs, it works, but I cannot prove it 
-        for num in nums:
-            cur = abs(num)
-            print("cur", cur)
-            if nums[cur] < 0:
-                duplicate = cur
-                break
-            nums[cur] = -nums[cur]
-            print(nums)
-
-        # Restore numbers
-        for i in range(len(nums)):
-            nums[i] = abs(nums[i])
-
-        return duplicate
