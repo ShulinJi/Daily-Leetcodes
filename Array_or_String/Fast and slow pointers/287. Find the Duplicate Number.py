@@ -33,6 +33,24 @@
 # How can we prove that at least one duplicate number must exist in nums?
 # Can you solve the problem in linear runtime complexity?
 
+#O(n) time and O(1) space by negating the numbers
+# but this modifies the input array even though we restore it at the end
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        # Negating the numebrs while traversing the array
+        # when we see a negative number again, that is the duplicate becuase all numbers are in the range 1 to n and if we see a negative number again, 
+        # it means we have seen that index before, which means that number is duplicate
+        for num in nums:
+            cur = abs(num)
+            if nums[cur] < 0:
+                duplicate = cur
+                break
+            nums[cur] *= -1
+
+        for i in range(len(nums)):
+            nums[i] = abs(nums[i])
+        
+        return duplicate
 
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
