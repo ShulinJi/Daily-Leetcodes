@@ -24,6 +24,19 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
+
+# O(n) and O(n) solution
 class Solution:
     def isPalindrome(self, head: Optional[ListNode]) -> bool:
+        nodes = []
+        if not head:
+            return False
+        
+        while head is not None:
+            nodes.append(head.val)
+            head = head.next
+        
+        return nodes == nodes[::-1]
+
         
