@@ -32,6 +32,9 @@ class Solution:
     def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
         slow = fast = head
         # if we check fast.next and fast.next.next, then our slow would be choosing the first one with two middles
+
+        # both start at first, then if odd number of nodes, fast would end at last node, slow at middle
+        # if even number of nodes, fast would end at None, slow at second middle
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
