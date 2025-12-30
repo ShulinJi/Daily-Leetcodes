@@ -1,5 +1,17 @@
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
+        sums = 0
+        ans = float(-inf)
+        for i in range(len(nums)):
+            # means the previous array sum is negative, we need to abandon this part
+            if sums + nums[i] < nums[i]:
+                sums = 0
+            
+            sums += nums[i]
+            ans = max(ans, sums)
+        
+        return ans
+    def maxSubArray(self, nums: List[int]) -> int:
         # Initialize our variables using the first element.
         current_subarray = max_subarray = nums[0]
 
