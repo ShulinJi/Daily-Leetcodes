@@ -32,6 +32,43 @@
 
 # Follow up: Could you find an algorithm that runs in O(m + n) time?
 
+# my own implementation
+# O(m + n) time | O(n) space because 2 loops but each pointer only goes through s once
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        if not t or not s or len(t) > len(s):
+            return ""
+
+        l = 0
+        r = 0
+        dict_of_required = Counter(t)
+        required = len(dict_of_required)
+        formed = 0
+        current_count = Counter()
+        ans = (float("inf"), 0, 0)
+
+        while r < len(s):
+            current_count[s[r]] = current_count.get(s[r], 0) + 1
+            if s[r] in dict_of_required:
+                if dict_of_required[s[r]] == current_count[s[r]]:
+                    formed += 1
+
+            while l <= r and formed == required:
+                if r - l + 1 < ans[0]:
+                    ans = (r - l + 1, l, r)
+
+                current_count[s[l]] -= 1
+                if s[l] in dict_of_required and current_count[s[l]] < dict_of_required[s[l]]:
+                    formed -= 1
+                
+                l += 1
+            
+            r += 1
+        
+        return "" if ans[0] == float("inf") else s[ans[1] : ans[2] + 1]
+
+
+
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
         if not t or not s:
