@@ -29,6 +29,36 @@
 # -104 <= nums[i] <= 104
 # 1 <= k <= nums.length
 
+# second attempt, new explanation
+# O(n) time and O(k) space
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        # dq is a monotonic decreasing queue that is used to store the indices, dq[0] is the indice of biggest number in current window
+        dq = deque()
+        res = []
+
+        # we find the answer and contruct the dq for the first window size of k
+        for i in range(k):
+            # if we find a number nums[i] that is bigger than nums[dq[-1]], it mneas that any window contains both 
+            # nums[i] and nums[dq[-1]], we will choose nums[i], then nums[dq[-1]] will no longer be needed for future
+            # windows, ex: [1,2,3,4, 5, 6], size = 3, then we have dq = [2] (first loop), then nums[3] = 4 encountered, we can safely pop dq because the window that only contains nums[dq[-1]] = 3 is over and any further windows that contain both of them like [3, 4, 5], [2, 3, 4], 3 will not be choosed, but 4 will be choosed, so 3 is no longer needed!
+            while dq and nums[i] >= nums[dq[-1]]:
+                dq.pop()
+            dq.append(i)
+        res.append(nums[dq[0]])
+
+        for i in range(k, len(nums)):
+            # we move to a new window, need to check if the current max is still inside the current window
+            if dq[0] < i - k + 1:
+                dq.popleft()
+            
+            while dq and nums[i] >= nums[dq[-1]]:
+                dq.pop()
+            dq.append(i)
+            res.append(nums[dq[0]])
+        
+        return res
+
 
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
