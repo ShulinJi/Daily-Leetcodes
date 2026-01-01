@@ -22,6 +22,8 @@
 # 1 <= s.length <= 105
 # s[i] is either 'A', 'C', 'G', or 'T'.
 
+# O(n) time | O(n) space
+# better one
 class Solution:
     def findRepeatedDnaSequences(self, s: str) -> List[str]:
 
@@ -42,3 +44,24 @@ class Solution:
                 sequence_set.add(s[left:right])        
 
         return list(return_list)
+
+
+# my own implementation# O(n) time | O(n) space
+from collections import Counter
+class Solution:
+    def findRepeatedDnaSequences(self, s: str) -> List[str]:
+        if len(s) < 10:
+            return []
+        occurence = Counter()
+        ans = []
+        for right in range(10, len(s) + 1):
+            left = right - 10
+            currrentSeq = s[left : right]
+            if currrentSeq in occurence:
+                if occurence[currrentSeq] == 1:
+                    occurence[currrentSeq] += 1
+                    ans.append(currrentSeq)
+            else:
+                occurence[currrentSeq] = 1
+                    
+        return ans
