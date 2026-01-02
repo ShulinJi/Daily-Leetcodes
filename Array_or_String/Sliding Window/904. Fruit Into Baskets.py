@@ -33,6 +33,33 @@
 # 1 <= fruits.length <= 105
 # 0 <= fruits[i] < fruits.length
 
+# second attempt
+# O(n) time | O(1) space because only 2 types of fruits allowed in the dictionary
+class Solution:
+    def totalFruit(self, fruits: List[int]) -> int:
+        # if less than 2, we have 2 baskets, we can take it anyway
+        ans = 0
+        if len(fruits) <= 2:
+            return len(fruits)
+        
+        left = 0
+        # dictionary to store fruit types and their counts
+        fruitTypes = {}
+        for right in range(len(fruits)):
+            # add the fruit to the dictionary
+            fruitTypes[fruits[right]] = fruitTypes.get(fruits[right], 0) + 1
+
+            # while there are more than 2 types of fruits, shrink the window from the left
+            while len(fruitTypes) > 2:
+                fruitTypes[fruits[left]] -= 1
+                if fruitTypes[fruits[left]] == 0:
+                    del fruitTypes[fruits[left]]
+                left += 1
+            # then we have a valid window with at most 2 types of fruits, and we update the answer
+            ans = max(ans, right - left + 1)
+        
+        return ans
+
 # O(n) time complexity solution using sliding window. O(1) space complexity since the types of fruits are limited to 2.
 class Solution:
     def totalFruit(self, fruits: List[int]) -> int:
