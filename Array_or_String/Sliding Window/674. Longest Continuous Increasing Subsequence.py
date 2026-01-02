@@ -24,6 +24,22 @@
 # 1 <= nums.length <= 104
 # -109 <= nums[i] <= 109
 
+# second attempt
+# O(n) time | O(1) space
+class Solution:
+    def findLengthOfLCIS(self, nums: List[int]) -> int:
+        left = 0
+        ans = 1
+
+        for right in range(1, len(nums)):
+            if nums[right] > nums[right - 1]:
+                ans = max(ans, right - left + 1)
+            else:
+                left = right
+        
+        return ans
+
+
 class Solution:
     def findLengthOfLCIS(self, nums: List[int]) -> int:
         left = 0
