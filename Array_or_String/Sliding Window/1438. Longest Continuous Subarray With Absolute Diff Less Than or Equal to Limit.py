@@ -49,8 +49,7 @@ class Solution:
             # For a number to ever be useful in min_deque, it must become the minimum of some future window. ex. [4, 2, 5], we see 2 so we 
             # pop 4 from the back, because 4 can never be the minimum of any future window that includes 2. Similarly for max_deque.
             # because when we pop, we pop from the left which is the order of sliding window, 
-            # so we are safe to pop from the back when we see a new number that is larger (for max_deque) or smaller (for min_deque)
-            
+
             # Maintain the max_deque in decreasing order, the first element is the maximum in the current window and oldest element
             while max_deque and max_deque[-1] < nums[right]:
                 max_deque.pop()

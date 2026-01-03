@@ -26,6 +26,29 @@
 # 1 <= nums.length <= 105
 # nums[i] is either 0 or 1.
 
+# second attempt, O(n) time, O(1) space, sliding window
+class Solution:
+    def longestSubarray(self, nums: List[int]) -> int:
+        left = 0
+        ans = 0
+        # zero counts
+        zero = 0
+        for right in range(len(nums)):
+            # if nums[right] == 1, ignore just keep updating the answer and traversing
+            if nums[right] == 0:
+                zero += 1
+            
+            # if there are more than 1 zero
+            while zero > 1:
+                if nums[left] == 0:
+                    zero -= 1
+                left += 1
+
+            # use right - left because we have to remove 1 element, it should be (right - left + 1) - 1
+            ans = max(ans, right - left)
+        
+        return ans
+
 # more efficient by memorizing the last_zero_index
 class Solution:
     def longestSubarray(self, nums: List[int]) -> int:
