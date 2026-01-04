@@ -33,6 +33,8 @@ class Solution:
                 continue
             
             complement = 0 - nums[i]
+
+            # left starts from i + 1 bc we want to find two numbers after i that sum to complement, right starts from end, avoids duplicates
             left = i + 1
             right = len(nums) - 1
             while left < right:
