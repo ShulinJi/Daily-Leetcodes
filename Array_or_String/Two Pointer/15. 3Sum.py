@@ -49,6 +49,8 @@ class Solution:
                     left += 1
                     right -= 1
                     # we skip the duplicates here
+                    # but we won't eliminate possible answers because eventually i will be one of the duplicate and then
+                    # we will find the answer again with left, right pointers with no duplicates
                     while left < right and nums[left] == nums[left - 1]:
                         left += 1
                     while left < right and nums[right] == nums[right + 1]:

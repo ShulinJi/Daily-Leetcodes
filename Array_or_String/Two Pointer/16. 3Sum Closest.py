@@ -14,6 +14,33 @@
 # Output: 0
 # Explanation: The sum that is closest to the target is 0. (0 + 0 + 0 = 0).
 
+# second attempt, O(n^2) time complexity, O(logn) space complexity due to sorting
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        nums.sort()
+        closest_diff = float("inf")
+
+        for i in range(len(nums)):
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+            left = i + 1
+            right = len(nums) - 1
+
+            while left < right:
+                current_sum = nums[i] + nums[left] + nums[right]
+                diff = abs(target - current_sum)
+                if diff < closest_diff:
+                    ans = current_sum
+                    closest_diff = diff
+                
+                if current_sum < target:
+                    left += 1
+                elif current_sum > target:
+                    right -= 1
+                else:
+                    return ans
+        return ans
+
 
 # O(n^2)
 class Solution:
