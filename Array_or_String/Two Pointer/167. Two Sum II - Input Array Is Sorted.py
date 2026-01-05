@@ -17,6 +17,26 @@
 # Output: [1,2]
 # Explanation: The sum of -1 and 0 is -1. Therefore index1 = 1, index2 = 2. We return [1, 2].
 
+# Binary search is not suitable for this problem since it will be O(nlogn) because we are fnding 2 numebrs not just 1, we need a loop outside of the binary search
+# SECOND ATTEMPT
+# O(n) and O(1) complexity
+# avoid integer overflow
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        left = 0
+        right = len(numbers) - 1
+
+        while left < right:
+            # if to prevent integer overflow: use the cast long to prevent it
+            # ex. long sum = (numbers[left] + numbers[right])
+            # but python won't have the overflow problem, if to be sure just int(numbers[left] + numbers[right])
+            if numbers[left] + numbers[right] == target:
+                return [left + 1, right + 1]
+            if numbers[left] + numbers[right] > target:
+                right -= 1
+            else:
+                left += 1
+        
 
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
