@@ -131,25 +131,28 @@ class SparseVector:
         
         return result
 
-# hash map solution
-# O(n) time | O(m + k) space where m and k are the number
+
+#  1. Brute Force: store as array, self.nums = nums, then just add up by looping all the items in both array
+
+# 2. HashMap solution, O(L + K) for both
+However, FB does not accept this solution, because if the vector is too large and spare, the computation time of 
+ the hash function would take up bulk of computation time that even the brute force would be better.!!!!!!!
 class SparseVector:
     def __init__(self, nums: List[int]):
-        # sotre only the non-zero elements in a hash map
-        self.nonzeros = {}
+        # use dictionary to store the non-zero indices and its value
+        self.dictionary = {}
         for i, n in enumerate(nums):
             if n != 0:
-                self.nonzeros[i] = n              
+                self.dictionary[i] = n
 
+    # Return the dotProduct of two sparse vectors
     def dotProduct(self, vec: 'SparseVector') -> int:
-        result = 0
-        # iterate through each non-zero element in this sparse vector
-        # update the dot product if the corresponding index has a non-zero value in the other vector
-        for i, n in self.nonzeros.items():
-            if i in vec.nonzeros:
-                result += n * vec.nonzeros[i]
-        return result
-
+        ans = 0
+        for i, n in self.dictionary.items():
+            if i in vec.dictionary:
+                ans += vec.dictionary[i] * self.dictionary[i]
+        
+        return ans
 # Your SparseVector object will be instantiated and called as such:
 # v1 = SparseVector(nums1)
 # v2 = SparseVector(nums2)
