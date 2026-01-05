@@ -68,6 +68,38 @@
 # 1 <= n <= 10^5
 # 0 <= nums1[i], nums2[i] <= 100
 
+# second attempt with follow up answered !
+# 3.  2 pointer solution, better
+class SparseVector:
+    def __init__(self, nums: List[int]):
+        # append all the index value pair with non zeros
+        self.pairs = []
+        for i, n in enumerate(nums):
+            if n != 0:
+                self.pairs.append((i, n))
+
+    # Return the dotProduct of two sparse vectors
+    def dotProduct(self, vec: 'SparseVector') -> int:
+        p = 0
+        q = 0
+        ans = 0
+
+        # follow up: if one of the vector is sparse and the other is not?
+        # we will compare the length of each pairs and 
+        # loop through the pairs that is shorter in length and do a binary search 
+        # in the long pairs to find the index of selected index in shorter one
+        
+        while p < len(self.pairs) and q < len(vec.pairs):
+            if self.pairs[p][0] == vec.pairs[q][0]:
+                ans += self.pairs[p][1] * vec.pairs[q][1]
+                p += 1
+                q += 1
+            elif self.pairs[p][0] < vec.pairs[q][0]:
+                p += 1
+            else:
+                q += 1
+        
+        return ans
 
 # best solution
 # O(n) time | O(m + k) space where m and k are the number of non-zero elements in nums1 and nums2 respectively
