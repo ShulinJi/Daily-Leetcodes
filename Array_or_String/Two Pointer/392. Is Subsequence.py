@@ -14,7 +14,17 @@
 # Follow up: Suppose there are lots of incoming s, say s1, s2, ..., sk where k >= 109, 
 # and you want to check one by one to see if t has its subsequence. In this scenario, how would you change your code?
 
-
+# SECOND ATTEMPT, O(n), O(1)
+class Solution:
+    def isSubsequence(self, s: str, t: str) -> bool:
+        p1 = 0
+        p2 = 0
+        while p1 < len(s) and p2 < len(t):
+            if s[p1] == t[p2]:
+                p1 += 1
+            p2 += 1
+        
+        return p1 == len(s)
 
 # Two Pointers
 class Solution:
