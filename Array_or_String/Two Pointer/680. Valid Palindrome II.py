@@ -23,6 +23,8 @@
 # s consists of lowercase English letters.
 
 # SECOND ATTEMPT
+# https://leetcode.com/problems/valid-palindrome-iii/editorial/
+# A very good followup on how to approach when we have a k deleted situation, asked in FB followup, good to know how, but not code
 class Solution:
     def validPalindrome(self, s: str) -> bool:
         # O(n) and O(1) because overall we only traversed the array once
