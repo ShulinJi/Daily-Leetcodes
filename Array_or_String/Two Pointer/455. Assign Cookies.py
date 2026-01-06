@@ -29,6 +29,30 @@
 
 # Note: This question is the same as 2410: Maximum Matching of Players With Trainers.
 
+# SECOND ATTEMPT
+class Solution:
+    def findContentChildren(self, g: List[int], s: List[int]) -> int:
+        # first sort to ensure the two pointer approach
+        # O(nlogn)
+        g.sort()
+        s.sort()
+
+        # two pointer for each array
+        p1 = 0
+        p2 = 0
+
+        ans = 0
+        while p1 < len(g) and p2 < len(s):
+            # if the greedy factor has been met, then +1 for the child list
+            if g[p1] <= s[p2]:
+                ans += 1
+                p1 += 1
+            # either met or not met, we both need to add p2 for next cookie
+            p2 += 1
+
+        return ans
+
+
 # O(n log n) time and O(n) space with sorting and two pointers
 class Solution:
     def findContentChildren(self, g: List[int], s: List[int]) -> int:
