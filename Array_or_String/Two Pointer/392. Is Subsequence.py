@@ -26,6 +26,48 @@ class Solution:
         
         return p1 == len(s)
 
+
+
+
+# Solution for the FOLLOW UP
+# Since t is fixed and reused, I preprocess the indices of each character and binary search those index lists to find increasing positions efficiently
+from bisect import bisect_right
+from collections import defaultdict
+
+class Solution:
+    # we first process the t since there are a lot of s, so this we only need to process t once
+    # O(n), O(n)
+    def __init__(self, t: str):
+        self.pos = defaultdict(list)
+        # dictionary for key is the character and vale is a list of index which it appears
+        for i, ch in enumerate(t):
+            self.pos[ch].append(i)
+
+    def isSubsequence(self, s: str, t: str) -> bool:
+        # the current index of t, we keep track of this to avoid 
+        curr = -1
+        for ch in s:
+            # if the character not in the dictionary, return false
+            if ch not in self.pos:
+                return False
+            
+            # initially curr is -1, then it will be 0, the first one of the list
+            # binary search to find the index that the curr could be inserted after curr, so that all elements before
+            # curr is <= curr
+            idx = bisect_right(self.pos[ch], curr)
+            # if the current index is bigger than every element in the list, binary search will return the last index
+            # which means we could only insert at the last index, then it means there is no available characters for  
+            # current situation, so return false
+            if idx == len(self.pos[ch]):
+                return False
+            
+            # update the current index of t to make sure it is strictly increating
+            curr = self.pos[ch][idx]
+        
+        return True
+
+
+
 # Two Pointers
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
