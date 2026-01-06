@@ -34,6 +34,25 @@
 # -100 <= nums[i] <= 100
 # nums is sorted in non-decreasing order.
 
+# SECOND ATTEMPT
+class Solution:
+    # O(n) time complexity and O(1) space complexity
+    def removeDuplicates(self, nums: List[int]) -> int:
+        # pointer used to track the index of the non-duplicate
+        # start at 1 because the first number cannot be duplicate
+        p1 = 1
+
+        for i in range(1, len(nums)):
+            # if we find a duplicate we ignore it
+            if nums[i] == nums[i - 1]:
+                continue
+            else:
+                # once we find a unique number, we continue override, it's like automatic override of the 
+                nums[p1] = nums[i]
+                p1 += 1
+        
+        return p1
+
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
         ### O(N) runtime and O(1) for space
