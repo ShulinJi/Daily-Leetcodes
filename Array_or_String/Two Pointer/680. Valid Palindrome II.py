@@ -22,6 +22,35 @@
 # 1 <= s.length <= 105
 # s consists of lowercase English letters.
 
+# SECOND ATTEMPT
+class Solution:
+    def validPalindrome(self, s: str) -> bool:
+        # O(n) and O(1) because overall we only traversed the array once
+        def checkPalindrome(left, right, s):
+            while left < right:
+                if s[left] != s[right]:
+                    return False
+                left += 1
+                right -= 1
+            
+            return True
+
+        i = 0
+        j = len(s) - 1
+        while i < j:
+            # we have a dismatch, then we need to delete one element, either left pointer or the right pointer
+            # then the rest of the loop is abandoned because we are checking the rest of the string
+            # in the checkPalindrome function
+            if s[i] != s[j]:
+                return checkPalindrome(i + 1, j, s) or checkPalindrome(i, j - 1, s)
+            
+            # we didn't fnd any dismatch, keep current checking loop going
+            i += 1
+            j -= 1
+        
+        return True
+
+
 class Solution:
     def validPalindrome(self, s: str) -> bool:
         # Check normal palidrome string
