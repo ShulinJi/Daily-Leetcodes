@@ -13,7 +13,30 @@
 # Input: prices = [7,6,4,3,1]
 # Output: 0
 # Explanation: In this case, no transactions are done and the max profit = 0.
- 
+
+# SECOND ATTEMPT O(n) and O(1), One Pass
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        min_price = 10 ** 4
+        profit = 0
+
+        # keep the cheapest buy, and traverse for the better profit
+
+        # for each price, we first check if it is a smaller price, if it is, then we update
+        # the min_price without considering the profit
+        # for this, we can ensure that we will not calculate subtract min_price with previous price
+        # because we are traversing to to the right and never go back to previous price after we update the min_price
+        for price in prices:
+            # it is safe to update the min because once we find a new min, everything after this min will be strictly 
+            # better, like price - new_min > price - old_min
+            if price < min_price:
+                min_price = price
+            elif price - min_price > profit:
+                profit = price - min_price
+        return profit
+
+
+
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         # O(n*2) too slow
