@@ -22,6 +22,33 @@
 # 1 <= n <= 300
 # nums[i] is either 0, 1, or 2
 
+# SECOND ATTEMPT
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        # One pass with O(N) and O(1) space complexity
+        # 0-2 pointers for 3 colors, with 0 for red, with 1 for white, 2 for blue
+        p0 = 0
+        p2 = len(nums) - 1
+
+        p1 = 0
+        while p1 <= p2:
+            # if we meet the 0, we swap p1 and p0, the only number we can fet from the p1 is 1 because
+            # we have traverse passed the index before p1, then we can safely increment the p1
+            if nums[p1] == 0:
+                nums[p1], nums[p0] = nums[p0], nums[p1]
+                p1 += 1
+                p0 += 1
+            # if it is 1, we keep finding 
+            elif nums[p1] == 1:
+                p1 += 1
+            else:
+                # when it is 2, we swap it with p2
+                # we don't increment p1 because we can't be sure about the number we swap back if it's 0, 1, 2
+                nums[p1], nums[p2] = nums[p2], nums[p1]
+                p2 -= 1
+        
+
+
 
 class Solution:
     def sortColors(self, nums: List[int]) -> None:
