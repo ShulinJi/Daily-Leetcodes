@@ -58,6 +58,44 @@
 
 # 1 <= num <= 3999
 
+# SECOND ATTEMPT
+class Solution:
+    def intToRoman(self, num: int) -> str:
+        # O(1) and O(1)
+
+        # we start at the biggest so that we can module from the biggest
+        digits = {
+            1000: "M",
+            900: "CM",
+            500: "D",
+            400: "CD",
+            100: "C",
+            90: "XC",
+            50: "L",
+            40: "XL",
+            10: "X",
+            9: "IX",
+            5: "V",
+            4: "IV",
+            1: "I"
+        }
+
+        ans = []
+        # from 1000 to 1 in the order to mdolue the number to avoid the case like 800 being moduled to 2 * 400 CDCD
+        # but actually it should consider 500 first, becomes DCCC
+        for digit, roman in digits.items():
+            if num == 0:
+                break
+            
+            # divmod: divmod(17, 5) = 17 // 5, 17 % 5 => 3, 2 divide and module at same time
+            count, num = divmod(num, digit)
+            ans.append(count * roman)
+        
+        return "".join(ans)
+
+
+
+
 class Solution:
     def intToRoman(self, num: int) -> str:
         digits = [
