@@ -23,6 +23,30 @@
 
 # Follow up: Squaring each element and sorting the new array is very trivial, could you find an O(n) solution using a different approach?
 
+# SECOND ATTEMPT, two pointer
+class Solution:
+    def sortedSquares(self, nums: List[int]) -> List[int]:
+        # O(n) and O(n) solution, two pointer
+        left = 0
+        right = len(nums) - 1
+        ans = []
+
+        # compare the abs of the numbers and the bigger one has bigger square
+        # then the two pointer will create a list that is from te biggest to smallest
+        # then we just reverse it
+        while left <= right:
+            if abs(nums[left]) > abs(nums[right]):
+                ans.append(nums[left] ** 2)
+                left += 1
+            else:
+                ans.append(nums[right] ** 2)
+                right -= 1
+
+        # python reverse takes O(n)
+        ans.reverse()
+        return ans
+
+
 class Solution:
     def sortedSquares(self, nums: List[int]) -> List[int]:
         left = 0
