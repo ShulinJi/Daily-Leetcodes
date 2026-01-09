@@ -17,6 +17,38 @@
 
 # Follow-up: Could you solve the problem in linear time and in O(1) space?
 
+# SECOND ATTEMPT
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        # O(n) and O(1)
+        # Boyer-Moore Voting Algorithm
+        count = 0
+        currentNum = None
+        # if we see the same num we +1, if the count go below 0, we change num and keep going and eventually we will end up with the majority number
+        for num in nums:
+            if currentNum == None:
+                currentNum = num
+                count += 1
+            elif num != currentNum:
+                count -= 1
+                if count < 0:
+                    currentNum = num
+                    count = 1
+            else:
+                count += 1
+        
+        return currentNum
+
+
+# O(n) and O(n) solution, hashmap
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        count = Counter()
+        for num in nums:
+            count[num] += 1
+        # find the max count in the dictionary
+        return max(nums, key=count.get)
+
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
         count = 0
@@ -39,11 +71,3 @@ class Solution:
         return candidate
 
 
-# O(n) and O(n) solution
-class Solution:
-    def majorityElement(self, nums: List[int]) -> int:
-        count = Counter()
-        for num in nums:
-            count[num] += 1
-        # find the max count in the dictionary
-        return max(nums, key=count.get)
