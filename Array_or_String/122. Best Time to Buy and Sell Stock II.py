@@ -46,6 +46,22 @@ class Solution:
 
         return profit
 
+# SECOND ATTEMPT
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        profit = 0
+        min_price = 10 ** 4
+        # if we see a higher price we sell and then buy at the same time to avoid missing the case of consecitive buy sell
+        # if we see a low price, we update the min
+        for price in prices:
+            if price < min_price:
+                min_price = price
+            else:
+                profit += price - min_price
+                min_price = price
+        
+        return profit
+
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         # O(n) runtime and greedy algorithm
