@@ -21,6 +21,31 @@
 # Output: 0
 # Explanation: There is no way to make a positive profit, so we never buy the stock to achieve the maximum profit of 0.
 
+# valleys and peaks approach
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        # O(n) and O(1) 
+        # we iteratively find the valleys and peaks 
+        profit = 0
+        i = 0
+
+        # after we find valley and peak
+        while i < len(prices):
+            # valley is a low point where it's price is smaller than next one
+            while i < len(prices) - 1 and prices[i] > prices[i + 1]:
+                i += 1
+            valley = prices[i]
+
+            # peak is the local high point where it's price is higher, so when it is smaller, we move forward to find next
+            while i < len(prices) - 1 and prices[i] < prices[i + 1]:
+                i += 1
+            peak = prices[i]
+            profit += peak - valley
+            
+            i += 1
+
+        return profit
+
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         # O(n) runtime and greedy algorithm
