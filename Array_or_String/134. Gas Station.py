@@ -37,6 +37,33 @@
 # 1 <= n <= 105
 # 0 <= gas[i], cost[i] <= 104
 
+# SECOND ATTEMPT, better explanation
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        totalGas = 0
+        totalCost = 0
+        currentGas = 0
+        startPoint = 0
+
+        for i in range(len(gas)):
+            currentGas += gas[i] - cost[i]
+            totalGas += gas[i]
+            totalCost += cost[i]
+
+            # if our current gas is below 0, let's say starting from 0 then first time we have negative, 
+            # it means all previous stations are notpossible start point because we never below 0 until now, 
+            # which means previous station are all helping us (net gas >= 0), and starting from any of the 
+            # stations between 0 to current station will reduce even more because we reduce the help by choosing
+            # 0 < k < current station!
+            # then, we choose to start from the next station!
+            if currentGas < 0:
+                startPoint = i + 1
+                currentGas = 0
+            
+        if totalCost > totalGas:
+            return -1
+        
+        return startPoint
 
 class Solution:
     def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
