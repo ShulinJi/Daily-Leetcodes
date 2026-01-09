@@ -37,3 +37,13 @@ class Solution:
                 count -= 1
         
         return candidate
+
+
+# O(n) and O(n) solution
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        count = Counter()
+        for num in nums:
+            count[num] += 1
+        # find the max count in the dictionary
+        return max(nums, key=count.get)
