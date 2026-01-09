@@ -19,7 +19,7 @@
 # 1 <= nums.length <= 100
 # 0 <= nums[i] <= 109
 
-# SECOND ATTEMPT, O(n)
+# SECOND ATTEMPT, O(nlogn)
 class Solution:
     def largestNumber(self, nums: List[int]) -> str:
         num_string = [str(num) for num in nums]
