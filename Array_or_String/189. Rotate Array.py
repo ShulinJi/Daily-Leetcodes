@@ -15,6 +15,27 @@
 # rotate 1 steps to the right: [99,-1,-100,3]
 # rotate 2 steps to the right: [3,99,-1,-100]
 
+method 4
+# top choice! 
+# O(n) and O(1) in place
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        def reverse(start, end):
+            while start < end:
+                nums[start], nums[end] = nums[end], nums[start]
+                start += 1
+                end -= 1
+        
+        k = k % len(nums)
+        # ex k = 3, [1,2,3,4,5,6,7]
+        reverse(0, len(nums) - 1)
+        # [7, 6, 5, 4, 3, 2, 1]
+        reverse(0, k - 1)
+        # [5, 6, 7, 4, 3, 2, 1]
+        reverse(k, len(nums) - 1)
+        # [5, 6, 7, 1, 2, 3, 4]
+
+
 1
 # Brute Force, O(n x k), O(1)
 class Solution:
@@ -64,37 +85,3 @@ class Solution:
 
 
 
-
-class Solution:
-    def rotate(self, nums: List[int], k: int) -> None:
-    # O(n) runtime, O(1) space
-    # Reverse method
-    def reverse(self, nums: list, start: int, end: int) -> None:
-        while start < end:
-            nums[start], nums[end] = nums[end], nums[start]
-            start, end = start + 1, end - 1
-
-    def rotate(self, nums: List[int], k: int) -> None:
-        n = len(nums)
-        k %= n
-
-        self.reverse(nums, 0, n - 1)
-        self.reverse(nums, 0, k - 1)
-        self.reverse(nums, k, n - 1)
-
-
-
-        ### O(n) runtime and O(n) extra space
-        # since every whole cycle doesn't change the order, we only need the module
-        rotate_times = k % len(nums)
-        # the numbers that are needed to move to front
-        move_to_front = nums[len(nums) - rotate_times:]
-        # numbers need to stay
-        rest = nums[:len(nums) - rotate_times]
-
-        # combine them
-        move_to_front.extend(rest)
-        nums[:] = move_to_front
-        return 
-
-        
