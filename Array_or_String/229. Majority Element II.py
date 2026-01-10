@@ -24,7 +24,62 @@
 
 # Follow up: Could you solve the problem in linear time and in O(1) space?
 
+# SECOND ATTEMPT
+# Boyer-Moore Voting Algorithm O(n) and O(1)
+class Solution:
+    def majorityElement(self, nums: List[int]) -> List[int]:
+        # O(n) and O(1)
+        # since we find all elements that appear more than n / 3 times, it means that we only have 2 answers
+        # at most 2 numbers can exceed 1/3
+        n = len(nums)
+        if not nums:
+            return []
+        
+        # O(n) traverse of Boyer-Moore Voting Algorithm
+        count1, count2, candidate1, candidate2 = 0, 0, None, None
+        for num in nums:
+            if candidate1 == num:
+                count1 += 1
+            elif candidate2 == num:
+                count2 += 1
+            elif count1 == 0:
+                count1 += 1
+                candidate1 = num
+            elif count2 == 0:
+                count2 += 1
+                candidate2 = num
+            else:
+                count1 -= 1
+                count2 -= 1
 
+        ans = []
+        for num in [candidate1, candidate2]:
+            # python array count takes O(n)
+            # we have two candidates that could potentially be the answer, we need to check if their validity
+            # bc there could be cases that no num is over n // 3 but they are at the end of the list, and falsely 
+            # being trated as a candidate
+            if nums.count(num) > (n // 3):
+                ans.append(num)
+        return ans
+
+        
+# O(n) and O(n) solution
+class Solution:
+    def majorityElement(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        hashmap = {}
+        ans = []
+        for x in nums:
+            hashmap[x] = hashmap.get(x, 0) + 1
+        
+        for x in hashmap:
+            if hashmap[x] > (n // 3):
+                ans.append(x)
+        
+        return ans
+
+
+     
 # O(n) time and O(1) space using Boyer-Moore Voting Algorithm, same as 169. Majority Element
 # This problem is similar to 169. Majority Element, where we find the element that appears more than n/2 times. for finding elements that appear
 #  more than n/3 times, we can at most have two such elements in the array. for more than n/2 times, we can have at most one such element.
