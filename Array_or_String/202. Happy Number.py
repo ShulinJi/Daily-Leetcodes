@@ -22,7 +22,59 @@
 
 # Input: n = 2
 # Output: false
- 
+
+# SECOND ATTEMPT
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        # O(logn) and O(logn)
+        seen = set()
+
+        # we keep iterating and until we see 1 or we see a cycle(already in hashset)
+        while n != 1:
+            if n in seen:
+                return False
+            else:
+                seen.add(n)
+            n_str = str(n)
+            new_num = 0
+            # O(logn) dominating part
+            for digit in n_str:
+                new_num += int(digit) ** 2
+            n = new_num
+
+        return True
+
+# Floyd's Cycle-Finding Algorithm
+# O(logn) and O(1) with two pointer
+# if they have a cycle, it means that it's false
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        def get_next(number):
+            total_sum = 0
+            while number > 0:
+                number, digit = divmod(number, 10)
+                total_sum += digit**2
+            return total_sum
+
+        slow_runner = n
+        fast_runner = get_next(n)
+        while fast_runner != 1 and slow_runner != fast_runner:
+            slow_runner = get_next(slow_runner)
+            fast_runner = get_next(get_next(fast_runner))
+        return fast_runner == 1
+
+        seen = set()
+        while n != 1 and n not in seen:
+            seen.add(n)
+
+            new_n = 0
+            n = str(n)
+            for x in n:
+                new_n += int(x) ** 2
+            n = new_n
+        
+        return n == 1
+
 class Solution:
     def isHappy(self, n: int) -> bool:
         # the set that is used to detect a cycle (seen the number before)
@@ -39,26 +91,3 @@ class Solution:
         
         # check to see if the number is 1, if yes -> happy
         return n == 1
-
-
-
-
-
-
-
-
-
-
-        # seen = set()
-        # while n != 1 and n not in seen:
-        #     string = str(n)
-        #     total = 0
-        #     for x in string:
-        #         total += (int(x)) ** 2
-            
-        #     if total == 1:
-        #         return True
-        #     seen.add(n)
-        #     n = total
-        
-        # return n == 1
