@@ -12,6 +12,7 @@
 # Input: prices = [1]
 # Output: 0
 
+# too hard o come up in a real interview, could try DP
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         """
