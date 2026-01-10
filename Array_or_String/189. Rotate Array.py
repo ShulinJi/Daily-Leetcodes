@@ -15,7 +15,7 @@
 # rotate 1 steps to the right: [99,-1,-100,3]
 # rotate 2 steps to the right: [3,99,-1,-100]
 
-
+1
 # Brute Force, O(n x k), O(1)
 class Solution:
     def rotate(self, nums: List[int], k: int) -> None:
@@ -33,7 +33,8 @@ class Solution:
                 nums[j], previous = previous, nums[j]
         
         return nums
-
+        
+2
 # O(n) and O(n), using extra array
 class Solution:
     def rotate(self, nums: List[int], k: int) -> None:
@@ -44,6 +45,23 @@ class Solution:
         
         nums[:] = ans
         return nums
+
+3
+# O(n) and O(n) with extra arrays combine 2 arrays
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        # since every whole cycle doesn't change the order, we only need the module
+        rotate_times = k % len(nums)
+        # the numbers that are needed to move to front
+        move_to_front = nums[len(nums) - rotate_times:]
+        # numbers need to stay
+        rest = nums[:len(nums) - rotate_times]
+
+        # combine them
+        move_to_front.extend(rest)
+        nums[:] = move_to_front
+        return 
+
 
 
 
