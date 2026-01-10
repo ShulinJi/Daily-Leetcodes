@@ -15,6 +15,24 @@
 # rotate 1 steps to the right: [99,-1,-100,3]
 # rotate 2 steps to the right: [3,99,-1,-100]
 
+# Brute Force, O(n x k), O(1)
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        # O(n x k) because k rotation for O(n) rotating once, O(1)
+        # speed up rotation
+        k = k % len(nums)
+        
+        # number of rotating to the right by 1 required
+        for i in range(k):
+            # the first number needs to be changed with last one since rotating to the right
+            previous = nums[-1]
+            for j in range(len(nums)):
+                # each time, we fill out the array, previous is the the value we should have at the current place
+                # ex. [1,2,3,4,5,6,7], then 1 becomes 7 ,previous becomes 1, then next iter: 2 becomes previous 1 ,and previous becomes 2, then next iter and so on
+                nums[j], previous = previous, nums[j]
+        
+        return nums
+
 
 class Solution:
     def rotate(self, nums: List[int], k: int) -> None:
