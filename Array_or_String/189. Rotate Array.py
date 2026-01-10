@@ -15,6 +15,7 @@
 # rotate 1 steps to the right: [99,-1,-100,3]
 # rotate 2 steps to the right: [3,99,-1,-100]
 
+
 # Brute Force, O(n x k), O(1)
 class Solution:
     def rotate(self, nums: List[int], k: int) -> None:
@@ -32,6 +33,18 @@ class Solution:
                 nums[j], previous = previous, nums[j]
         
         return nums
+
+# O(n) and O(n), using extra array
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        ans = [0] * len(nums)
+        for i in range(len(nums)):
+            # use (i + k) % len(nums) to find the position after the rotation
+            ans[(i + k) % len(nums)] = nums[i]
+        
+        nums[:] = ans
+        return nums
+
 
 
 class Solution:
