@@ -40,6 +40,40 @@
 # 0 <= nums[i] <= 50
 # 0 <= val <= 100
 
+# SECOND ATTEMPT
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        # i is the count of numbers of elements not equal to val
+        i = 0
+        for j in range(len(nums)):
+            # then whenever we meet a number that does not equal to the val
+            # we increment i and rewrite the nums[i]
+            # in this way, we only write to the list with numbers that are not equal to the val
+            if nums[j] != val:
+                nums[i] = nums[j]
+                i += 1
+        return i
+
+# same idea, O(n) and O(1)
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        i = 0
+        j = len(nums) - 1
+
+        while i <= j:
+            if nums[i] == val:
+                # we meet the numbers == val, we swap it with randome at the back since order does not matter
+                nums[i] = nums[j]
+                # we decrease the j and keep the i the same because we are not sure if the number gets swapped back
+                # might also equal to the val
+                j -= 1
+            else:
+                # we have numbers != val, just increment
+                i += 1
+        
+        return i
+
+
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
         ### Two pointer O(N) runtime 
