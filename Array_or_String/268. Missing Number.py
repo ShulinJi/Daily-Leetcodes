@@ -32,13 +32,6 @@
 
 # n = 9 since there are 9 numbers, so all numbers are in the range [0,9]. 8 is the missing number in the range since it does not appear in nums.
 
- 
- 
-
- 
-
- 
-
 # Constraints:
 
 # n == nums.length
@@ -48,6 +41,27 @@
  
 
 # Follow up: Could you implement a solution using only O(1) extra space complexity and O(n) runtime complexity?
+
+# SECOND ATTEMPT O(n) and O(1)
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        # O(n) time and O(1) space
+        # use the formula of n * (n + 1) // 2 to get the sum of the continuous sum of array 
+        n = len(nums)
+        expected_sum = (n * (n + 1)) // 2
+        current_sum = sum(nums)
+
+        return expected_sum - current_sum
+
+# Hashset O(n) and O(n)
+class Solution:
+    def missingNumber(self, nums):
+        # convert list to set and loop over to see which one is not in set()
+        num_set = set(nums)
+        n = len(nums) + 1
+        for number in range(n):
+            if number not in num_set:
+                return number
 
 
 # O(n) time complexity solution using Gauss' formula. O(1) space complexity.
