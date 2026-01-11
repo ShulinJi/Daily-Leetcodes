@@ -25,6 +25,48 @@
 
 # 1 <= nums.length <= 105
 # -231 <= nums[i] <= 231 - 1
+
+# O(n) and O(1) auxiliary, means we only used constant space except the input, in-place modification
+# SECOND ATTEMPT
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        contain1 = False
+        for i in range(len(nums)):
+            if nums[i] == 1:
+                contain1 = True
+                # convert all the non-positive numbers and the ones over the length of the nums
+            if nums[i] <= 0 or nums[i] > len(nums):
+                nums[i] = 1
+        
+        # if the nums does not contain 1, the smallest missing positive is 1
+        if not contain1:
+            return 1
+
+        for i in range(len(nums)):
+            # use abs because we might have already flpped it and make it negative
+            # if not abs, then we will flip it again and back to positive
+            value = abs(nums[i])
+            if value == len(nums):
+                nums[0] = -abs(nums[0])
+            else:
+                nums[value] = -abs(nums[value])
+        
+        # if the number is still positive, that means the i never exists in the list so that the value corresponds to
+        # that value never becomes negative
+        for i in range(1, len(nums)):
+            if nums[i] > 0:
+                return i
+
+        # if after 1 ~ len(nums), we still could't find the answer, then we need to check if the len(num) itself is the ans, if it is > 0, it means the len(num) is missing in the list and we have checked from (1 ~ len(nums) - 1), if there is answer ,we should returned, then the first missing is len(nums)
+        if nums[0] > 0:
+            return len(nums)
+        else:
+            # otherwise, the num length is len(nums) and from 1 ~ len(nums), it all contains, which means the list
+            # contains exactly 1 ~ len(nums), the the first missing is the len(nums) + 1
+            return len(nums) + 1
+        
+
+
 class Solution:
     def firstMissingPositive(self, nums: List[int]) -> int:
         contains1 = False
