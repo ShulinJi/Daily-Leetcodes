@@ -45,6 +45,23 @@
 # SECOND ATTEMPT O(n) and O(1)
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
+        # avoid the Gauss formula,O(n) and O(1)
+
+        # actual sum of the list 
+        curr_sum = 0
+        # expected sum if no missing number
+        expected_sum = 0
+
+        for i in range(len(nums)):
+            # curr_sum add the actual number, expected_sum adds the index
+            curr_sum += nums[i]
+            expected_sum += i
+        # since we miss one number, we need to add one more length to the expected sum
+        expected_sum += len(nums)
+        return expected_sum - curr_sum
+     
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
         # O(n) time and O(1) space
         # use the formula of n * (n + 1) // 2 to get the sum of the continuous sum of array 
         n = len(nums)
