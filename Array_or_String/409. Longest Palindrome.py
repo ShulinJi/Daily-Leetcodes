@@ -21,6 +21,32 @@
 # 1 <= s.length <= 2000
 # s consists of lowercase and/or uppercase English letters only.
 
+# SECOND ATTEMPT
+# O(n) and O(n) solution
+from collections import Counter
+
+class Solution:
+    def longestPalindrome(self, s: str) -> int:
+        # frequency hashmap of the characters
+        freq = Counter(s)
+        
+        # hasSinglechar used to check if the string has a unpaired character (single)
+        # single character can be put the the middle of the palindrome +1 in the length
+        hasSinglechar = False
+        pairs = 0
+        for count in freq.values():
+            # check if the string has single char
+            if not hasSinglechar:
+                if count % 2:
+                    hasSinglechar = True
+            # add the number of pairs to total count
+            pairs += count // 2
+        
+        # if has single characters, we can +1 at the middle after all pairs of char
+        # ex. we can go from "aabb" to "aacbb"
+        return (pairs * 2) if not hasSinglechar else (pairs * 2 + 1)
+            
+
 class Solution:
     def longestPalindrome(self, s: str) -> int:
         # mapp all the elements with numbers of appearances
