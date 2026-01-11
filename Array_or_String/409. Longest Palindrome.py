@@ -22,7 +22,33 @@
 # s consists of lowercase and/or uppercase English letters only.
 
 # SECOND ATTEMPT
-# O(n) and O(n) solution
+
+# even better with only 1 pass!
+# O(n) and O(1)
+class Solution:
+    def longestPalindrome(self, s: str) -> int:
+        character_set = set()
+        res = 0
+
+        # Loop over characters in the string
+        for c in s:
+            # If set contains the character, match found, we found a pair, add 2 to ans
+            if c in character_set:
+                character_set.remove(c)
+                # Add the two occurrences to our palindrome
+                res += 2
+            else:
+                # Add the character to the set
+                character_set.add(c)
+
+        # If any character remains, we have at least one unmatched
+        # character to make the center of an odd length palindrome.
+        if character_set:
+            res += 1
+
+        return res
+
+# O(n) and O(1) solution because only 52 characters
 from collections import Counter
 
 class Solution:
@@ -46,6 +72,8 @@ class Solution:
         # ex. we can go from "aabb" to "aacbb"
         return (pairs * 2) if not hasSinglechar else (pairs * 2 + 1)
             
+
+
 
 class Solution:
     def longestPalindrome(self, s: str) -> int:
