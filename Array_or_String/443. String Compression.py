@@ -34,6 +34,38 @@
 # 1 <= chars.length <= 2000
 # chars[i] is a lowercase English letter, uppercase English letter, digit, or symbol.
 
+# SECOND ATTEMPT, O(n) and O(1)
+class Solution:
+    def compress(self, chars: List[str]) -> int:
+        # O(n) and O(1) since in-place
+        # becuse we need to both calculate the length and modify the array
+        res = 0
+        i = 0
+
+        while i < len(chars):
+            # we check how many repetive chars we have
+            group_length = 0
+            curr_char = chars[i]
+            while i < len(chars) and chars[i] == curr_char:
+                group_length += 1
+                i += 1
+
+            # then we add the current character, ex. the first one in the pair of "a", "12"
+            chars[res] = curr_char
+            res += 1
+
+            # then we deal with the occurrences, if it's bigger than 1, we need to add the number of occurence
+            if group_length > 1:
+                # we need to convert to the string and then list because there could be cases that group_length > 10
+                #  which needs to 10 or longer will be split into multiple characters in chars, which length could be >1
+                # then we overwrite the input array
+                group_length_list = list(str(group_length))
+                chars[res: res + len(group_length_list)] = group_length_list
+                res += len(group_length_list)
+
+        return res
+     
+
 class Solution:
     def compress(self, chars: List[str]) -> int:
         i = 0
