@@ -20,6 +20,31 @@
 # 1 <= n <= 2 * 104
 # 0 <= height[i] <= 105
 
+# SECOND ATTEMPT, similar to DP approach
+class Solution:
+    def trap(self, height):
+        # O(n) and O(1)
+        left = 0
+        right = len(height) - 1
+
+        rightmost = 0
+        leftmost = 0
+        ans = 0
+        # similar to DP approach, but we only need to know that if there is a larger bar  at one end, we are gurannteed
+        # to have some water trapped and it depends on the shorter bar (current direction(pointer)), tha's why we have two pointer, we can account both from left and right, if left is larger, then we calculate for right, if right is larger, we start to calulate left!
+        while left < right:
+            if height[left] < height[right]:
+                leftmost = max(leftmost, height[left])
+                ans += leftmost - height[left]
+                left += 1
+            else:
+                rightmost = max(rightmost, height[right])
+                ans += rightmost - height[right]
+                right -= 1
+        
+        return ans
+
+
 # O(n) and O(n) using DP (pre-populate results)
 class Solution:
     def trap(self, height):
