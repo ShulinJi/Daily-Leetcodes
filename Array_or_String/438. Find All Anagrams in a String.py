@@ -24,6 +24,38 @@
 # 1 <= s.length, p.length <= 3 * 104
 # s and p consist of lowercase English letters.
 
+# SECOND ATTEMPT
+from collections import Counter
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        if len(s) < len(p):
+            return []
+        
+        # two counters for each string
+        ans = []
+        p_counter = Counter(p)
+        s_counter = Counter()
+
+        # a sliding window which is the length of string p since we want to check every window in s such that if an window in s can match exactly with p
+        for i in range(len(s)):
+            # ad new character
+            s_counter[s[i]] += 1
+
+            # we need to shrink the window each time by 1 because we are moving by 1, one by one
+            if i >= len(p):
+                # if length == 1, when we decrease the count, it becomes 0, we need tp delete the pair
+                if s_counter[s[i - len(p)]] == 1:
+                    del s_counter[s[i - len(p)]]
+                else:
+                    s_counter[s[i - len(p)]] -= 1
+
+            # check if the hashmap matches
+            if s_counter == p_counter:
+                ans.append(i - len(p) + 1)
+            
+        return ans
+
+
 # Sliding windows!!!!!!!!!!
 class Solution:
     def findAnagrams(self, s: str, p: str) -> List[int]:
