@@ -20,7 +20,36 @@
 # 1 <= n <= 2 * 104
 # 0 <= height[i] <= 105
 
-# O(n^2) and O(n), works but exceed the time limit
+# O(n) and O(n) using DP (pre-populate results)
+class Solution:
+    def trap(self, height):
+        # O(n) and O(n)
+        if len(height) == 0:
+            return 0
+        
+        ans = 0
+        n = len(height)
+        leftmost = [0] * n
+        rightmost = [0] * n
+
+        # needs init because we need to check i - 1 element
+        # populate the left boundary for the current index
+        leftmost[0] = height[0]
+        for i in range(1, n):
+            leftmost[i] = max(height[i], leftmost[i - 1])
+
+        # populate the right boundary for current index, from backward because of the right boundary
+        rightmost[n - 1] = height[n - 1]
+        for i in range(n - 2, -1, -1):
+            rightmost[i] = max(height[i], rightmost[i + 1])
+        
+        # answer is the min of the left and right boundary which can hold the water and then subtract the height
+        for i in range(1, n - 1):
+            ans += min(rightmost[i], leftmost[i]) - height[i]
+        
+        return ans
+
+# O(n^2) and O(n), for each index, finding the min b/w right and left boundary and subtract the height is the trpped water for that index
 class Solution:
     def trap(self, height):
         ans = 0
