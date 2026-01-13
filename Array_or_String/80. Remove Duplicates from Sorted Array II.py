@@ -35,6 +35,33 @@
 # -104 <= nums[i] <= 104
 # nums is sorted in non-decreasing order.
 
+# SECOND ATTEMPT O(n) and O(1), Two Pointer
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        # Two pointer with j <= i, always write to j to override the array based on the requirement
+        # start with 1 because we need to check th front one
+        i = 1
+        j = 1
+        # count also starts at one because we have traversed through the first element
+        count = 1
+        while i < len(nums):
+            if nums[i] == nums[i - 1]:
+                count += 1
+                # if count is bigger than 2, then we simply ignore it and don't override the array (skipped)
+                # and the extra ones will be override in future loops by num[j] = num[i] since j < i always
+                if count > 2:
+                    i += 1
+                    continue
+            else:
+                # we reset the count back to one since we start at a new element
+                count = 1
+            # we keep overriding the array such that each element can only appear up to two times
+            nums[j] = nums[i]
+            i += 1
+            j += 1
+        
+        return j
+
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
         ### if length is smaller than 2, we simply return its length
