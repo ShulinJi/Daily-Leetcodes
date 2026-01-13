@@ -84,18 +84,47 @@
 # 0 <= s.length <= 200
 # s consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+', '-', and '.'.
 
+# SECOND ATTEMPT
+class Solution:
+    def myAtoi(self, s: str) -> int:
+        # sign default is positive
+        sign = 1
+        result = 0 # the digital number
+        # used to check overflow and underflow
+        INT_MAX = pow(2, 31) - 1
+        INT_MIN = -pow(2, 31)
+        index = 0
 
-# class Solution:
-#     def myAtoi(self, s: str) -> int:
-#         s = s.strip()
-#         s = s.replace(" ", '')
+        # skip all the white space at the front
+        while index < len(s) and s[index].isspace():
+            index += 1
+        
+        # check the sign at the front
+        if index < len(s) and s[index] == "+":
+            sign = 1
+            index += 1
+        elif index < len(s) and s[index] == "-":
+            sign = -1
+            index += 1
+        
+        # if we meet any non-digital, stop iter 
+        while index < len(s) and s[index].isdigit():
+            digit = int(s[index])
 
-#         sign = 1
-#         numStr = ""
-#         index = 0
+            # to check overflow/underflow, 
+            # if result is bigger than INT_MAX // 10 = 214748364, any bigger than this, say 214748365, if we append a 
+            # another digit behind that, it will overflow! and if say 214748363, samller than, then we can append any digit without worrying overflow, and if equals, then we need to compare the next digit if it is smaller than 7
+            # 
+            if (result > INT_MAX // 10) or (result == INT_MAX // 10 and digit > INT_MAX % 10):
+                # we have aoverflow
+                return INT_MAX if sign == 1 else INT_MIN
+            
+            # continue to form number
+            result = result * 10 + digit
+            index += 1
+        
+        return sign * result
 
-#         if index
-#         while index < len(s) :
 
 class Solution:
     def myAtoi(self, input: str) -> int:
