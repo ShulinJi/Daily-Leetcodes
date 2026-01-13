@@ -45,6 +45,42 @@ class Solution:
         
         return  s[ans[0]: ans[1] + 1]
 
+# O(n) and O(n) solution
+# Manacher's solution
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        s_prime = "#" + "#".join(s) + "#"
+        n = len(s_prime)
+        # The number of characters you can expand left and right from index i
+        palindrome_radii = [0] * n
+        # These track the rightmost palindrome found so far
+        center = radius = 0
+
+        for i in range(n):
+            # If i is on the right side of the center, mirror is the symmetric position on the left.
+            mirror = 2 * center - i
+
+            if i < radius:
+                palindrome_radii[i] = min(radius - i, palindrome_radii[mirror])
+
+            while (
+                i + 1 + palindrome_radii[i] < n
+                and i - 1 - palindrome_radii[i] >= 0
+                and s_prime[i + 1 + palindrome_radii[i]]
+                == s_prime[i - 1 - palindrome_radii[i]]
+            ):
+                palindrome_radii[i] += 1
+
+            if i + palindrome_radii[i] > radius:
+                center = i
+                radius = i + palindrome_radii[i]
+
+        max_length = max(palindrome_radii)
+        center_index = palindrome_radii.index(max_length)
+        start_index = (center_index - max_length) // 2
+        longest_palindrome = s[start_index : start_index + max_length]
+
+        return longest_palindrome
 
 class Solution:
     def longestPalindrome(self, s: str) -> str:
