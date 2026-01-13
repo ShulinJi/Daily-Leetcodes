@@ -128,31 +128,6 @@ class Solution:
 
 class Solution:
     def myAtoi(self, input: str) -> int:
-        # my own answer without checking Int overflow
-        s = s.strip()
-        s = s.replace(" ", '')
-
-        sign = 1
-        index = 0
-        if index < len(s) and s[index] == "+":
-            index += 1
-            sign = 1
-        elif index < len(s) and s[index] == "-":
-            index += 1
-            sign = -1
-
-        result = 0
-        while index < len(s) and s[index].isdigit():
-            digit = int(s[index])
-
-            results += results * 10 + digit
-            index += 1
-        
-        return results * sign
-
-
-
-
         # Official solution with overflow check!
         sign = 1
         result = 0
