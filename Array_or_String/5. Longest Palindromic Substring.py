@@ -1,3 +1,51 @@
+# Given a string s, return the longest 
+# palindromic
+ 
+# substring
+#  in s.
+
+ 
+
+# Example 1:
+
+# Input: s = "babad"
+# Output: "bab"
+# Explanation: "aba" is also a valid answer.
+# Example 2:
+
+# Input: s = "cbbd"
+# Output: "bb"
+
+# SECOND ATTEMPT, O(n^2) and O(1)
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        def expand(i, j):
+            while i >= 0 and j < len(s) and s[i] == s[j]:
+                i -= 1
+                j += 1
+            # -2 because i and j is 1 index over the correct palindrome for both i and j after final iteration
+            return j - i - 2 + 1
+
+        ans = [0, 0]
+        for i in range(len(s)):
+            # first check case: expand from the centre with unique char at middle, ex: "caabaad"
+            length = expand(i, i)
+            if length > ans[1] - ans[0] + 1:
+                middle = length // 2
+                ans[0] = i - middle
+                ans[1] = i + middle
+            
+            # now we check the case where no centre exists
+            length = expand(i, i + 1)
+            # "eccaaaaccf", i = 4 we have a palinrome, length 8, no middle, middle = 8//2 - 1, left = 1
+            if length > ans[1] - ans[0] + 1:
+                middle = length // 2 - 1
+                ans[0] = i - middle
+                ans[1] = i + middle + 1
+        
+        return  s[ans[0]: ans[1] + 1]
+
+
 class Solution:
     def longestPalindrome(self, s: str) -> str:
         # my own solution
@@ -29,10 +77,9 @@ class Solution:
 
 
 
-
-
-
-
+# Editorial
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
         def expand(i, j):
             left = i
             right = j
@@ -64,24 +111,6 @@ class Solution:
         i, j = ans
         return s[i: j + 1]
 
-
-# Given a string s, return the longest 
-# palindromic
- 
-# substring
-#  in s.
-
- 
-
-# Example 1:
-
-# Input: s = "babad"
-# Output: "bab"
-# Explanation: "aba" is also a valid answer.
-# Example 2:
-
-# Input: s = "cbbd"
-# Output: "bb"
 
 # Brute-force just find all substring and check palindrome
         
