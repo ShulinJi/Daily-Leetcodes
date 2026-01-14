@@ -34,6 +34,26 @@
 # Follow up: Can you come up with an algorithm that runs in O(m + n) time?
 
 # SECOND ATTEMPT
+# Best Solution!!! O(m + n) and O(1)
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        # now we start from the back, since the last n numbers of nums1 is all zero and we don't care, then we don't need to worry about overwriting important information. Why? let's say what's the case that could cause overwrite? it is when we need to choose from nums2 and write to nums1 because if we choose from nums1 and insert at end, the total relative position does not change [1, 2, 3, 4_, _,_] will just become [1, 2, 3,_, _,_,4], so we want to choose as many as from nums2 to maximize the possibility if violation, but we already have n unrelated slots and max we can choose from nums2 is n, so we will never overwrite
+        p1 = m - 1
+        p2 = n - 1
+        p = m + n - 1
+
+        while p >= 0:
+            # choose from nums1
+            if p2 < 0 or (p1 >= 0 and nums1[p1] > nums2[p2]):
+                nums1[p] = nums1[p1]
+                p1 -= 1
+            else:
+                nums1[p] = nums2[p2]
+                p2 -= 1
+            
+            p -= 1
+
+
 class Solution:
     def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
         # O(m + n) and O(m) 
