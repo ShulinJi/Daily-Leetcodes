@@ -37,6 +37,55 @@
 #         self.left = left
 #         self.right = right
 
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+# SECOND ATTEMPT
+class Solution:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
+        # NOT good for BFS, could solve, but not efficient in space, because if use BFS, then we need to track
+        # all the paths at the same time, which will significatly increase the space
+
+        # O(n^2) because we have at msot N/2 leaf nodes that require an O(N) copy list operation (found ans and copy)
+        # O(n) for path itself
+        if not root:
+            return []
+
+        def backtracking(node, path, curr_sum):
+            # it could be the case where the node only has left branch, and we are at right branch, which is None
+            if not node:
+                return 
+
+            curr_sum += node.val
+            path.append(node.val)
+            # check if it is target sum
+            if curr_sum == targetSum:
+                # check if it is a leaf node
+                if not node.left and not node.right:
+                    # found the answer and return 
+                    ans.append(path[:])
+                    # whenever we return, we need to pop and return to original state
+                    path.pop()
+                    curr_sum -= node.val
+                    return 
+
+            # keep traverse to the next level
+            backtracking(node.left, path, curr_sum)
+            backtracking(node.right, path, curr_sum)
+            # backtrack to find more possibility
+            path.pop()
+            curr_sum -= node.val
+            return 
+
+        ans = []
+        backtracking(root, [], 0)
+        return ans
+     
+
 # O(n^2) time, O(h) space, h is the height of the tree
 class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
