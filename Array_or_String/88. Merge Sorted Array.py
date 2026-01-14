@@ -33,6 +33,31 @@
 # -109 <= nums1[i], nums2[j] <= 109
 # Follow up: Can you come up with an algorithm that runs in O(m + n) time?
 
+# SECOND ATTEMPT
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        # O(m + n) and O(m) 
+        # three pointer
+        # p1 for trversing nums1_copy and p2 for nums2 
+        p1 = 0
+        p2 = 0
+
+        # we need a copy bc if we find a bigger number in nums2 and will overwrite nums1!
+        nums1_copy = nums1[:]
+        # p is only for overwriting original nums1
+        p = 0
+        while p < m + n:
+            print(p1, p2)
+            # if runs out of nums2 or nums1 is smaller than p2 and nums 1 inbound
+            if p2 >= n or (p1 < m and nums1_copy[p1] < nums2[p2]):
+                nums1[p] = nums1_copy[p1]
+                p1 += 1
+            else:
+                # else nums2 is bigger 
+                nums1[p] = nums2[p2]
+                p2 += 1
+            
+            p += 1
 
 class Solution:
     def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
