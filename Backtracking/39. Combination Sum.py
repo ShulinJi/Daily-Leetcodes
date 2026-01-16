@@ -21,6 +21,32 @@
 # Input: candidates = [2], target = 1
 # Output: []
 
+# SECOND ATTEMPT
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        ans = []
+        def backtracking(curr_sum, path, start):
+            if curr_sum == target:
+                ans.append(path[:])
+            elif curr_sum > target:
+                return 
+            
+            # because we have distinct integers and we are either staying or moving forward
+            # it won't have duplicate cases! ex: target 7, candidates = [2,3,6,7], we could only have [2, 2, 3]
+            # but there is no way to have [2, 3, 2] because we are not able to go backward
+
+            # we use start, not start +1 to allow use of same number unlimited number of times.
+            for i in range(start, len(candidates)):
+                path.append(candidates[i])
+                curr_sum += candidates[i]
+                
+                backtracking(curr_sum, path, i)
+                curr_sum -= candidates[i]
+                path.pop()
+        
+        backtracking(0, [], 0)
+        return ans
+
 
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
