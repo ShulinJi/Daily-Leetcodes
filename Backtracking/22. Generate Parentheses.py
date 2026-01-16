@@ -16,6 +16,31 @@
 
 # 1 <= n <= 8
 
+# SECOND ATTEMPT
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        ans = []
+        def backtracking(curr_string, left_count, right_count):
+            if len(curr_string) == 2 * n:
+                ans.append("".join(curr_string))
+            
+            if left_count < n:
+                curr_string.append("(")
+                left_count += 1
+                backtracking(curr_string, left_count, right_count)
+                left_count -= 1
+                curr_string.pop()
+            
+            if right_count < left_count:
+                curr_string.append(")")
+                right_count += 1
+                backtracking(curr_string, left_count, right_count)
+                right_count -= 1
+                curr_string.pop()
+        
+        backtracking([], 0, 0)
+        return ans
+
 # Brute Force Solution
 # Time complexity: O(2*2n⋅n) same for space complexity
 class Solution:
