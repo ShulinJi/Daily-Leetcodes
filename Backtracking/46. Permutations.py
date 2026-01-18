@@ -22,6 +22,28 @@
 # -10 <= nums[i] <= 10
 # All the integers of nums are unique.
 
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        # need to keep track what we have so far to record ans and check ans
+        def backtracking(path):
+            if len(path) == len(nums):
+                ans.append(path[:])
+            
+            # since the numbers are distinct, as long as we a number that is not in the path, we add it, which is valid!
+            # and we just start at different index and form different permutations
+            for i in range(len(nums)):
+                if nums[i] not in path:
+                    path.append(nums[i])
+                    backtracking(path)
+                    path.pop()
+
+
+        ans = []
+        backtracking([])
+        return ans
+     
+
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         # Time complexity, what you should say in an interview: O(n⋅n!)
