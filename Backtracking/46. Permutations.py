@@ -22,7 +22,8 @@
 # -10 <= nums[i] <= 10
 # All the integers of nums are unique.
 
-
+# O(n!n) time complexity because there are n! for n numbers and takes O(n) to copy path to ans
+# O(n) space
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         # need to keep track what we have so far to record ans and check ans
@@ -42,7 +43,30 @@ class Solution:
         ans = []
         backtracking([])
         return ans
-     
+
+# Can also have a visited array to avoid the O(n) check in the for loop
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+        ans = []
+        visited = [False] * n
+
+        def backtracking(path):
+            if len(path) == n:
+                ans.append(path[:])
+                return
+
+            for i in range(n):
+                if not visited[i]:
+                    visited[i] = True
+                    path.append(nums[i])
+                    backtracking(path)
+                    path.pop()
+                    visited[i] = False
+
+        backtracking([])
+        return ans
+
 
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
