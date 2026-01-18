@@ -21,6 +21,7 @@
 # 1 <= n <= 9
 
 # SECOND ATTEMPT
+# O(n!) same reason as N-Queens I and O(n) for each set
 class Solution:
     def totalNQueens(self, n: int) -> int:
         def backtracking(row, cols, diagonal, anti_diagonal):
