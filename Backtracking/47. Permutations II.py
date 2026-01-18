@@ -23,7 +23,8 @@ from collections import Counter
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
         # time complexity is the same of the number of nodes in a tree, 
-        # 
+        # If the counts of repeated numbers are: c1, c2, ..., cm   (sum = N). number of unique permutations is: N! / (c1! · c2! · ... · cm!), which is the Level k → P(N, k)
+        # then we sum up all the levels :O(N · (N! / (c1! · c2! · ... · cm!))), upper bound would be O(n!n) and O(n)
         def backtracking(path, counter):
             if len(path) == len(nums):
                 ans.append(path[:])
