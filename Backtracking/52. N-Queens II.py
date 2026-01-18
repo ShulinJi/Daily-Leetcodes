@@ -20,6 +20,38 @@
 
 # 1 <= n <= 9
 
+# SECOND ATTEMPT
+class Solution:
+    def totalNQueens(self, n: int) -> int:
+        def backtracking(row, cols, diagonal, anti_diagonal):
+            # if row reached n, then it means we successfully have a valid answer after traversing all the boards
+            if row == n:
+                return 1
+            
+            # conut start at the top of each tree node
+            count = 0
+            for col in range(n):
+                diagonal_value = row - col
+                anti_diagonal_value = row + col
+                if col in cols or diagonal_value in diagonal or anti_diagonal_value in anti_diagonal:
+                    continue
+                
+                cols.add(col)
+                diagonal.add(diagonal_value)
+                anti_diagonal.add(anti_diagonal_value)
+
+                # summing up all the viable answers
+                count += backtracking(row + 1, cols, diagonal, anti_diagonal)
+
+                anti_diagonal.remove(anti_diagonal_value)
+                diagonal.remove(diagonal_value)
+                cols.remove(col)
+
+            return count
+
+        ans = backtracking(0, set(), set(), set())
+        return ans
+
 class Solution:
     def totalNQueens(self, n: int) -> int:
         count = 0
