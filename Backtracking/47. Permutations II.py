@@ -18,6 +18,33 @@
 # 1 <= nums.length <= 8
 # -10 <= nums[i] <= 10
 
+# SECOND ATTEMPT
+from collections import Counter
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        # time complexity is the same of the number of nodes in a tree, 
+        # 
+        def backtracking(path, counter):
+            if len(path) == len(nums):
+                ans.append(path[:])
+            
+            # we convert the list to a hashmap, in thi way, we can know how many duplicates we can have 
+            for num in counter:
+                if counter[num] > 0:
+                    counter[num] -= 1
+                    path.append(num)
+                    backtracking(path, counter)
+                    counter[num] += 1
+                    path.pop()
+        
+
+        ans = []
+        # similar to Permutation I, but this time we are using a counter map to check if the number is visited already
+        # this time we have duplicate, we cannot use the if in simple mechnism to check 
+        backtracking([], Counter(nums))
+        return ans
+
+
 # O(n * n!) time | O(n) space
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
