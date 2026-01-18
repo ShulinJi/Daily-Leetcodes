@@ -17,6 +17,53 @@
 # Input: n = 1
 # Output: [["Q"]]
 
+# Time complexity: O(N!)
+# Unlike the brute force approach, we will only place queens on squares that aren't under attack. For the first queen, we have N options. For the next queen, we won't attempt to place it in the same column as the first queen, 
+# and there must be at least one square attacked diagonally by the first queen as well. Thus, the maximum number of squares we can consider for the second queen is N−2. 
+# For the third queen, we won't attempt to place it in 2 columns already occupied by the first 2 queens, and there must be at least two squares attacked diagonally from the first 2 queens. 
+# Thus, the maximum number of squares we can consider for the third queen is N−4. This pattern continues, resulting in an approximate time complexity of N!.
+# While it costs O(N^2) to build each valid solution, the amount of valid solutions S(N) does not grow nearly as fast as N!, so O(N!+S(N)∗N^2)=O(N!)
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        # deep_copy of the board
+        def copy_board(board):
+            new_board = []
+            for i in range(n):
+                new_board.append("".join(board[i]))
+            return new_board
+
+        # O(n!) and O(n^2)
+        def backtracking(row, cols, diagonal, anti_diagonal, state):
+            # row starts at 0, if we reach n it means we reach the len(board), should end
+            # because we haven't found any restrictions and reached here
+            if row == n:
+                ans.append(copy_board(state))
+            
+            for col in range(n):
+                # if two queens on the same disgonal or anti-diagonal, they have the same value
+                diagonal_value = row - col
+                anti_diagonal_value = row + col
+                # if we cannot place a queen, we continue
+                if col in cols or diagonal_value in diagonal or anti_diagonal_value in anti_diagonal:
+                    continue
+                
+                state[row][col] = "Q"
+                cols.add(col)
+                diagonal.add(diagonal_value)
+                anti_diagonal.add(anti_diagonal_value)
+
+                backtracking(row + 1, cols, diagonal, anti_diagonal, state)
+
+                state[row][col] = "."
+                cols.remove(col)
+                diagonal.remove(diagonal_value)
+                anti_diagonal.remove(anti_diagonal_value)
+
+        ans = []
+        new_board = [["."] * n for _ in range(n)]
+        backtracking(0, set(), set(), set(), new_board)
+        return ans
+
 
 # for Backtracking problem
 # Problems that require you to produce a candidate solution.
