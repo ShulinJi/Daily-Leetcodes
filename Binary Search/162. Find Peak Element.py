@@ -26,6 +26,25 @@
 # -231 <= nums[i] <= 231 - 1
 # nums[i] != nums[i + 1] for all valid i.
 
+# SECOND ATTEMPT
+# O(logn) and O(logn)
+class Solution:
+    def findPeakElement(self, nums: List[int]) -> int:
+        left = 0
+        right = len(nums) - 1
+
+        # think of the problem as comparing the slope
+        # if nums[mid] > nums[mid + 1], it means we are on the decreasing slope, then the peak should be on the left(uphill)
+        # then if nums[mid] < nums[mid + 1], then we are on increasing slope, we should go to the right to find peak
+        while left < right:
+            mid = (left + right) // 2
+            # we find a number that is greater than right side
+            if nums[mid] > nums[mid + 1]:
+                right = mid
+            else:
+                left = mid + 1
+        
+        return left
 
 class Solution:
     def findPeakElement(self, nums: List[int]) -> int:
