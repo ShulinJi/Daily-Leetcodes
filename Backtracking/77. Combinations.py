@@ -16,6 +16,26 @@
 # Output: [[1]]
 # Explanation: There is 1 choose 1 = 1 total combination.
 
+# SECOND ATTEMPT
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        def backtracking(start, path):
+            if len(path) == k:
+                ans.append(path[:])
+                return
+
+            # find in the range of [start, n]
+            # to avoid duplicate, we only choose from left to right by counting a start point, 
+            # so that in next branch we never go back to previous values
+            for i in range(start, n + 1):
+                path.append(i)
+                # use i + 1 because we only allow to use it once
+                backtracking(i + 1, path)
+                path.pop()
+
+        ans = []
+        backtracking(1, [])
+        return ans
 
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
