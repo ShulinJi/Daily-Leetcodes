@@ -18,6 +18,9 @@
 
 # SECOND ATTEMPT
 class Solution:
+         # combination formulat: nCr: n! / (n - r)!r!
+        # in this case, we have n! / (n - k)!k!, then we have k answers to copy, so * O(k), which is O(n!k / (n - k)!k!)
+        # O(k) for space since path only store at max k elements
     def combine(self, n: int, k: int) -> List[List[int]]:
         def backtracking(start, path):
             if len(path) == k:
