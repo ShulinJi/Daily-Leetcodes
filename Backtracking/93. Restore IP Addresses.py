@@ -37,6 +37,42 @@ def backtrack(state):
             backtrack(state)
             undo_choice(state, choice)
 
+
+class Solution:
+    def restoreIpAddresses(self, s: str) -> List[str]:
+        def backtracking(curr_index, path):
+            # if we have 4 segments and we are at len(s) -> trversed all the string
+            if len(path) == 4:
+                if curr_index == len(s):
+                    ans.append(".".join(path[:]))
+                # if we have 4 segments and have not reached the end or over the end, return
+                return
+
+            for i in range(1, 4):
+                # if bigger than len(s), then we cannot s[:curr + i] out of bound, but curr+i == len(s) i sstill valid
+                if curr_index + i > len(s):
+                    return
+                curr_segment = s[curr_index: curr_index + i]
+                # if all digits are integer
+                for digit in curr_segment:
+                    if not digit.isdigit():
+                        return
+                # if have leading zero or bigger thn 255
+                if len(curr_segment) > 1 and int(curr_segment[0]) == 0:
+                    return 
+                if int(curr_segment) > 255:
+                    return
+
+                # then we start to backtracking again
+                path.append(curr_segment)
+                backtracking(curr_index + i, path)
+                path.pop()
+            
+        ans = []
+        backtracking(0, [])
+        return ans
+
+
 # Personal Solution
 class Solution:
     def restoreIpAddresses(self, s: str) -> List[str]:
