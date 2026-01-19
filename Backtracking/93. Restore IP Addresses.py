@@ -37,7 +37,9 @@ def backtrack(state):
             backtrack(state)
             undo_choice(state, choice)
 
-
+# SECOND ATTEMPT
+# O(m^n * n) m is 3, n is 4, so we have a O(1) time complexity, 3^4 to find all possible segments, n to copy
+# O(m * n) since max length of path is 3 * 4 + 3 dots, so O(1)
 class Solution:
     def restoreIpAddresses(self, s: str) -> List[str]:
         def backtracking(curr_index, path):
