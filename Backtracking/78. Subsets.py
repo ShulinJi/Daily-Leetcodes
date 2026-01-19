@@ -20,6 +20,25 @@
 # -10 <= nums[i] <= 10
 # All the numbers of nums are unique.
 
+# SECOND ATTEMPT
+class Solution:
+    def subsets(self, nums):
+        # O(N * 2^N) becaseu 2^n to generate all possible subset, and O(n) to copy the path
+        def backtracking(start, path):
+            # whenever we have a path, it is valid
+            ans.append(path[:])
+
+            # to avoid the duplicate, we never traverse backwards and start with i + 1
+            for i in range(start, len(nums)):
+                path.append(nums[i])
+                backtracking(i + 1, path)
+                path.pop()
+
+        ans = []
+        backtracking(0, [])
+        return ans 
+
+
 class Solution:
     def subsets(self, nums):
         self.output = []
