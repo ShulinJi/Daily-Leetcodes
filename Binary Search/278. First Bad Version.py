@@ -24,6 +24,25 @@
 # The isBadVersion API is already defined for you.
 # def isBadVersion(version: int) -> bool:
 
+# The isBadVersion API is already defined for you.
+# def isBadVersion(version: int) -> bool:
+
+# SECOND ATTEMPT
+class Solution:
+    # O(logn), basic binary search
+    def firstBadVersion(self, n: int) -> int:
+        left = 1
+        right = n
+
+        while left < right:
+            mid = (left + right) // 2
+            if not isBadVersion(mid):
+                left = mid + 1
+            else:
+                right = mid
+        
+        return left
+
 class Solution:
     def firstBadVersion(self, n: int) -> int:
         # version starts at 1
