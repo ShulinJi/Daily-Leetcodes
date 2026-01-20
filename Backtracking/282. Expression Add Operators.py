@@ -57,7 +57,9 @@ class Solution:
             string.pop()
             string.pop()
 
-            # if we are at the start of the operation
+            # if we are not at the start of the operation
+            # because the question says insert the binary operators '+', '-', and/or '*' between the digits,we cannot put - and * at the very beginning
+            # but + doesn't matter, because we "".join(string[1:]) we ignore the first sign
             if string:
                 # we try subtraction
                 string.append("-")
