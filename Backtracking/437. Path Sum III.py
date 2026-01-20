@@ -42,6 +42,39 @@ class Solution:
             if curr_sum == targetSum:
                 count += 1
             # we need this even when curr_sum == targetSum because there could be sum = 0
+         # Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
+        def backtracking(curr_sum, node):
+            nonlocal count
+            if not node:
+                return 
+            
+            curr_sum += node.val
+            if curr_sum == targetSum:
+                count += 1
+            # we need this even when curr_sum == targetSum because there could be sum = 0
+            # curr_sum is the prefix sum up to the current node, prev_sum is some ancestor node that sums up to
+            # and we want curr_sum - prev_sum = taget, so we want to see if there is any prev_sum in the hashmap
+            # so prev_sum = curr-sum - target
+            count += prefix_sum_map[curr_sum - targetSum]
+            
+            prefix_sum_map[curr_sum] += 1
+            backtracking(curr_sum, node.left)
+            backtracking(curr_sum, node.right)
+            prefix_sum_map[curr_sum] -= 1
+
+
+        count = 0
+        prefix_sum_map = defaultdict(int)
+        backtracking(0, root)
+        return count
+
             count += prefix_sum_map[curr_sum - targetSum]
 
             prefix_sum_map[curr_sum] += 1
