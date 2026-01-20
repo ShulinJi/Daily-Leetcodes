@@ -30,6 +30,32 @@
 #         self.left = left
 #         self.right = right
 
+# O(n) n is the number of nodes and O(n)
+class Solution:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
+        def backtracking(curr_sum, node):
+            nonlocal count
+            if not node:
+                return 
+            
+            curr_sum += node.val
+            if curr_sum == targetSum:
+                count += 1
+            # we need this even when curr_sum == targetSum because there could be sum = 0
+            count += prefix_sum_map[curr_sum - targetSum]
+
+            prefix_sum_map[curr_sum] += 1
+            backtracking(curr_sum, node.left)
+            backtracking(curr_sum, node.right)
+            prefix_sum_map[curr_sum] -= 1
+
+
+        count = 0
+        prefix_sum_map = defaultdict(int)
+        backtracking(0, root)
+        return count
+
+
 # O(n) time complexity solution using DFS and a hashmap to store the frequency of prefix sums. O(h) space complexity, where h is the height of the tree.
 class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
