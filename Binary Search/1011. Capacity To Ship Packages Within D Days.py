@@ -42,6 +42,43 @@
 # 1 <= days <= weights.length <= 5 * 104
 # 1 <= weights[i] <= 500
 
+# SECOND ATTEMPT
+# O(nlogn) because O(n) to compute days and logn for binary search
+class Solution:
+    def shipWithinDays(self, weights: List[int], days: int) -> int:
+        # min should be at least be able to ship all the weight
+        # max should be able to ship all weights at once
+        left = max(weights)
+        right = sum(weights)
+
+        # we try different capacity and calcualte the needed days for current capacity
+        # if current_capacity needs less days, then we can try a bigger capacity, vice versa
+        while left < right:
+            mid = (left + right) // 2
+            curr_days = 0
+            curr_weights = 0
+            for i in range(len(weights)):
+                if curr_weights + weights[i] > mid:
+                    curr_days += 1
+                    curr_weights = weights[i]
+                else:
+                    curr_weights += weights[i]
+
+            if curr_weights != 0:
+                curr_days += 1
+
+            print(mid)
+            print(curr_days)
+            # if we need less than days, we can still try a smaller capacity
+            if curr_days <= days:
+                right = mid
+            else:
+                # we try larger capacity
+                left = mid + 1
+        
+        return left
+
+
 # O(n log(sum(weights))) time complexity solution using binary search. O(1) space complexity.
 class Solution:
     def shipWithinDays(self, weights: List[int], days: int) -> int:
