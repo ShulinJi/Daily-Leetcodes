@@ -34,6 +34,39 @@
 # If nums[mid] < target and target < nums[right], it implies that the sorted right half might contain target. As a result, we will move on with the right half.
 # Otherwise, the right half is guaranteed not to contain target, and we will move on to the left half.
 
+# SECOND ATTEMPT
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        # if we are rotating the array, then at least one half is sorted
+        # ex. [4,5,6,7,0,1,2], left half is sorted
+        left = 0
+        right = len(nums) - 1
+
+        while left <= right:
+            mid = (left + right) // 2
+            if nums[mid] == target:
+                return mid
+            # if left side is sorted, 
+            # we need the <= instead of < only, because single element is also sorted!
+            # ex, nums = [3,1] target = 1, left = 0, right = 1, mid = 0, mid == left, if without <=, then we will 
+            # go to the right side directly and then right = mid-1 = -1, breaks and return false
+
+            if nums[mid] >= nums[left]:
+                # if target is in the left side, then we shrink right to mid - 1
+                if target >= nums[left] and target < nums[mid]:
+                    right = mid - 1
+                else:
+                    left = mid + 1
+            # if right side is sorted, we do binary search on right side
+            else:
+                # check if target is in the right side
+                if target > nums[mid] and target <= nums[right]:
+                    left = mid + 1
+                else:
+                    right = mid - 1
+        
+        return -1
+
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         low, high = 0, len(nums) - 1
