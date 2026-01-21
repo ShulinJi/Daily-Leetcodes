@@ -26,6 +26,30 @@
 # All the integers in each column are sorted in ascending order.
 # -109 <= target <= 109
 
+# O(m + n)
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        # this is different from the 2D matrix question by the matrix that each row is not strictly bigger than prev row
+        if not matrix:
+            return False
+
+        m = len(matrix)
+        n = len(matrix[0])
+
+        row = m - 1
+        col = 0
+        # we find that if we start from the bottom left corner, if we go up, we are decreasing, and if we go to the right
+        # we are increasing, so we just need to adjust the row and col based on the target
+        while row >= 0 and col < n:
+            if matrix[row][col] == target:
+                return True
+            elif matrix[row][col] < target:
+                col += 1
+            else:
+                row -= 1
+        
+        return False
+
 
 # O(MxN)
 # the enxt row/column is not entirely bigger/smaller than previous one, so 2 binary search does not work here
