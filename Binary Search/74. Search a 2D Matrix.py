@@ -27,6 +27,43 @@
 # 1 <= m, n <= 100
 # -104 <= matrix[i][j], target <= 104
 
+# O(n*m) bc 2 binary search O(m) + O(n) = O(mn)
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        left = 0
+        right = len(matrix) - 1
+        correct_row = -1
+        while left <= right:
+            mid = (left + right) // 2
+            # if target is bigger than the last element of that row, try other bigger row
+            if target > matrix[mid][-1]:
+                left = mid + 1
+            elif target < matrix[mid][0]:
+                right = mid - 1
+            else:
+                # we find the condition where matrix[mid][0] < tagret < matrix[mid][-1] 
+                correct_row = mid
+                break
+        # if we get here, it means we found the correct row, then do binary search again to find the exact number
+        if correct_row < 0:
+            return False
+
+        left = 0
+        right = len(matrix[correct_row])
+        while left < right:
+            mid = (left + right) // 2
+            if matrix[correct_row][mid] > target:
+                right = mid
+            elif matrix[correct_row][mid] == target:
+                return True
+            else:
+                left = mid + 1
+        
+        return False
+                
+               
+
+
 # my own solution in Log(m * n)
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
