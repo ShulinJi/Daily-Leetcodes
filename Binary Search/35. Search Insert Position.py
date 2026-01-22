@@ -25,6 +25,29 @@
 # nums contains distinct values sorted in ascending order.
 # -104 <= target <= 104
 
+# SECOND ATTEMPT
+# O(logn)
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        left = 0
+        right = len(nums) - 1
+
+        # it already handles the case where the number is not found.
+        # at the end of the iteration, the left would equal to right if we couldn't find it, then the next iteration, 
+        # based on the current idex, if it is bigger than currentnumber, then it is mid - 1, vice sersa
+        while left <= right:
+            mid = left + (right - left) // 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+        
+        return left
+            
+
+
 class Solution:
     def searchInsert(self, nums: List[int], target: int) -> int:
         left, right = 0, len(nums) - 1
