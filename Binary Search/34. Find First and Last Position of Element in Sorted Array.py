@@ -27,6 +27,43 @@
 # nums is a non-decreasing array.
 # -109 <= target <= 109
 
+# SECOND ATTEMPT
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        # O(logn)
+        left = 0
+        right = len(nums) - 1
+        left_bound = -1
+        right_bound = -1
+
+        # try to find left bound
+        # when we find the target, we update the bound
+        # it is guranteed to converged because of the condition
+        while left <= right:
+            mid = left + (right - left) // 2
+            if nums[mid] == target:
+                right = mid - 1
+                left_bound = mid
+            elif nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+        # find right bound
+        left = 0
+        right = len(nums) - 1
+        while left <= right:
+            mid = left + (right - left) // 2
+            if nums[mid] == target:
+                left = mid + 1
+                right_bound = mid
+            elif nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+        
+        return [left_bound, right_bound]
+
+
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
         left = 0
