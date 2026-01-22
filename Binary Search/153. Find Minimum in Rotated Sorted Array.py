@@ -35,6 +35,33 @@
 # All the integers of nums are unique.
 # nums is sorted and rotated between 1 and n times.
 
+# O(logn) algo using binary search
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        left = 0
+        right = len(nums) - 1
+        
+        # case where the array is not retated
+        # the = also count for the case where it only has one number [1], just return
+        if nums[-1] >= nums[0]:
+            return nums[0]
+
+        while left <= right:
+            mid = (left + right) // 2
+            # check if mid or mid + 1is the answer
+            # ex [4,5,1,2,3], nums[1] > nums[2], then nums[2] is the answer
+            if nums[mid] > nums[mid + 1]:
+                return nums[mid + 1]
+            if nums[mid] < nums[mid - 1]:
+                return nums[mid]
+            
+            # if mid > 0, it means left side is sorted, the answer is at right side
+            if nums[mid] > nums[0]:
+                left = mid + 1
+            else:
+                right = mid - 1
+        
+
 
 class Solution:
     def findMin(self, nums: List[int]) -> int:
