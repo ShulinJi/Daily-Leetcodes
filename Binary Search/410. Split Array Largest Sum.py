@@ -26,6 +26,41 @@
 # 0 <= nums[i] <= 106
 # 1 <= k <= min(50, nums.length)
 
+# SECOND ATTEMPT
+class Solution:
+    def splitArray(self, nums: List[int], k: int) -> int:
+        def calculateSplitNumbers(maxSum):
+            totalSplit = 0
+            currSum = 0
+            for num in nums:
+                if currSum + num > maxSum:
+                    currSum = num
+                    totalSplit += 1
+                else:
+                    currSum += num
+            return totalSplit + 1
+        
+        left = max(nums)
+        right = sum(nums)
+        bestSum = float("inf")
+        while left <= right:
+            mid = left + (right - left) // 2
+            print(left, right)
+            # calculateSplitNumbers is the function that calculate the minimum number of subarray given current maxSum
+            # but sometimes we have bestSum but with fewer than allowed cut (k), which is also the optimal
+            # ex, [2,3,1,1,1,1,1], allowde is 5, but we can only make bestSum to 3 since max(arr) = 3 and calculateSplitNumbers return 4 instead of 5, so we should use <=, instead of == to check calculateSplitNumbers(mid) since if calculateSplitNumbers(mid) gives us a answer <= k, it means it is a valid maxSum! if it's smaller, we can just add more cuts randomly.
+            if calculateSplitNumbers(mid) <= k:
+                # we should keep trying if we find a valid answer to find minimum
+                # try to make the sum smaller and see if it changes
+                bestSum = min(mid, bestSum)
+                right =  mid - 1
+            else:
+                # we need more than allowed k subarrays
+                left = mid + 1
+        
+        return bestSum
+
+
 # O(n log m) time complexity where n is the number of elements in nums and m is the range of possible sums (from max(nums) to sum(nums)).
 class Solution:
     def splitArray(self, nums: List[int], k: int) -> int:
