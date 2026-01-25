@@ -35,6 +35,34 @@
 # s consists of English letters (lower-case and upper-case), ',' and '.'.
 # 1 <= numRows <= 1000
 
+# SECOND ATTEMPT
+# O(n) time | O(1) space because the rows array will at most be size of numRows which is capped at 1000
+class Solution:
+    def convert(self, s: str, numRows: int) -> str:
+        # if we only allow one row, then we don't need the zigzag conversion
+        if numRows == 1:
+            return s
+        # we set up this many number of rows of strings
+        rows = [''] * numRows
+        # pointer of current row
+        current_row = 0
+        # direction control, -1 means going down, 1 means going up by 1 row to follow the zigzag pattern
+        direction = -1
+
+        # then we traverse through the string
+        for char in s:
+            # we add the character to the current row
+            rows[current_row] += char
+
+            # if we reach either top of bottom, we need to change direction
+            if current_row == numRows - 1 or current_row == 0:
+                direction *= -1
+            
+            # move to the next row according to the direction
+            current_row += direction
+        
+        # list of strings, then we just join them together and return
+        return "".join(rows)
 
 
 class Solution:
