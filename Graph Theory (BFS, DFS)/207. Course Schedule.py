@@ -18,6 +18,56 @@
 # Explanation: There are a total of 2 courses to take. 
 # To take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.
 
+# SECOND ATTEMPT
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        # O(V + E) because each node and edges are at most processed once because of visited array, adj cost O(E), 
+        # and the dfs cost O(V + E)
+        # space: O(V + E), adj cost O(E) which is the length of prerequisites, and then visted and instack cost O(V)
+        def dfs(course_num, visited, inStack):
+            # if current on stack, we have a cycle, cannot take all courses, return true(have a cycle)
+            if inStack[course_num]:
+                return True
+            
+            # if we have previously checked this branch and it is safe in previous dfs calls, we knows we can skip
+            if visited[course_num]:
+                return False
+            # add current course to the stack
+            inStack[course_num] = True
+
+            # check the prerequisite and continue expand the branches back to front
+            for course in adj[course_num]:
+                if dfs(course, visited, inStack):
+                    return True
+            
+            # we finished checking, and this branch is safe and no cycle is found here
+            # we pop the current_course from stack and add it to the safe visited
+            inStack[course_num] = False
+            visited[course_num] = True
+
+            return False
+
+
+        # we create a list of course prerequisite, the index represents the course number from 0 to numCourse - 1
+        # and its value represents the prerequisite required to take this course
+        adj = [[] for _ in range(numCourses)]
+        for prerequisite in prerequisites:
+            adj[prerequisite[1]].append(prerequisite[0])
+
+        # both are global even though they are paseed to functions, but lists they are mutable, and python will
+        # pass the reference to the same mutable!
+        # visited is used to keep track of the branches we hav already checked and can prune early
+        # instack is used to keep track of current path and backtrack it after checking one whole branch
+        # can also use a set to replace inStack, then we use add, remove, equivalent
+        visited = [False] * numCourses
+        inStack = [False] * numCourses
+
+        for i in range(numCourses):
+            # if any of the dfs finds a cycle: instack == true, we cannot take all courses
+            if dfs(i, visited, inStack):
+                return False
+        
+        return True
 
 # DFS Solution, Runtime O(M+N), Space O(M+N)
 class Solution:
