@@ -1,3 +1,48 @@
+
+# SECOND ATTEMPT
+# TIME complexity: O(M * N) which we have toi traverse all the islands, cases: all 1s in the grid.
+# Space complexity: O(M * N) in the worst case, the grid is filled with lands, we will have M * N recursive calls on the call stack.
+# Not O(1) space because each recursive call takes space on the call stack, O(1) for each call, but we have maximum M * N calls.
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        
+        if not grid:
+            return 0
+
+        m = len(grid)
+        n = len(grid[0])
+
+        def dfs(row, col):
+            # out of bound index
+            if row > m - 1 or col > n - 1 or row < 0 or col < 0:
+                return 
+            # if it's 0, then return, reach the bound
+            if grid[row][col] == "0":
+                return 
+            
+            # turn the current grid to 0 to avoid turning back to form infinite loop
+            grid[row][col] = "0"
+            # find all four directions
+            dfs(row + 1, col)
+            dfs(row - 1, col)
+            dfs(row, col + 1)
+            dfs(row, col - 1)
+
+            return 
+        
+        # traverse through the matrix, as long as we see a 1, we trigger a dfs starting from that row/col
+        # and the dfs will turn all the connected 1's to 0
+        ans = 0
+        for r in range(m):
+            for c in range(n):
+                if grid[r][c] == "1":
+                    dfs(r, c)
+                    ans += 1
+        return ans
+        
+
+
+
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         # DFS: set each visitied 1 grid to 0 to track all the one's we visited
