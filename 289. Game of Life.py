@@ -45,6 +45,80 @@
 # which would cause problems when the active area encroaches upon the border of the array (i.e., live cells reach the border). 
 # How would you address these problems?
 
+# follow-up hashmap solution, O(L) time | O(L) space, L is the number of live cells
+from collections import Counter
+from typing import List, Set, Tuple
+
+class Solution:
+    def gameOfLifeInfinite(self, live_cells: Set[Tuple[int, int]]) -> Set[Tuple[int, int]]:
+        """
+        Computes the next generation for an infinite Game of Life board,
+        where only live cells are stored.
+
+        live_cells: set of (row, col) coordinates that are currently alive
+        returns: new set of (row, col) coordinates that will be alive
+        """
+
+        # Count how many live neighbors each cell has.
+        # We only need to consider cells that are neighbors of existing live cells.
+        neighbor_count = Counter()
+
+        # we are iterating through the live cells only, and check for 8 neighbors and count them to see if any neighbor becomes alive
+        for (r, c) in live_cells:
+            # Add +1 count to all 8 neighbors of (r, c)
+            for dr in (-1, 0, 1):
+                for dc in (-1, 0, 1):
+                    if dr == 0 and dc == 0:
+                        continue  # skip the cell itself
+                    nr, nc = r + dr, c + dc
+                    neighbor_count[(nr, nc)] += 1
+
+        # Decide which cells are alive in the next generation
+        next_live_cells = set()
+
+        for cell, count in neighbor_count.items():
+            # Check if the cell is currently alive
+            is_currently_alive = cell in live_cells
+
+            # Rule 1: any cell with exactly 3 neighbors becomes alive
+            if count == 3:
+                next_live_cells.add(cell)
+
+            # Rule 2: any live cell with exactly 2 neighbors stays alive
+            elif count == 2 and is_currently_alive:
+                next_live_cells.add(cell)
+
+            # other cells die or stay dead
+        return next_live_cells
+
+    def gameOfLife(self, board: List[List[int]]) -> None:
+        """
+        Wrapper for the infinite-board approach, but applied to a finite board:
+        - Convert board -> set of live cells
+        - Run one infinite step
+        - Write the result back to board
+        """
+        # find live cells from the current board
+        live_cells = set()
+        for r, row in enumerate(board):
+            for c, value in enumerate(row):
+                if value == 1:
+                    live_cells.add((r, c))
+
+        # Compute next generation using infinite-board logic
+        # by feeding the living cells, and getting back the new living cells
+        live_cells = self.gameOfLifeInfinite(live_cells)
+
+        # Write back to the board (only within given bounds)
+        for r, row in enumerate(board):
+            for c in range(len(row)):
+                board[r][c] = 1 if (r, c) in live_cells else 0
+
+# For the follow up, second question, it's about the scalability of the matrix, if the matrix is infinitely large, 
+# we can use a hashset to store the living cells, and only check the living cells and the ones that has living neighbors.
+# but if the memory cannot fit the whole board/hashset, then we can only take a portion of the board each time, 
+# we will take at max three rows each time, process it and then discard the previous row, and take the next row from the board
+
 # SECOND Attempt
 # O(M*N) time | O(1) space  because we are modifying the board in place (8 * M * N for counting neighbors)
 class Solution:
