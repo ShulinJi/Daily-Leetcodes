@@ -56,6 +56,9 @@ class Solution:
             # stations between 0 to current station will reduce even more because we reduce the help by choosing
             # 0 < k < current station! because any station in between those stations would be net >= 0
             # then, we choose to start from the next station!
+
+            # if net gas is negative, then we will eventually be net negative no matter where we start
+            # but if it is bigger than 0, then there must be a solution
             if currentGas < 0:
                 startPoint = i + 1
                 currentGas = 0
