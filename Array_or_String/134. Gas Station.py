@@ -52,9 +52,9 @@ class Solution:
 
             # if our current gas is below 0, let's say starting from 0 then first time we have negative, 
             # it means all previous stations are notpossible start point because we never below 0 until now, 
-            # which means previous station are all helping us (net gas >= 0), and starting from any of the 
+            # which means previous station are all helping us (net gas >= 0) for all indices before current index, and starting from any of the 
             # stations between 0 to current station will reduce even more because we reduce the help by choosing
-            # 0 < k < current station!
+            # 0 < k < current station! because any station in between those stations would be net >= 0
             # then, we choose to start from the next station!
             if currentGas < 0:
                 startPoint = i + 1
