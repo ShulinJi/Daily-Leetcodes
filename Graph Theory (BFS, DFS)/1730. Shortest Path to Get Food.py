@@ -35,6 +35,41 @@
 # Input: grid = [["X","X","X","X","X","X","X","X"],["X","*","O","X","O","#","O","X"],["X","O","O","X","O","O","X","X"],["X","O","O","O","O","#","O","X"],["O","O","O","O","O","O","O","O"]]
 # Output: 5
 
+# SECOND ATTEMPT
+from collections import deque
+class Solution:
+    def getFood(self, grid: list[list[str]]) -> int:
+        # O(mn) worst case, we traverse all the matrix
+        # O(mn) space
+        dirs = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+        food = []
+        start = None
+        for r in range(len(grid)):
+            for c in range(len(grid[0])):
+                if grid[r][c] == "*":
+                    start = (r, c)
+                elif grid[r][c] == "#":
+                    food.append((r, c))
+        
+        seen = set()
+        seen.add(start)
+        step = 0
+        queue = deque([start])
+        while queue:
+            for _ in range(len(queue)):
+                curr_grid = queue.popleft()
+                for dx, dy in dirs:
+                    new_row = dx + curr_grid[0]
+                    new_col = dy + curr_grid[1]
+                    if (0 <= new_row < len(grid) and 0 <= new_col < len(grid[0]) and grid[new_row][new_col] != "X" and (new_row, new_col) not in seen):
+                        if grid[new_row][new_col] == "#":
+                            return step + 1
+                        else:
+                            queue.append((new_row, new_col))
+                            seen.add((new_row, new_col))
+            step += 1
+        
+        return -1
 
 class Solution:
     def getFood(self, grid: list[list[str]]) -> int:
