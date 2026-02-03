@@ -55,6 +55,9 @@ class Solution:
         seen.add(start)
         step = 0
         queue = deque([start])
+        # if I want to use A*, we need to make queue a priority queue, 
+        # which is a heapq that prioritize the manhatan distance abs(row - foodx) + abs(col - foody), (distance, steps, row, col), 
+        # when calculating a distance, we need to traverse through the food list and find the min distance
         while queue:
             for _ in range(len(queue)):
                 curr_grid = queue.popleft()
