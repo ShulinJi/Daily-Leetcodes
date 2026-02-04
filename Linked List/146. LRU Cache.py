@@ -47,13 +47,18 @@ class ListNode:
         self.prev = None
 
 class LRUCache:
+    # a single hashmap is not enough because of capacity, when capacity exceeds we cannot just randomly
+    # evict a kv pair, we need to evict the least recently used ones!
+    # we put the key at the back when we used it, and remove the front one
+
     # Use doubly linked list(have prev and next both way) so that we can delete a node at any postion
     # Need reference for both tail and head b/c we need tail so that we can add new value and update
     # Need reference for head b/c need to remove the LRU node
     def __init__(self, capacity: int):
         self.capacity = capacity
+
+        # use dictionary to allow O(1) finding time to find a node
         self.dic = {}
-        # create fake heads and tails to avoid edge cases (sentenel head)
         self.head = ListNode(-1, -1)
         self.tail = ListNode(-1, -1)
 
@@ -61,33 +66,37 @@ class LRUCache:
         self.head.next = self.tail
         self.tail.prev = self.head
 
+    # we need to move the node to the back, and the current node can be at anywhere, so we need the functionality of deletion from anywhere. O(1) of finding the node by hashmap, O(1) deletion in doubly linked list, ex. delete C simply B.next = D since we have prev (C.prev = B) and next (D)
     def get(self, key: int) -> int:
         if key not in self.dic:
             return -1
         
-        # update the node by moving it to the end (remove and then add to back)
         node = self.dic[key]
+        # remove the node and add it to the end
         self.remove(node)
         self.add(node)
         return node.val
 
+    # need to update or insert in hashmap
+    # if existing in the hashmap, remove the old node, and add the new node to the back 
     def put(self, key: int, value: int) -> None:
-        # we already have the node, then we remove it 
+        # if existing in the hashmap, delete the node (because we accessed it)
         if key in self.dic:
             old_node = self.dic[key]
             self.remove(old_node)
         
-        # create a new node no matter if we are update or adding new value
+        # add new node to the back
         node = ListNode(key, value)
         self.dic[key] = node
         self.add(node)
 
-        # if over capacity, then we delete the head
+        # if inserting a node exceeds the limit, then we delete the front
         if len(self.dic) > self.capacity:
             node_to_delete = self.head.next
             self.remove(node_to_delete)
             del self.dic[node_to_delete.key]
     
+    # add a node to the end of the doubly linked list
     def add(self, node):
         previous_end = self.tail.prev
         # update 4 links between 3 nodes (2 prev, 2 next)(last tail, current new tail, fake tail)
@@ -99,6 +108,76 @@ class LRUCache:
     def remove(self, node):
         node.prev.next = node.next
         node.next.prev = node.prev
+
+
+# a doubly linked list
+class ListNode:
+    def __init__(self, key, value):
+        self.key = key
+        self.value = value
+        self.next = None
+        self.prev = None
+
+# SECOND ATTEMPT with debug messages
+class LRUCache:
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.dict = {}
+
+        self.head = ListNode(-1, -1)
+        self.tail = ListNode(-1, -1)
+
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def remove(self, node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
+
+    def add_to_back(self, node):
+        prev_node = self.tail.prev
+        prev_node.next = node
+        node.prev = prev_node
+        self.tail.prev = node
+        node.next = self.tail
+
+    def print_list(self):
+        value_list = []
+        temp_head = self.head
+        while temp_head.next:
+            value_list.append(temp_head.value)
+            temp_head = temp_head.next
+        print(value_list)
+    # to get a key, if key not in the 
+    def get(self, key: int) -> int:
+        if key not in self.dict:
+            return -1
+
+        curr_node = self.dict[key]
+        self.remove(curr_node)
+        self.add_to_back(curr_node)
+        # self.print_list()
+
+        return curr_node.value
+    
+    def put(self, key: int, value: int) -> None:
+        if key in self.dict:
+            curr_node = self.dict[key]
+            self.remove(curr_node)
+
+        new_node = ListNode(key, value)
+        self.add_to_back(new_node)
+        self.dict[key] = new_node
+        if len(self.dict) > self.capacity:
+            del self.dict[self.head.next.key]
+            self.remove(self.head.next)
+            
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
 
 
 # Your LRUCache object will be instantiated and called as such:
