@@ -21,8 +21,10 @@
 # 0 <= height[i] <= 105
 
 # SECOND ATTEMPT, similar to DP approach
+
 class Solution:
     def trap(self, height):
+        # the thought is not about max height, its about having a wall that is taller than either left or right side, if right side is taller, than we can guranntee that use the leftmost as boundary will result a trap in water because left < right, use left equals to this formula min(rightmost[i], leftmost[i]) - height[i] already set left as min, and the answer would just be left - curr_height!
         # O(n) and O(1)
         left = 0
         right = len(height) - 1
@@ -45,7 +47,6 @@ class Solution:
         return ans
 
 
-# O(n) and O(n) using DP (pre-populate results)
 class Solution:
     def trap(self, height):
         # O(n) and O(n)
@@ -59,17 +60,21 @@ class Solution:
 
         # needs init because we need to check i - 1 element
         # populate the left boundary for the current index
+
+        # leftmost is the maxheight upto the given point from left to right
         leftmost[0] = height[0]
         for i in range(1, n):
             leftmost[i] = max(height[i], leftmost[i - 1])
 
         # populate the right boundary for current index, from backward because of the right boundary
+        # rightmost is the maxheight upto the given point from right to left
         rightmost[n - 1] = height[n - 1]
         for i in range(n - 2, -1, -1):
             rightmost[i] = max(height[i], rightmost[i + 1])
-        
+
         # answer is the min of the left and right boundary which can hold the water and then subtract the height
         for i in range(1, n - 1):
+            # the level of water = inimum of maximum height of bars on both the sides minus its own height
             ans += min(rightmost[i], leftmost[i]) - height[i]
         
         return ans
