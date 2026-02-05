@@ -38,6 +38,44 @@
 #         self.right = None
 
 
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+# SECOND ATTEMPT
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        # O(n) for runtime, worst case we traverse through all the nodes
+        #  and O(n) space because of the recursion stack
+        ans = None
+        def find_ancestor(node):
+            nonlocal ans
+            if not node:
+                return False
+            
+            left = find_ancestor(node.left)
+            right = find_ancestor(node.right)
+            mid = True if (node == p or node == q) else False
+
+            # the only case that this is true is when we find the lowest common ancestor
+            # which is when we have 3 nodes, 2 of them are true, no other set of 3 nodes will satisfy this
+            # gurantee the only possible answer update
+            if mid + left + right >= 2:
+                ans = node
+            
+            # if any of the condition is true, it is true
+            return mid or left or right
+
+        find_ancestor(root)
+        return ans
+
+
+
+
+
 # O(n) and O(n)
 class Solution:
     def __init__(self):
