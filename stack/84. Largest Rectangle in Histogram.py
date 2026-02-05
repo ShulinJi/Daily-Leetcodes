@@ -21,6 +21,32 @@
 # 1 <= heights.length <= 105
 # 0 <= heights[i] <= 104
 
+# SECOND ATTEMPT
+# O(n) time and O(n) space
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        # the stack is increasing order, so that whenever we find a number
+        stack = [-1]
+        ans = 0
+
+        for i in range(len(heights)):
+            # we found a new right boundary, (we don't account for left and right boundary, the middle part are the area we try to calculate)
+            while stack[-1] != -1 and heights[stack[-1]] >= heights[i]:
+                current_height = heights[stack.pop()]
+                current_width = i - stack[-1] - 1
+                ans = max(ans, current_height * current_width)
+            # add current bar to the stack
+            stack.append(i)
+
+        
+        # it means we have some bars that never see a smaller bar(right boundary) that are left over, right boundary for them is len(heights)
+        while stack [-1] != -1:
+            current_height = heights[stack.pop()]
+            current_width = len(heights) - stack[-1] - 1
+            ans = max(ans, current_width * current_height)
+        
+        return ans
+
 # O(n^2) time complexity, where n is the number of bars in the histogram. This is because we have a nested loop: for each bar, we potentially look at all other bars to its right to determine the minimum height and calculate the area.
 # brute force approach by examining all possible rectangles
 class Solution:
