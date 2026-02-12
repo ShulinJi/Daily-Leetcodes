@@ -42,6 +42,39 @@
 # ......
 # and so on.
  
+# SECOND ATTEMPT
+class Solution:
+
+    def __init__(self, w: List[int]):
+        # O(N) and O(1)
+        # total sum to record total weights
+        # prefix sum used to track index based on weights in each range (prefix so that we can use binary search incremental, and each jump in the prefix is a range length, indicate how much weights in there)
+        self.total_sum = 0
+        self.prefix_sum = []
+        for num in w:
+            self.total_sum += num
+            self.prefix_sum.append(self.total_sum)
+
+    def pickIndex(self) -> int:
+        # O(logn) and O(1)
+        current_pick = self.total_sum * random.random()
+        left = 0
+        right = len(self.prefix_sum) - 1
+        # we need right = mid and left = mid + 1 instead of right = mid - 1 and left = mid because we use // 2 that 
+        # so that left <= mid, and right > mid because left != right, so mid alsways < right, we dno't worry about nifinite loops, but with left = mid, we will have cases that we keep looping at mid = left
+        while left < right:
+            mid = (left + right) // 2
+            # if current pick is smaller than current range, ex w=[1, 2, 3, 4, 5], prefix_sum = [1, 3, 6, 10, 15], then we have 7, then let's say 7 is smaller than prefix_sum[mid=4], then we need to search for left part
+            if current_pick < self.prefix_sum[mid]:
+                right = mid
+            else:
+                left = mid + 1
+        return left
+
+
+# Your Solution object will be instantiated and called as such:
+# obj = Solution(w)
+# param_1 = obj.pickIndex()
 
 
  class Solution:
