@@ -22,6 +22,32 @@
 
 # 1 <= n <= 231 - 1
 
+# SECOND ATTEMPT
+# O(logn) and O(1)
+class Solution:
+    def arrangeCoins(self, n: int) -> int:
+        left = 0
+        right = n
+
+        while left <= right:
+            mid = left + (right - left) // 2
+            # total coins needed to form all mid many complete rows
+            total_coins_from_mid = (mid * (mid + 1)) // 2
+            if n == total_coins_from_mid:
+                return mid
+            # if we need more coins than we have, it means more rows are needed
+            elif n < total_coins_from_mid:
+                right = mid - 1
+            # vice versa, less coins are needed
+            else:
+                left = mid + 1
+        
+        # use right becuase we used left <= right, it means it will terminate at left > right = right + 1, so it 
+        # is out of the boundary
+        return right
+     
+
+
 # O(log(n)) time, O(1) space, binary search solution
 class Solution:
     def arrangeCoins(self, n: int) -> int:
