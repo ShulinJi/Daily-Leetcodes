@@ -27,6 +27,54 @@
 # arr is sorted in ascending order.
 # -104 <= arr[i], x <= 104
 
+# O(log(N)+k) and O(1)
+# SECOND ATTEMPT
+class Solution:
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        left = 0
+        right = len(arr) - 1
+        
+        # we first find the index that is closest to the number x
+        # use the template number 3
+        index = None
+        while left + 1 < right:
+            mid = left + (right - left) // 2
+            if arr[mid] == x:
+                index = mid
+                break
+            elif arr[mid] < x:
+                left = mid
+            else:
+                right = mid
+        
+        # need to check left and right since this template left 2 numbers to check
+        if index is None:
+            if abs(arr[left] - x) <= abs(arr[right] - x):
+                index = left
+            else:
+                index = right
+        # after find the index that is closest to the x
+
+        # we need a find the window that is size of k that are closest to x
+        # left bound and right bound are not included in the window
+        left_bound, right_bound = index - 1, index
+        # keep the window size under k + 1, because [1,2,3,4,5], if we want 3,4 our left and right would be 2, 5 and 5-2 = 3, and the size of window is 2, so we need to keep the bound diff under k + 1
+        while right_bound - left_bound <= k:
+            # if either left or right is out of bound, only move one side
+            if left_bound == -1:
+                right_bound += 1
+            elif right_bound == len(arr):
+                left_bound -= 1
+            # compare the absolute diff to find the closer one
+            elif abs(arr[left_bound] - x) <= abs(arr[right_bound] - x):
+                left_bound -= 1
+            else:
+                right_bound += 1
+        
+        # use + 1 because rightbound - left_bound == 7
+        return arr[left_bound + 1:right_bound]
+        
+        
 
 
 class Solution:
