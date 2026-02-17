@@ -1,3 +1,24 @@
+
+# SECOND ATTEMPT
+# O(logn) and O(1)
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        left = 0
+        right = x
+        # use binary search to find the closest number to the power of 2
+        while left <= right:
+            mid = (left + right) // 2
+            if mid ** 2 == x:
+                return mid
+            elif mid ** 2 < x:
+                left = mid + 1
+            else:
+                right = mid - 1
+        
+        # we use left - 1 or right because when we terminate the condition is left > right = right + 1
+        return right
+
+
 class Solution:
     def mySqrt(self, x: int) -> int:
         # O(log(N))
@@ -21,6 +42,7 @@ class Solution:
                 return pivot
 
         return right
+
 
 
 # Given a non-negative integer x, return the square root of x rounded down to the nearest integer. The returned integer should be non-negative as well.
