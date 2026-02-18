@@ -34,8 +34,13 @@ class Solution:
         def calculate_hours(rate):
             total_hours = 0
             for bananas in piles:
-                # ceil is much faste
+                # this is even faster with only integer division
+                # total_hours += (bananas + rate - 1) // rate
+
+                # float division, C function call
                 total_hours += math.ceil(bananas / rate)
+
+                # divmod returns tuple and needs unpack, slow 
                 # integer, res = divmod(bananas, rate)
                 # total_hours += integer
                 # if res != 0:
