@@ -32,6 +32,21 @@
 # 0 <= arr[i] <= 106
 # arr is guaranteed to be a mountain array.
 
+# SECOND ATTEMPT, same question as the 162. find peak element
+class Solution:
+    def peakIndexInMountainArray(self, arr: List[int]) -> int:
+        left = 0
+        right = len(arr) - 1
+        while left < right:
+            mid = left + (right - left) // 2
+            # if we are downhill (mid > mid + 1), then try find the left side. vice versa
+            if arr[mid] >= arr[mid + 1]:
+                right = mid
+            else:
+                left = mid + 1
+        
+        return left
+
 # O(log(n)) solution using binary search
 class Solution:
     def peakIndexInMountainArray(self, arr: List[int]) -> int:
