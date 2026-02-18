@@ -28,6 +28,35 @@
 # piles.length <= h <= 109
 # 1 <= piles[i] <= 109
 
+# SECOND ATTEMPT
+class Solution:
+    def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        def calculate_hours(rate):
+            total_hours = 0
+            for bananas in piles:
+                # ceil is much faste
+                total_hours += math.ceil(bananas / rate)
+                # integer, res = divmod(bananas, rate)
+                # total_hours += integer
+                # if res != 0:
+                #     total_hours += 1
+            
+            return total_hours
+
+        left = 1
+        right = max(piles)
+        while left < right:
+            mid = left + (right - left) // 2
+            curr_hours = calculate_hours(mid)
+            # if koko can finish in h hours, then we should try smaller rate (k)
+            if curr_hours <= h:
+                right = mid
+            else:
+                left = mid + 1
+            
+        return left
+
+
 # Binary search solution to find the minimum eating speed k.
 # O(n * log(max(piles))) time complexity, where n is the number of piles and max(piles) is the maximum number of bananas in a pile.
 class Solution:
