@@ -30,6 +30,19 @@
 # -3 * 104 <= nums[i] <= 3 * 104
 # Each element in the array appears twice except for one element which appears only once.
 
+# SECOND ATTEMPT
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        # 0 XOR anything(x) is that number x
+        # ^ is XOR, only 0/1 or 1/0 can result 1, others like 0/0, 1/1 are all
+        # so we can utlize this property to 
+        #  a⊕b⊕a = (a⊕a)⊕b = 0⊕b = b, to find out the one that is single, others will be cancelled out
+        a = 0
+        for i in nums:
+            a = a ^ i
+        
+        return a
+
 # O(n) time, O(1) space
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
