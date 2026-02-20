@@ -33,6 +33,59 @@
 # All the timestamps timestamp of set are strictly increasing.
 # At most 2 * 105 calls will be made to set and get.
 
+# SECOND ATTEMPT
+from collections import defaultdict
+class TimeMap:
+
+    def __init__(self):
+        self.timestamp_hashmap = defaultdict(list)
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        self.timestamp_hashmap[key].append((timestamp, value))
+
+    def get(self, key: str, timestamp: int) -> str:
+        if not self.timestamp_hashmap or key not in self.timestamp_hashmap:
+            return ""
+        
+        # if the given time stamp is smaller than the smallest stmap in the list 
+        if timestamp < self.timestamp_hashmap[key][0][0]:
+            return ""
+
+
+        # current search space is [left, right), right is a bounday
+        left = 0
+        # if we use right = len() - 1, then we are using the inclusive boundaryb [left, right], then we need to add right = mid - 1 because mid is also not valid answer, then we need to exclude mid so that we only include the valid range [left, right] that can be accessed because left, right are both accessible,
+
+        # it should look something like this because if we use left < right, then we end at left == right, which left one more candidate to check, which is not valid!
+        # while left <= right:
+        #     mid = left + (right - left) // 2
+        #     if self.timestamp_hashmap[key][mid][0] <= timestamp:
+        #         ans = mid
+        #         left = mid + 1
+        #     else:
+        #         right = mid - 1
+
+
+        right = len(self.timestamp_hashmap[key])
+        # ans is the last index that we can find a timestamp that is <= given timestamp
+        ans = 0
+
+        while left < right:
+            mid = left + (right - left) // 2
+            if self.timestamp_hashmap[key][mid][0] <= timestamp:
+                ans = mid
+                left = mid + 1
+            else:
+                right = mid
+        
+
+        return self.timestamp_hashmap[key][ans][1]
+
+
+# Your TimeMap object will be instantiated and called as such:
+# obj = TimeMap()
+# obj.set(key,value,timestamp)
+# param_2 = obj.get(key,timestamp)
 
 class TimeMap:
 
