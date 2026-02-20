@@ -43,6 +43,7 @@
 
 # SECOND ATTEMPT
 
+# follow-up: Use the “clear lowest set bit” trick so runtime depends on # of 1s, not always 32 checks.
 # clever ones
 class Solution:
     def hammingWeight(self, n: int) -> int:
