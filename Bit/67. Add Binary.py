@@ -18,6 +18,28 @@
 # a and b consist only of '0' or '1' characters.
 # Each string does not contain leading zeros except for the zero itself.
 
+# SECOND ATTEMPT
+class Solution:
+    def addBinary(self, a, b) -> str:
+        # convert string to numbers and to binary
+        a_bit = int(a, 2)
+        b_bit = int(b, 2)
+
+        while b_bit:
+            # xor of 2 numbers equal to add two numbers without caring the carry bit
+            # since xor is only 1 when bits are 0 and 1 or 1 and 0, 
+            curr_sum = a_bit ^ b_bit
+
+            # then we take care of carry bit by AND to find the 1 and 1 that result in 1 and we 
+            # shift the position by 1 bc 01 + 01 = 10
+            carry_bit = (a_bit & b_bit) << 1
+
+            # then we keep iterating the process until there is no carrying bit to process
+            a_bit, b_bit = curr_sum, carry_bit
+        
+        # bin(a_bit) convert it from int to binary with 0b at the start
+        return bin(a_bit)[2:]
+
 class Solution:
     def addBinary(self, a, b) -> str:
         # convert number to binary form
