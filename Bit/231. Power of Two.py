@@ -27,6 +27,15 @@
 
 # Follow up: Could you solve it without loops/recursion?
 
+# SECOND ATTEMPT
+# O(1) and O(1), another approach to check if it is power of 2, bc number that are power of 2 has only 1 in all the bits, such as 1000, 100, 10000
+# so when we n - 1, we flip all the bits 1000 - 1 is 0111, so the AND operator will always give us 0!
+class Solution(object):
+    def isPowerOfTwo(self, n: int) -> bool:
+        if n <= 0:
+            return False
+        
+        return True if n & (n - 1) == 0 else False
 
 # O(1) time | O(1) space with bit manipulation
 class Solution(object):
