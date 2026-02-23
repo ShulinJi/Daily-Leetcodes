@@ -1,3 +1,91 @@
+# You are given an m x n matrix board containing letters 'X' and 'O', capture regions that are surrounded:
+
+# Connect: A cell is connected to adjacent cells horizontally or vertically.
+# Region: To form a region connect every 'O' cell.
+# Surround: A region is surrounded if none of the 'O' cells in that region are on the edge of the board. Such regions are completely enclosed by 'X' cells.
+# To capture a surrounded region, replace all 'O's with 'X's in-place within the original board. You do not need to return anything.
+
+ 
+
+# Example 1:
+
+# Input: board = [["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O","X","X"]]
+
+# Output: [["X","X","X","X"],["X","X","X","X"],["X","X","X","X"],["X","O","X","X"]]
+
+# Explanation:
+
+
+# In the above diagram, the bottom region is not captured because it is on the edge of the board and cannot be surrounded.
+
+# Example 2:
+
+# Input: board = [["X"]]
+
+# Output: [["X"]]
+
+ 
+
+# Constraints:
+
+# m == board.length
+# n == board[i].length
+# 1 <= m, n <= 200
+# board[i][j] is 'X' or 'O'.
+
+
+# SECOND ATTEMPT
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        # O(n) because number of cells N in the board (worst case traverse all cells twice, dfs worst case only traverse board once), and O(n) because number of cells (list of boarders if all cells are boarders, max depth of recursive call is N calls)
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        # it is obvious that if any "O" can reach the border, then it is an escape and will not be captured.
+        # Then we can check the border instead of check the whole border, which saves a huge amount of time. then we first get all the cells on the border(edges)
+
+        border = []
+        self.ROW = len(board)
+        self.COL = len(board[0])
+
+        for r in range(self.ROW):
+            for c in range(self.COL):
+                if r == 0 or r == self.ROW - 1 or c == 0 or c == self.COL - 1:
+                    border.append((r, c))
+        
+        # dfs only traverse along the O and mark all the O that can be reached from the edge to E
+        def dfs(row, col):
+            # if we meet X or E, we return , we meet E we meet duplicate, we meet X, we meet barrier
+            if board[row][col] != "O":
+                return 
+            
+            board[row][col] = "E"
+            if col < self.COL - 1:
+                dfs(row, col + 1)
+            if col > 0:
+                dfs(row, col - 1)
+            if row < self.ROW - 1:
+                dfs(row + 1, col)
+            if row > 0:
+                dfs(row - 1, col)              
+
+        # now we run the dfs from the border
+        for r, c in border:
+            dfs(r, c)
+
+        # now we change all the E to O since they are noe captured, not surrounded bc they can be reached from edge, and any other O would be captured!
+        for r in range(self.ROW):
+            for c in range(self.COL):
+                if board[r][c] == "E":
+                    board[r][c] = "O"
+                elif board[r][c] == "O":
+                    board[r][c] = "X"
+        
+
+
+        
+
+
 class Solution:
     def solve(self, board: List[List[str]]) -> None:
         """
