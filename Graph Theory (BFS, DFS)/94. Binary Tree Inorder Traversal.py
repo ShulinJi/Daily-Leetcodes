@@ -50,6 +50,28 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+
+# SECOND ATTEMPT
+# O(n) because we traversed all of the nodes, and O(logn) avg because of how many function stacks but worst case is O(n) if examples like we tree does not have any branches
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        # inorder traversal: left, root, right, then we do the traversal in this order in dfs
+        ans = []
+        def dfs_traversal(node):
+            # when we reach the end of the tree, we recurve back
+            if not node:
+                return 
+            
+            dfs_traversal(node.left)
+            ans.append(node.val)
+            dfs_traversal(node.right)
+
+        dfs_traversal(root)
+        return ans
+
+
+
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         if not root:
