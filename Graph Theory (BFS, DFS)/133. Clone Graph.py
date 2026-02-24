@@ -6,6 +6,39 @@ class Node:
         self.neighbors = neighbors if neighbors is not None else []
 """
 
+
+# SECOND ATTEMPT: DFS solution
+from typing import Optional
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        # DFS solution
+        # O(V+E) and O(V+E) for visiting and store all the nodes and edges
+
+        # use visited so that we don't revisits and avoid stuck in cycles
+        visited = {}
+        def clone(node):
+            # if it is None
+            if not node:
+                return None
+            
+            # if it's visited
+            if node in visited:
+                return visited[node]
+            
+            # copy the node and store in the visited
+            clone_node = Node(node.val, [])
+            visited[node] = clone_node
+
+            # then we recursively finding its neighbors
+            for neighbor in node.neighbors:
+                clone_node.neighbors.append(clone(neighbor))
+            
+            return clone_node
+        
+        return clone(node)
+
+
+
 from typing import Optional
 from collections import deque
 
