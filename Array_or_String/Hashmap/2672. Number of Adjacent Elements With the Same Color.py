@@ -41,11 +41,52 @@
 # 1 <=  colori <= 105
 
 
+# Now since last we using preallocated array, if n gets too big, it will fail the space complexity, 
+# we can use a hashmap to store the color of each index instead, and if an index is not in the hashmap, 
+# we can assume it's 0 (uncolored) by default. This way we can save space when n is large and we don't need to store the color of every index.
+class Solution:
+    def colorTheArray(self, n: int, queries: List[List[int]]) -> List[int]:
+        color = {}
+        pairs = 0
+        ans = []
+
+        for coor, new_color in queries:
+            old_color = color.get(coor, 0)
+
+            if old_color == new_color:
+                ans.append(pairs)
+                continue
+            
+            # we check and left and right neighboring index's color, if they are the same as old color, 
+            # then we break the pair and decrease the pairs count by 1 for each pair we break
+            left = color.get(coor + 1, 0)
+            right = color.get(coor - 1, 0)
+
+            if old_color != 0:
+                if left == old_color:
+                    pairs -= 1
+                if right == old_color:
+                    pairs -= 1
+
+            # if we color it to 0, just pop it, add new color, and check if we form any new pairs with the new color, 
+            # if we do, then we increase the pairs count by 1 for each pair we form
+            if new_color == 0:
+                color.pop(coor, None)
+            else:
+                color[coor] = new_color
+
+            if new_color != 0:
+                if left == new_color:
+                    pairs += 1
+                if right == new_color:
+                    pairs += 1
+
+            ans.append(pairs)
+
+        return ans
+
 # Time: O(q)
-# Space: O(lenghth) space because we preallocate that much, but if n gets too big, it will fail the space complexity
-from typing import List
-
-
+# Space: O(lenghth) space because we preallocate that much, but if n gets too big, it will fail the space complexity!!!!!!!!
 class Solution:
     def colorTheArray(self, n: int, queries: List[List[int]]) -> List[int]:
         color = [0] * n
@@ -79,3 +120,4 @@ class Solution:
             ans.append(pairs)
 
         return ans
+    
