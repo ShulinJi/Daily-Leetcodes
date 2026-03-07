@@ -75,6 +75,47 @@
 #        :rtype List[NestedInteger]
 #        """
 
+# SECOND ATTEMPT
+from collections import deque
+class Solution:
+    def depthSum(self, nestedList: List[NestedInteger]) -> int:
+        # we need to copy one by one because if we just use (nested, 1) the first element (nestedList) would be python list, not a nestedInteger list!!! will cause error when calling isInteger()
+
+        # we can do this and another way is to use queue = deque(nestedList) so that we don't need to add depth as a tuple, it avoids the problem of first check is the python list.
+        # then laster in the while loop, we need to find the length of each layer, for _ in range(len(queue)) to represent each layer, so that we can pop exactly that much node in current layer, then we increment the depth + 1 to indicate next layer.
+
+        queue = deque([(element, 1) for element in nestedList])
+        total = 0
+
+        while queue:
+            curr_element, curr_depth = queue.popleft()
+            if curr_element.isInteger():
+                total += curr_depth * curr_element.getInteger()
+            else:
+                for element in curr_element.getList():
+                    queue.append((element, curr_depth + 1))
+        
+        return total
+
+
+class Solution:
+    # dfs, try to think how we find each list and go through all the element in the list
+    def depthSum(self, nestedList: List[NestedInteger]) -> int:
+        def dfs(depth, curr_list):
+            total = 0
+
+            for element in curr_list:
+                if element.isInteger():
+                    total += element.getInteger() * depth
+                else:
+                    total += dfs(depth + 1, element.getList())
+            
+            return total
+        
+        return dfs(1, nestedList)
+
+
+
 class Solution:
     # DFS
     def depthSum(self, nestedList: List[NestedInteger]) -> int:
