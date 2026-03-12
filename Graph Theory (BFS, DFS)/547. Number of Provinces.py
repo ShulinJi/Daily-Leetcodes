@@ -29,6 +29,32 @@
 # isConnected[i][i] == 1
 # isConnected[i][j] == isConnected[j][i]
 
+# SECOND ATTEMPT
+# DFS Approach, and O(n ^ 2) b/c n nodes and each node have n nodes to reach in isConnected[i], so O(n^2), and O(n) space
+class Solution:
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        # record visited island to avoid cycles
+        visited = [False] * len(isConnected)
+        island = 0
+
+        # DFS to keep searching and mark visited on the way, until we couldn't find any more options, we form one province
+        def dfs(i):
+            visited[i] = True
+
+            for j in range(len(isConnected[i])):
+                # not visited and can connect to the next node (isConnected[i][j] == 1)
+                if not visited[j] and isConnected[i][j] == 1:
+                    dfs(j)
+
+        # we loop through each island to expand from that island and mark all the reachable as visited to form a province
+        for i in range(len(isConnected)):
+            if not visited[i]:
+                dfs(i)
+                island += 1
+
+        return island
+
+
 # O(n^2) and O(n)
 class Solution:
     def dfs(self, node, isConnected, visit):
