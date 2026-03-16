@@ -87,10 +87,10 @@ class Solution:
         # my own solution
         def expand(i, j):
         # i can be 0! but j cannot be len(s)
-        while i >= 0 and j < len(s) and s[i] == s[j]:
-            i -= 1
-            j += 1
-        return j - i - 2 + 1
+            while i >= 0 and j < len(s) and s[i] == s[j]:
+                i -= 1
+                j += 1
+            return j - i - 2 + 1
     
         ans = [0, 0]
         for i in range(len(s)):
