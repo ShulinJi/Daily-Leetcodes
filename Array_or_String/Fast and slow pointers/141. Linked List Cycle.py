@@ -73,8 +73,10 @@ class Solution:
 
 
 
-        # works, but with O(n) time and O(n) space complexity
-        # keeps adding nodes to a set, if a node is already in the set, then there is a cycle
+# works, but with O(n) time and O(n) space complexity
+# keeps adding nodes to a set, if a node is already in the set, then there is a cycle
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
         node_seen = set()
         current = head
         while current is not None:
