@@ -37,6 +37,74 @@
 # target and deadends[i] consist of digits only.
 
 
+# SECOND ATTEMPT
+# O(4(d + 10^4)) time | O(4(d + 10^4)) space with BFS
+from collections import deque
+class Solution:
+    def openLock(self, deadends: List[str], target: str) -> int:
+        # used to map next and prev slots
+        next_slot = {
+            "0": "1",
+            "1": "2",
+            "2": "3",
+            "3": "4",
+            "4": "5",
+            "5": "6",
+            "6": "7",
+            "7": "8",
+            "8": "9",
+            "9": "0",
+        }
+        prev_slot = {
+            "0": "9",
+            "1": "0",
+            "2": "1",
+            "3": "2",
+            "4": "3",
+            "5": "4",
+            "6": "5",
+            "7": "6",
+            "8": "7",
+            "9": "8",
+        }
+
+        # use visited act as deadends and avoid cycles
+        visited = set(deadends)
+        if "0000" in visited:
+            return -1
+
+        queue = deque()
+        queue.append("0000")
+        turn = 0
+
+        while queue:
+            # for current turn (step), we have so many to check
+            for _ in range(len(queue)):
+                curr_combination = queue.popleft()
+                if curr_combination == target:
+                    return turn
+                # for each digit, we have 2 ways of modifying it, go next or prev, add those to the queue
+                for i in range(4):
+                    curr_list = list(curr_combination)
+                    curr_list[i] = next_slot[curr_list[i]]
+                    next_comb = "".join(curr_list)
+                    if next_comb not in visited:
+                        visited.add(next_comb)
+                        queue.append(next_comb)
+
+                    curr_list = list(curr_combination)
+                    curr_list[i] = prev_slot[curr_list[i]]
+                    prev_comb = "".join(curr_list)
+                    if prev_comb not in visited:
+                        visited.add(prev_comb)
+                        queue.append(prev_comb)
+
+            turn += 1
+        
+        # if we have traversed all possible comb and still can't find answers, return -1
+        return -1
+
+
 # O(4(d + 10^4)) time | O(4(d + 10^4)) space with BFS
 class Solution:
     def openLock(self, deadends: List[str], target: str) -> int:
