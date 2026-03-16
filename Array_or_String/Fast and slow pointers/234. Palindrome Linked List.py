@@ -66,9 +66,9 @@ class Solution:
             return True
 
         # Find the end of first half
-        first_half_end = self.end_of_first_half(head)
+        first_half_end = self.find_the_first_half(head)
         # flip the second half
-        second_half_start = self.reverse_list(first_half_end.next)
+        second_half_start = self.reverse_link(first_half_end.next)
 
         # Check whether or not there's a palindrome.
         result = True
@@ -81,5 +81,5 @@ class Solution:
             second_position = second_position.next
 
         # Restore the list and return the result.
-        first_half_end.next = self.reverse_list(second_half_start)
+        first_half_end.next = self.reverse_link(second_half_start)
         return result    

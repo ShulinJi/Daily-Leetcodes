@@ -113,6 +113,8 @@ class Solution:
 
 
         # it works, but take O(n) time and O(n) space complexity
+class Solution:
+    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
         nodes_seen = set()
 
         node = head
