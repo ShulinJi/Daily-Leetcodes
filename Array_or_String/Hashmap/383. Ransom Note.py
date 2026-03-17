@@ -23,6 +23,7 @@
 # ransomNote and magazine consist of lowercase English letters.
 
 # O(m + n) time | O(1) space - since only lowercase English letters are used, and only 1 hashmap is used
+from collections import Counter
 class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
         if len(ransomNote) > len(magazine):
