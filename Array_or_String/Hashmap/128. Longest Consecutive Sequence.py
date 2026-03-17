@@ -27,9 +27,8 @@ class Solution:
 
         return longest_streak
 
-
-
-
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
         # O(nlogn) runtime, Space Complexity: O(logn) or O(n)
         if not nums:
             return 0
