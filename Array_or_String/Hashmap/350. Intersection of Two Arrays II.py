@@ -46,3 +46,36 @@ class Solution:
                     del counter_nums1[num]
         
         return ans
+
+### Answers for the follow up questions: ###
+
+
+# followups 1: What if the given array is already sorted? How would you optimize your algorithm?
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        i = 0, j = 0
+        ans = []
+        while i < len(nums1) and j < len(nums2):
+            if nums1[i] == nums2[j]:
+                ans.append(nums1[i])
+                i += 1
+                j += 1
+            elif nums1[i] < nums2[j]:
+                i += 1
+            else:
+                j += 1
+
+        return ans
+
+# followup 2: What if nums1's size is small compared to nums2's size? Which algorithm is better?
+#  Then we simply use the hashmap approach since we use it for the smaller one, better space complexity
+
+
+# followup 3: What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
+
+# If nums1 fits into the memory, we can use Approach 1 to collect counts for nums1 into a hash map. Then, we can sequentially load and process nums2.
+
+# If neither of the arrays fit into the memory, we can apply some partial processing strategies:
+# Split the numeric range into subranges that fits into the memory. Modify Approach 1 to collect counts only within a given subrange, and call the method multiple times (for each subrange).
+
+# Use an external sort for both arrays. Modify Approach 2 to load and process arrays sequentially.
