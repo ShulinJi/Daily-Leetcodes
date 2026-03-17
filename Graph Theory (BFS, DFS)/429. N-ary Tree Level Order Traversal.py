@@ -56,3 +56,35 @@ class Solution:
             ans.append(node_this_layer)
         
         return ans
+
+
+
+# How do we build the tree from the array?
+    # [1,null,3,2,4,null,5,6]
+    from collections import deque
+    def buildTree(self, arr):
+        # if array is None, then the root is None
+        if not arr:
+            return None
+        
+        # init the root value and children as empty list for future fill
+        root = Node(arr[0], [])
+        queue = deque(root)
+
+        # i is the index for the array, we start at 2 b/c we have considered root = 1, and null (indicate end of the child)
+        i = 2
+        
+        while i < len(arr) and queue:
+            parent = queue.popleft()
+            
+            while i < len(arr) and arr[i] is not None:
+                # create the new child and add to the children list
+                new_child = Node(arr[i], [])
+                parent.children.append(new_child)
+                queue.append(new_child)
+                i += 1
+            
+            # we reach here, we reach the null, need to skip it
+            i += 1
+        
+        return root
