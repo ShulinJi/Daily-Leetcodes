@@ -31,12 +31,15 @@
 #         self.right = right
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
-        # O(n) and O(n)
         # first element of preorder would be the root, root -> left -> right
         # then we find the index of this element in inorder array, b/c inroder left -> root -> right, then the left of the root is left subtree, same for right
         preorder_index = 0
         def array_to_tree(left, right):
+            # preorder_index is like the root of each subtree
+            # so basically what we do is we pick a root from preorder, find its index in inorder, 
+            # then split to left and right subtree again and keep iterating.
             nonlocal preorder_index
+            # range becomes invalid
             if left > right:
                 return None
             
@@ -45,6 +48,7 @@ class Solution:
 
             preorder_index += 1
             
+            # -1 is the left subtree, +1 is the right subtree
             root.left = array_to_tree(left, inorder_index_map[root_value] - 1)
             root.right = array_to_tree(inorder_index_map[root_value] + 1, right)
 
