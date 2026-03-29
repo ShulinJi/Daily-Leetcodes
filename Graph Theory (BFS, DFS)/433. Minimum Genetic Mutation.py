@@ -28,6 +28,31 @@
 # startGene, endGene, and bank[i] consist of only the characters ['A', 'C', 'G', 'T'].
 
 
+# SECOND ATTEMPT
+from collections import deque
+class Solution:
+    def minMutation(self, startGene: str, endGene: str, bank: List[str]) -> int:
+        visited = set()
+        visited.add(startGene)
+        queue = deque([startGene])
+        turn = 0
+
+        while queue:
+            for _ in range(len(queue)):
+                curr_gene = queue.popleft()
+                if curr_gene == endGene:
+                    return turn
+                
+                for letter in "ACGT":
+                    for i in range(len(curr_gene)):
+                        new_string = curr_gene[:i] + letter + curr_gene[i + 1:]
+                        if new_string not in visited and new_string in bank:
+                            queue.append(new_string)
+                            visited.add(new_string)
+            
+            turn += 1
+        
+        return -1 
 
 
 # Use BFS instead of DFS b/c we want to find minmum path(shortest path), going with DFS will need to explore more paths that does not lead to optimal
