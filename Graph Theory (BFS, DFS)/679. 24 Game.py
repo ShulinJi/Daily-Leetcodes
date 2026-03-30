@@ -28,6 +28,43 @@
 # cards.length == 4
 # 1 <= cards[i] <= 9
 
+# SECOND ATTEMPT
+class Solution:
+    def judgePoint24(self, cards: List[int]) -> bool:
+        return self.backtracking(cards)
+
+    def backtracking(self, cards):
+        if len(cards) == 1:
+            return True if abs(cards[0] - 24) <= 0.1 else False
+
+        for i in range(len(cards)):
+            for j in range(i + 1, len(cards)):
+                # generate a new list of cards without the two that are selected
+                remaining_card = []
+                for x in range(len(cards)):
+                    if x != i and x != j:
+                        remaining_card.append(cards[x])
+                
+                # then we generate all possible comb from the two selected cards
+                new_comb = self.generate_comb_in_two_cards(cards[i], cards[j])
+                # and try out each possibilities to see if it is valid
+                for card in new_comb:
+                    remaining_card.append(card)
+                    if self.backtracking(remaining_card):
+                        return True
+                    remaining_card.pop()
+        return False
+
+    # generate all possible results from all operations from 2 cards
+    def generate_comb_in_two_cards(self, card1, card2):
+        res = [card1 * card2, card1 - card2, card2 - card1, card1 + card2]
+        if card1 != 0:
+            res.append(card2 / card1)
+        if card2 != 0:
+            res.append(card1/card2)
+        
+        return res
+
 class Solution:
     def generate_possible_comb(self, card1, card2):
         # generate all possible results from two cards
