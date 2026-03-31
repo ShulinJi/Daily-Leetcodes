@@ -25,6 +25,41 @@
 # 1 <= m, n <= 50
 # grid[i][j] is either 0 or 1.
 
+
+# SECOND ATTEMPT
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        ans = 0
+        m = len(grid)
+        n = len(grid[0])
+
+        def dfs(row, col):
+            # if current row and col is out of bound or current grid is 0, we return 0
+            if row < 0 or row >= m or col < 0 or col >= n:
+                return 0
+            if grid[row][col] == 0:
+                return 0
+
+            directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+            
+            # total = 1 because we are currently on a land cell, so we count it as 1
+            # and we mark it as 0 to avoid cycle
+            total = 1
+            grid[row][col] = 0
+            for r, c in directions:
+                # so that no cycle
+                total += dfs(r + row, c + col)
+
+            return total
+        
+        for row in range(m):
+            for col in range(n):
+                if grid[row][col] == 1:
+                    ans = max(ans, dfs(row, col))
+        
+        return ans
+
+
 # O(m * n) time complexity
 # O(m * n) space complexity
 class Solution:
