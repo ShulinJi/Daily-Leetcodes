@@ -29,6 +29,26 @@
 
 # The starting pixel is already colored with 0, which is the same as the target color. Therefore, no changes are made to the image.
 
+# SECOND ATTEMPT
+# O(m*n) time, O(m*n) space
+class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        def dfs_flood_fill(r, c, old_color):
+            if r < 0 or r >= len(image) or c < 0 or c >= len(image[0]):
+                return 
+            if image[r][c] != old_color:
+                return 
+
+            image[r][c] = color
+            directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+            for dx, dy in directions:
+                dfs_flood_fill(r + dx, c + dy, old_color)
+
+            return 
+
+        if color != image[sr][sc]:
+            dfs_flood_fill(sr, sc, image[sr][sc])
+        return image
 
 
 # DFS
