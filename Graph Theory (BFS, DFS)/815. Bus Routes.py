@@ -29,6 +29,36 @@
 # 0 <= routes[i][j] < 106
 # 0 <= source, target < 106
 
+# SECOND ATTEMPT
+# O(N) where N is the total number of stops in all routes, since we will visit each stop at most once.
+# O(N) space for the queue and the seen sets. In the worst case, we might have to store all stops in the queue and seen sets.
+from collections import deque
+from collections import defaultdict
+class Solution:
+    def numBusesToDestination(self, routes: List[List[int]], source: int, target: int) -> int:
+        stop_to_route = defaultdict(set)
+        for i, route in enumerate(routes):
+            for stop in route:
+                stop_to_route[stop].add(i)
+        
+        seenRoutes = set()
+        seenStop = {source}
+
+        queue = deque([(source, 0)])
+        while queue:
+            stop, count = queue.popleft()
+            if stop == target:
+                return count
+
+            for route_id in stop_to_route[stop]:
+                if route_id not in seenRoutes:
+                    seenRoutes.add(route_id)
+                    for stop in routes[route_id]:
+                        if stop not in seenStop:
+                            seenStop.add(stop)
+                            queue.append((stop, count + 1))
+        
+        return -1
 
 class Solution:
     def numBusesToDestination(self, routes, S, T):
