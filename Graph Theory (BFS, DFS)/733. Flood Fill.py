@@ -29,6 +29,41 @@
 
 # The starting pixel is already colored with 0, which is the same as the target color. Therefore, no changes are made to the image.
 
+# followup: 
+# If you had a massive image grid where recursion depth might exceed the stack limit, how would you rewrite this to be more robust?
+
+# we can use a stack to do the DFS iteratively instead of recursively or BFS with a queue. 
+from typing import List
+from collections import deque
+
+class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        rows = len(image)
+        cols = len(image[0])
+        old_color = image[sr][sc]
+
+        if old_color == color:
+            return image
+
+        queue = deque([(sr, sc)])
+
+        while queue:
+            r, c = queue.popleft()
+
+            if r < 0 or r >= rows or c < 0 or c >= cols:
+                continue
+            if image[r][c] != old_color:
+                continue
+
+            image[r][c] = color
+
+            queue.append((r + 1, c))
+            queue.append((r - 1, c))
+            queue.append((r, c + 1))
+            queue.append((r, c - 1))
+
+        return image
+
 # SECOND ATTEMPT
 # O(m*n) time, O(m*n) space
 class Solution:
