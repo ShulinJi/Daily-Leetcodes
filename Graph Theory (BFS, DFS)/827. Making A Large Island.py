@@ -30,6 +30,59 @@
 # 1 <= n <= 500
 # grid[i][j] is either 0 or 1.
 
+# SECOND ATTEMPT
+class Solution:
+    def largestIsland(self, grid: List[List[int]]) -> int:
+        area = {}
+        m = len(grid)
+        n = len(grid[0])
+
+        def mark_area(r, c, area_id):
+            if r < 0 or r >= len(grid) or c < 0 or c >= len(grid[0]):
+                return 0
+            
+            if grid[r][c] != 1:
+                return 0
+
+            grid[r][c] = area_id
+            directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+            total = 0
+            for dx, dy in directions:
+                total += mark_area(r + dx, c + dy, area_id)
+            return total + 1
+        
+        area_id = 2
+        for r in range(m):
+            for c in range(n):
+                if grid[r][c] == 1:
+                    curr_area = mark_area(r, c, area_id)
+                    if curr_area == m * n:
+                        return m*n
+                    area[area_id] = curr_area
+                    area_id += 1
+
+        ans = 0
+        for r in range(m):
+            for c in range(n):
+                if grid[r][c] == 0:
+                    seen = set()
+                    total = 0
+                    if r < m - 1 and grid[r + 1][c] != 0:
+                        total += area[grid[r + 1][c]]
+                        seen.add(grid[r + 1][c])
+                    if r > 0 and grid[r - 1][c] != 0 and grid[r - 1][c] not in seen:
+                        total += area[grid[r - 1][c]]
+                        seen.add(grid[r - 1][c])
+                    if c > 0 and grid[r][c - 1] != 0 and grid[r][c - 1] not in seen:
+                        total += area[grid[r][c - 1]]
+                        seen.add(grid[r][c - 1])
+                    if c < n - 1 and grid[r][c + 1] != 0 and grid[r][c + 1] not in seen:
+                        total += area[grid[r][c + 1]]
+                        seen.add(grid[r][c + 1])
+                    ans = max(ans, total + 1)
+        
+        return ans
+
 # O(n ^ 2) time complexity, O(n ^ 2) space complexity
 # 2 phases solution: first phase to precompute the area of each island and mark them with unique island ids, store in a map
 # second phase to iterate through each 0 cell, check its 4-directional neighbours, and calculate the area if we flip this 0 to 1
