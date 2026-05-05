@@ -33,6 +33,49 @@
 # 1 <= m, n <= 10
 # grid[i][j] is 0, 1, or 2.
 
+# SECOND ATTEMPT, use BFS, but with fresh_orange counter, level order traversal, and a directions array to simplify the code
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        ROTTEN = 2
+        FRESH = 1
+        EMPTY = 0
+
+        queue = deque()
+        fresh_orange = 0
+        for r in range(m):
+            for c in range(n):
+                if grid[r][c] == ROTTEN:
+                    queue.append((r, c))
+                if grid[r][c] == FRESH:
+                    fresh_orange += 1
+
+        if not queue and fresh_orange == 0:
+            return 0
+
+        steps = -1
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+        while queue:
+            for _ in range(len(queue)):
+                curr_orange = queue.popleft()
+                curr_row = curr_orange[0]
+                curr_col = curr_orange[1]
+
+                for dx, dy in directions:
+                    if curr_row + dx < m and curr_row + dx >= 0 and curr_col + dy < n and curr_col + dy >= 0 and grid[curr_row + dx][curr_col + dy] == FRESH:
+                        queue.append((curr_row + dx, curr_col + dy))
+                        grid[curr_row + dx][curr_col + dy] = ROTTEN
+                        fresh_orange -= 1
+            
+            steps += 1
+
+        if fresh_orange != 0:
+            return -1    
+
+        return steps
+
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
         queue = deque()
