@@ -35,6 +35,33 @@
 # 1 <= ai, bi <= n
 
 
+# could be better because there could not be two judges at the same time because two judges would trust each other!
+# so we don't nbeed the judge_exist variable, we can just return -1 if we find two judges
+class Solution:
+    def findJudge(self, n: int, trust: List[List[int]]) -> int:
+        if n == 1:
+            return 1
+
+        trusted_numbers = [0] * (n + 1)
+        trust_numbers = [0] * (n + 1)
+        # we record the number of times that each person being trusted
+        for relationship in trust:
+            trusted_numbers[relationship[1]] += 1
+            trust_numbers[relationship[0]] += 1        
+  
+        judge_exist = False
+        current_judge = -1
+        for i in range(len(trusted_numbers)):
+            if trusted_numbers[i] == n - 1 and trust_numbers[i] == 0:
+                if judge_exist:
+                    return -1
+                else:
+                    judge_exist = True
+                    current_judge = i
+        
+        return current_judge
+
+
 # O(E) and O(n)
 class Solution:
     def findJudge(self, n: int, trust: List[List[int]]) -> int:
