@@ -28,6 +28,37 @@
 
 # Note: This question is the same as 1765: https://leetcode.com/problems/map-of-highest-peak/
 
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        seen = set()
+        queue = deque()
+        m = len(mat)
+        n = len(mat[0])
+
+        # start from all the zeros as step 0, and we expand from all the zero!
+        for r in range(m):
+            for c in range(n):
+                if mat[r][c] == 0:
+                    queue.append((r,c))
+                    seen.add((r, c))
+        
+        step = 0
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        while queue:
+            for _ in range(len(queue)):
+                row, col = queue.popleft()
+                for dx, dy in directions:
+                    next_row = row + dx
+                    next_col = col + dy
+                    if 0 <= next_row < m and 0 <= next_col < n and (next_row, next_col) not in seen:
+                        seen.add((next_row, next_col))
+                        mat[next_row][next_col] = step + 1
+                        queue.append((next_row, next_col))
+            step += 1
+
+        return mat
+
+
 from collections import deque
 class Solution:
     def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
