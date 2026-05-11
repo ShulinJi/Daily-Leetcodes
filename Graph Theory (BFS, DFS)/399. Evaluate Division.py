@@ -24,7 +24,7 @@ class Solution:
         graph = defaultdict(defaultdict)
 
         # fill in the graph with edge value
-        for (dividend, divisor), value in zip(equations, values):
+        for (dividend, divisor), value in zip(equations, values): 
             graph[dividend][divisor] = value
             graph[divisor][dividend] = 1 / value
         
@@ -74,3 +74,45 @@ class Solution:
 
 # Input: equations = [["a","b"]], values = [0.5], queries = [["a","b"],["b","a"],["a","c"],["x","y"]]
 # Output: [0.50000,2.00000,-1.00000,-1.00000]
+
+# SECOND ATTEMPT
+from collections import defaultdict
+class Solution:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        def dfs_back_track(start, end, product, visited):
+            visited.add(start)
+            ret = -1
+            # get all the connected neighbors from the graph
+            neighbors = graph[start]
+            if end in neighbors:
+                # if our end node is our neighbor
+                return product * neighbors[end]
+            else:
+                # need the .item() to get key value pair since neighbors is a dictionary
+                for neighbor, value in neighbors.items():
+                    if neighbor in visited:
+                        continue
+                    ret = dfs_back_track(neighbor, end, product * value, visited)
+                    # it means we have found our answer, else it'll be -1
+                    if ret != -1:
+                        break
+            visited.remove(start)
+            return ret
+
+        graph = defaultdict(dict)
+        for (dividend, divisor), value in zip(equations, values):
+            graph[dividend][divisor] = value
+            graph[divisor][dividend] = 1 / value
+        
+        result = []
+
+        for dividend, divisor in queries:            
+            if dividend not in graph or divisor not in graph:
+                ret = -1
+            elif dividend == divisor:
+                ret = 1
+            else:
+                visited = set()
+                ret = dfs_back_track(dividend, divisor, 1, visited)
+            result.append(ret)
+        return result
